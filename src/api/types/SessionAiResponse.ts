@@ -4,11 +4,15 @@
 
 import * as Airtop from "../index";
 
-export interface SessionContentPromptResponse {
+export interface SessionAiResponse {
     /** A URL to the JSON Schema for this object. */
     schema?: string;
     /** The response data from the prompt about the browser window */
-    data: Airtop.SessionContentPromptResponseOutput;
+    data: Airtop.SessionAiResponseData;
+    /** Any errors that occurred while processing the request */
+    errors?: Airtop.SessionAiResponseIssue[];
     /** Metadata about the response */
     meta: Airtop.SessionAiResponseMetadata;
+    /** Any warnings that occurred while processing the request */
+    warnings?: Airtop.SessionAiResponseIssue[];
 }

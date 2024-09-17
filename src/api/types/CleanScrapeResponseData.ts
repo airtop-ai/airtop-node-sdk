@@ -7,6 +7,6 @@ import * as Airtop from "../index";
 export interface CleanScrapeResponseData {
     /** The response to the question about this specific browser window */
     output: Airtop.CleanScrapeResponseOutput;
-    /** Whether the prompt was successful */
-    success: boolean;
+    /** outcome of the operation */
+    status: Airtop.CleanScrapeResponseDataStatus;
 }

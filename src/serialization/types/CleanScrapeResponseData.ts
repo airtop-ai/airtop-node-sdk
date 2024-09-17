@@ -6,18 +6,19 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { CleanScrapeResponseOutput } from "./CleanScrapeResponseOutput";
+import { CleanScrapeResponseDataStatus } from "./CleanScrapeResponseDataStatus";
 
 export const CleanScrapeResponseData: core.serialization.ObjectSchema<
     serializers.CleanScrapeResponseData.Raw,
     Airtop.CleanScrapeResponseData
 > = core.serialization.object({
     output: CleanScrapeResponseOutput,
-    success: core.serialization.boolean(),
+    status: CleanScrapeResponseDataStatus,
 });
 
 export declare namespace CleanScrapeResponseData {
     interface Raw {
         output: CleanScrapeResponseOutput.Raw;
-        success: boolean;
+        status: CleanScrapeResponseDataStatus.Raw;
     }
 }

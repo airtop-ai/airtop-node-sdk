@@ -5,18 +5,19 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { SessionAiResponseDataStatus } from "./SessionAiResponseDataStatus";
 
 export const SessionAiResponseData: core.serialization.ObjectSchema<
     serializers.SessionAiResponseData.Raw,
     Airtop.SessionAiResponseData
 > = core.serialization.object({
     output: core.serialization.string(),
-    success: core.serialization.boolean(),
+    status: SessionAiResponseDataStatus,
 });
 
 export declare namespace SessionAiResponseData {
     interface Raw {
         output: string;
-        success: boolean;
+        status: SessionAiResponseDataStatus.Raw;
     }
 }

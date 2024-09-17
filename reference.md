@@ -197,7 +197,7 @@ await client.profiles.getById("4a61a55c-391b-4f73-957e-ffbd29ac7cba");
 
 ## Sessions
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">get</a>(id) -> Airtop.SessionOutputV1Body</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.SessionsOutputV1Body</code></summary>
 <dl>
 <dd>
 
@@ -209,7 +209,7 @@ await client.profiles.getById("4a61a55c-391b-4f73-957e-ffbd29ac7cba");
 <dl>
 <dd>
 
-Get a session by ID
+Get a list of sessions by ID
 
 </dd>
 </dl>
@@ -225,7 +225,7 @@ Get a session by ID
 <dd>
 
 ```typescript
-await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+await client.sessions.list();
 ```
 
 </dd>
@@ -241,7 +241,7 @@ await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dl>
 <dd>
 
-**id:** `string` — UUID of the session to get
+**request:** `Airtop.SessionsListRequest`
 
 </dd>
 </dl>
@@ -308,6 +308,69 @@ await client.sessions.post();
 </dl>
 </details>
 
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">get</a>(id) -> Airtop.SessionOutputV1Body</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a session by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — UUID of the session to get
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Sessions.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">delete</a>(id) -> void</code></summary>
 <dl>
 <dd>
@@ -353,6 +416,69 @@ await client.sessions.delete("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dd>
 
 **id:** `string` — UUID of the session to delete
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Sessions.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">events</a>(id) -> core.Stream<Airtop.SessionsEventsResponse></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a session event stream for a given session ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.events("string");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — UUID of the session to get status info for
 
 </dd>
 </dl>
@@ -489,7 +615,7 @@ await client.sessions.cleanScrapeSession(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sessionPromptContent</a>(sessionId, windowId, { ...params }) -> Airtop.SessionContentPromptResponse</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sessionPromptContent</a>(sessionId, windowId, { ...params }) -> Airtop.SessionAiResponse</code></summary>
 <dl>
 <dd>
 
@@ -559,7 +685,7 @@ await client.sessions.sessionPromptContent(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sessionPromptPaginatedExtraction</a>(sessionId, windowId, { ...params }) -> Airtop.SessionPaginatedExtractionResponse</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sessionPromptPaginatedExtraction</a>(sessionId, windowId, { ...params }) -> Airtop.SessionAiResponse</code></summary>
 <dl>
 <dd>
 
@@ -629,7 +755,7 @@ await client.sessions.sessionPromptPaginatedExtraction(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">summary</a>(sessionId, windowId) -> Airtop.SessionSummaryResponse</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">summary</a>(sessionId, windowId) -> Airtop.SessionAiResponse</code></summary>
 <dl>
 <dd>
 

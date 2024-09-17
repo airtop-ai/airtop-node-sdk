@@ -8,6 +8,7 @@ import * as Airtop from "../../../index";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
+import * as stream from "stream";
 
 export declare namespace Sessions {
     interface Options {
@@ -33,9 +34,9 @@ export class Sessions {
     constructor(protected readonly _options: Sessions.Options = {}) {}
 
     /**
-     * Get a session by ID
+     * Get a list of sessions by ID
      *
-     * @param {string} id - UUID of the session to get
+     * @param {Airtop.SessionsListRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Airtop.NotFoundError}
@@ -43,13 +44,26 @@ export class Sessions {
      * @throws {@link Airtop.InternalServerError}
      *
      * @example
-     *     await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b")
+     *     await client.sessions.list()
      */
-    public async get(id: string, requestOptions?: Sessions.RequestOptions): Promise<Airtop.SessionOutputV1Body> {
+    public async list(
+        request: Airtop.SessionsListRequest = {},
+        requestOptions?: Sessions.RequestOptions
+    ): Promise<Airtop.SessionsOutputV1Body> {
+        const { sessionIds } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (sessionIds != null) {
+            if (Array.isArray(sessionIds)) {
+                _queryParams["sessionIds"] = sessionIds.map((item) => item);
+            } else {
+                _queryParams["sessionIds"] = sessionIds;
+            }
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}`
+                "sessions"
             ),
             method: "GET",
             headers: {
@@ -59,19 +73,20 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SessionOutputV1Body.parseOrThrow(_response.body, {
+            return serializers.SessionsOutputV1Body.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -159,8 +174,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -204,6 +219,109 @@ export class Sessions {
     }
 
     /**
+     * Get a session by ID
+     *
+     * @param {string} id - UUID of the session to get
+     * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Airtop.NotFoundError}
+     * @throws {@link Airtop.UnprocessableEntityError}
+     * @throws {@link Airtop.InternalServerError}
+     *
+     * @example
+     *     await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b")
+     */
+    public async get(id: string, requestOptions?: Sessions.RequestOptions): Promise<Airtop.SessionOutputV1Body> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(id)}`
+            ),
+            method: "GET",
+            headers: {
+                "x-airtop-token":
+                    (await core.Supplier.get(this._options.airtopToken)) != null
+                        ? await core.Supplier.get(this._options.airtopToken)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "airtop",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.SessionOutputV1Body.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new Airtop.NotFoundError(
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 422:
+                    throw new Airtop.UnprocessableEntityError(
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 500:
+                    throw new Airtop.InternalServerError(
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.AirtopError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AirtopError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.AirtopTimeoutError();
+            case "unknown":
+                throw new errors.AirtopError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * Ends a session by ID
      *
      * @param {string} id - UUID of the session to delete
@@ -226,8 +344,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -246,6 +364,113 @@ export class Sessions {
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AirtopError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.AirtopTimeoutError();
+            case "unknown":
+                throw new errors.AirtopError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Get a session event stream for a given session ID
+     */
+    public async events(
+        id: string,
+        requestOptions?: Sessions.RequestOptions
+    ): Promise<core.Stream<Airtop.SessionsEventsResponse>> {
+        const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(id)}/events`
+            ),
+            method: "GET",
+            headers: {
+                "x-airtop-token":
+                    (await core.Supplier.get(this._options.airtopToken)) != null
+                        ? await core.Supplier.get(this._options.airtopToken)
+                        : undefined,
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "airtop",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            responseType: "sse",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return new core.Stream({
+                stream: _response.body,
+                parse: async (data) => {
+                    return serializers.SessionsEventsResponse.parseOrThrow(data, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    });
+                },
+                signal: requestOptions?.abortSignal,
+                eventShape: {
+                    type: "sse",
+                    streamTerminator: "[DONE]",
+                },
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new Airtop.NotFoundError(
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 422:
+                    throw new Airtop.UnprocessableEntityError(
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 500:
+                    throw new Airtop.InternalServerError(
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.AirtopError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -302,8 +527,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -372,8 +597,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -431,7 +656,7 @@ export class Sessions {
         windowId: string,
         request: Airtop.SessionPromptContentRequest,
         requestOptions?: Sessions.RequestOptions
-    ): Promise<Airtop.SessionContentPromptResponse> {
+    ): Promise<Airtop.SessionAiResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -445,8 +670,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -458,7 +683,7 @@ export class Sessions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SessionContentPromptResponse.parseOrThrow(_response.body, {
+            return serializers.SessionAiResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -505,7 +730,7 @@ export class Sessions {
         windowId: string,
         request: Airtop.SessionPromptPaginatedExtractionRequest,
         requestOptions?: Sessions.RequestOptions
-    ): Promise<Airtop.SessionPaginatedExtractionResponse> {
+    ): Promise<Airtop.SessionAiResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -521,8 +746,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -536,7 +761,7 @@ export class Sessions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SessionPaginatedExtractionResponse.parseOrThrow(_response.body, {
+            return serializers.SessionAiResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -579,7 +804,7 @@ export class Sessions {
         sessionId: string,
         windowId: string,
         requestOptions?: Sessions.RequestOptions
-    ): Promise<Airtop.SessionSummaryResponse> {
+    ): Promise<Airtop.SessionAiResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -593,8 +818,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "airtop",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "airtop/0.0.1",
+                "X-Fern-SDK-Version": "0.0.2",
+                "User-Agent": "airtop/0.0.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -605,7 +830,7 @@ export class Sessions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SessionSummaryResponse.parseOrThrow(_response.body, {
+            return serializers.SessionAiResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

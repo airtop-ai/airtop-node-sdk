@@ -6,21 +6,26 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { SessionAiResponseData } from "./SessionAiResponseData";
+import { SessionAiResponseIssue } from "./SessionAiResponseIssue";
 import { SessionAiResponseMetadata } from "./SessionAiResponseMetadata";
 
-export const SessionPaginatedExtractionResponse: core.serialization.ObjectSchema<
-    serializers.SessionPaginatedExtractionResponse.Raw,
-    Airtop.SessionPaginatedExtractionResponse
+export const SessionAiResponse: core.serialization.ObjectSchema<
+    serializers.SessionAiResponse.Raw,
+    Airtop.SessionAiResponse
 > = core.serialization.object({
     schema: core.serialization.property("$schema", core.serialization.string().optional()),
     data: SessionAiResponseData,
+    errors: core.serialization.list(SessionAiResponseIssue).optional(),
     meta: SessionAiResponseMetadata,
+    warnings: core.serialization.list(SessionAiResponseIssue).optional(),
 });
 
-export declare namespace SessionPaginatedExtractionResponse {
+export declare namespace SessionAiResponse {
     interface Raw {
         $schema?: string | null;
         data: SessionAiResponseData.Raw;
+        errors?: SessionAiResponseIssue.Raw[] | null;
         meta: SessionAiResponseMetadata.Raw;
+        warnings?: SessionAiResponseIssue.Raw[] | null;
     }
 }
