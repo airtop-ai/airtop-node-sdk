@@ -1,14 +1,14 @@
 # Airtop TypeScript Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-[![npm shield](https://img.shields.io/npm/v/airtop)](https://www.npmjs.com/package/airtop)
+[![npm shield](https://img.shields.io/npm/v/@airtop/sdk)](https://www.npmjs.com/package/@airtop/sdk)
 
 The Airtop TypeScript library provides convenient access to the Airtop API from TypeScript.
 
 ## Installation
 
 ```sh
-npm i -s airtop
+npm i -s @airtop/sdk
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm i -s airtop
 Instantiate and use the client with the following:
 
 ```typescript
-import { AirtopClient } from "airtop";
+import { AirtopClient } from "@airtop/sdk";
 
 const client = new AirtopClient({ airtopToken: "YOUR_AIRTOP_TOKEN" });
 await client.sessions.post();
@@ -28,7 +28,7 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { Airtop } from "airtop";
+import { Airtop } from "@airtop/sdk";
 
 const request: Airtop.ProfilesGetRequest = {
     ...
@@ -41,7 +41,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { AirtopError } from "airtop";
+import { AirtopError } from "@airtop/sdk";
 
 try {
     await client.sessions.post(...);
@@ -116,7 +116,7 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { AirtopClient } from "airtop";
+import { AirtopClient } from "@airtop/sdk";
 
 const client = new AirtopClient({
     ...
