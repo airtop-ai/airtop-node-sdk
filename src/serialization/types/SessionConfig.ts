@@ -8,7 +8,6 @@ import * as core from "../../core";
 
 export const SessionConfig: core.serialization.ObjectSchema<serializers.SessionConfig.Raw, Airtop.SessionConfig> =
     core.serialization.object({
-        enableCdp: core.serialization.property("enable_cdp", core.serialization.boolean().optional()),
         persistProfile: core.serialization.property("persist_profile", core.serialization.boolean().optional()),
         persistProfileName: core.serialization.property("persist_profile_name", core.serialization.string().optional()),
         persistProfileTags: core.serialization.property(
@@ -21,7 +20,6 @@ export const SessionConfig: core.serialization.ObjectSchema<serializers.SessionC
 
 export declare namespace SessionConfig {
     interface Raw {
-        enable_cdp?: boolean | null;
         persist_profile?: boolean | null;
         persist_profile_name?: string | null;
         persist_profile_tags?: string[] | null;

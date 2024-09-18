@@ -3,8 +3,6 @@
  */
 
 export interface SessionConfig {
-    /** Whether to enable the CDP */
-    enableCdp?: boolean;
     /** Persist the profile */
     persistProfile?: boolean;
     /** Profile name to persist resulting profile (required when persist_profile is true). Must contain A-Za-z0-9 only */

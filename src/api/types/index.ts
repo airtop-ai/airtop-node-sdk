@@ -19,6 +19,7 @@ export * from "./SessionAiResponseData";
 export * from "./SessionAiResponseIssue";
 export * from "./SessionAiResponseMetadata";
 export * from "./SessionAiResponseMetadataUsage";
+export * from "./SessionAiResponseResponseMetadataModelUsage";
 export * from "./SessionConfig";
 export * from "./SessionConfigV1";
 export * from "./SessionOutputV1Body";
