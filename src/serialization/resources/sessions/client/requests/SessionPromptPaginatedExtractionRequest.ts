@@ -11,12 +11,18 @@ export const SessionPromptPaginatedExtractionRequest: core.serialization.Schema<
     Airtop.SessionPromptPaginatedExtractionRequest
 > = core.serialization.object({
     schema: core.serialization.property("$schema", core.serialization.string().optional()),
+    costThresholdCredits: core.serialization.number().optional(),
+    customerRequestId: core.serialization.string().optional(),
     prompt: core.serialization.string(),
+    timeThresholdMs: core.serialization.number().optional(),
 });
 
 export declare namespace SessionPromptPaginatedExtractionRequest {
     interface Raw {
         $schema?: string | null;
+        costThresholdCredits?: number | null;
+        customerRequestId?: string | null;
         prompt: string;
+        timeThresholdMs?: number | null;
     }
 }

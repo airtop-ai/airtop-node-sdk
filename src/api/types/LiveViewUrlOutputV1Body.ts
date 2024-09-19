@@ -5,6 +5,10 @@
 export interface LiveViewUrlOutputV1Body {
     /** A URL to the JSON Schema for this object. */
     schema?: string;
+    /** Browser ID for live view session */
+    browserId: string;
+    /** Token for authenticating to a live view session */
+    token: string;
     /** Url for live view session */
     url: string;
 }

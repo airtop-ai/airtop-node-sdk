@@ -11,12 +11,16 @@ export const LiveViewUrlOutputV1Body: core.serialization.ObjectSchema<
     Airtop.LiveViewUrlOutputV1Body
 > = core.serialization.object({
     schema: core.serialization.property("$schema", core.serialization.string().optional()),
+    browserId: core.serialization.string(),
+    token: core.serialization.string(),
     url: core.serialization.string(),
 });
 
 export declare namespace LiveViewUrlOutputV1Body {
     interface Raw {
         $schema?: string | null;
+        browserId: string;
+        token: string;
         url: string;
     }
 }

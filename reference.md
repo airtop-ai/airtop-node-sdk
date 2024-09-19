@@ -497,7 +497,7 @@ await client.sessions.events("string");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">createLiveViewUrl</a>(id, { ...params }) -> Airtop.LiveViewUrlOutputV1Body</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">window</a>(id, windowId) -> Airtop.LiveViewUrlOutputV1Body</code></summary>
 <dl>
 <dd>
 
@@ -510,10 +510,7 @@ await client.sessions.events("string");
 <dd>
 
 ```typescript
-await client.sessions.createLiveViewUrl("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", {
-    browserId: "7334da2a-91b0-42c5-6156-76a5eba87430",
-    targetId: "123456",
-});
+await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430");
 ```
 
 </dd>
@@ -537,7 +534,7 @@ await client.sessions.createLiveViewUrl("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", 
 <dl>
 <dd>
 
-**request:** `Airtop.CreateLiveViewUrlRequest`
+**windowId:** `string` — id of the browser window, either the browserId (uuid) or targetId (simple string)
 
 </dd>
 </dl>

@@ -5,6 +5,8 @@
 import * as Airtop from "../index";
 
 export interface SessionAiResponseMetadata {
+    /** The customer provided metadata for this request */
+    clientProvided?: Airtop.ClientProvidedResponseMetadata;
     /** The usage metadata for this request */
     usage: Airtop.SessionAiResponseMetadataUsage;
 }

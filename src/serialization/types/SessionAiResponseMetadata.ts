@@ -5,17 +5,20 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { ClientProvidedResponseMetadata } from "./ClientProvidedResponseMetadata";
 import { SessionAiResponseMetadataUsage } from "./SessionAiResponseMetadataUsage";
 
 export const SessionAiResponseMetadata: core.serialization.ObjectSchema<
     serializers.SessionAiResponseMetadata.Raw,
     Airtop.SessionAiResponseMetadata
 > = core.serialization.object({
+    clientProvided: ClientProvidedResponseMetadata.optional(),
     usage: SessionAiResponseMetadataUsage,
 });
 
 export declare namespace SessionAiResponseMetadata {
     interface Raw {
+        clientProvided?: ClientProvidedResponseMetadata.Raw | null;
         usage: SessionAiResponseMetadataUsage.Raw;
     }
 }

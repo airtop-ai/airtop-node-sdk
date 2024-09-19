@@ -73,8 +73,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -174,8 +174,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -245,8 +245,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -344,8 +344,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -401,8 +401,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -490,34 +490,21 @@ export class Sessions {
 
     /**
      * @param {string} id - UUID of the session to create a url for
-     * @param {Airtop.CreateLiveViewUrlRequest} request
+     * @param {string} windowId - id of the browser window, either the browserId (uuid) or targetId (simple string)
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.sessions.createLiveViewUrl("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", {
-     *         browserId: "7334da2a-91b0-42c5-6156-76a5eba87430",
-     *         targetId: "123456"
-     *     })
+     *     await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430")
      */
-    public async createLiveViewUrl(
+    public async window(
         id: string,
-        request: Airtop.CreateLiveViewUrlRequest = {},
+        windowId: string,
         requestOptions?: Sessions.RequestOptions
     ): Promise<Airtop.LiveViewUrlOutputV1Body> {
-        const { browserId, targetId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (browserId != null) {
-            _queryParams["browserId"] = browserId;
-        }
-
-        if (targetId != null) {
-            _queryParams["targetId"] = targetId;
-        }
-
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}/live-view-url`
+                `sessions/${encodeURIComponent(id)}/window/${encodeURIComponent(windowId)}`
             ),
             method: "GET",
             headers: {
@@ -527,13 +514,12 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -597,8 +583,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -670,8 +656,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -746,8 +732,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -818,8 +804,8 @@ export class Sessions {
                         : undefined,
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@airtop/sdk/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@airtop/sdk/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

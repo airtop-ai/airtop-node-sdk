@@ -11,6 +11,9 @@
 export interface SessionPromptContentRequest {
     /** A URL to the JSON Schema for this object. */
     schema?: string;
+    costThresholdCredits?: number;
+    customerRequestId?: string;
     /** The prompt to submit about the content in the browser window */
     prompt: string;
+    timeThresholdMs?: number;
 }

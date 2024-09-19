@@ -2,6 +2,7 @@ export * from "./CleanScrapeResponse";
 export * from "./CleanScrapeResponseDataStatus";
 export * from "./CleanScrapeResponseData";
 export * from "./CleanScrapeResponseOutput";
+export * from "./ClientProvidedResponseMetadata";
 export * from "./ConnectionInfo";
 export * from "./ErrorDetail";
 export * from "./ErrorMessage";
