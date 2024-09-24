@@ -6,7 +6,7 @@ import * as errors from "../../errors/index";
 import * as Airtop from "../index";
 
 export class InternalServerError extends errors.AirtopError {
-    constructor(body: Airtop.ErrorModel) {
+    constructor(body: Airtop.ErrorEnvelope) {
         super({
             message: "InternalServerError",
             statusCode: 500,

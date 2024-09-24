@@ -12,8 +12,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Profiles {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        /** Override the x-airtop-token header */
-        airtopToken?: core.Supplier<string | undefined>;
+        apiKey?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -24,8 +23,6 @@ export declare namespace Profiles {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
-        /** Override the x-airtop-token header */
-        airtopToken?: string | undefined;
     }
 }
 
@@ -46,7 +43,7 @@ export class Profiles {
     public async get(
         request: Airtop.ProfilesGetRequest = {},
         requestOptions?: Profiles.RequestOptions
-    ): Promise<Airtop.ProfilesOutputV1Body> {
+    ): Promise<Airtop.ListProfileV1EnvelopeDefaultMetaWrapper> {
         const { name, tags } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (name != null) {
@@ -68,14 +65,11 @@ export class Profiles {
             ),
             method: "GET",
             headers: {
-                "x-airtop-token":
-                    (await core.Supplier.get(this._options.airtopToken)) != null
-                        ? await core.Supplier.get(this._options.airtopToken)
-                        : undefined,
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-b",
-                "User-Agent": "@airtop/sdk/0.0.7-b",
+                "X-Fern-SDK-Version": "0.0.7-c",
+                "User-Agent": "@airtop/sdk/0.0.7-c",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -87,7 +81,7 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ProfilesOutputV1Body.parseOrThrow(_response.body, {
+            return serializers.ListProfileV1EnvelopeDefaultMetaWrapper.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -154,14 +148,11 @@ export class Profiles {
             ),
             method: "DELETE",
             headers: {
-                "x-airtop-token":
-                    (await core.Supplier.get(this._options.airtopToken)) != null
-                        ? await core.Supplier.get(this._options.airtopToken)
-                        : undefined,
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-b",
-                "User-Agent": "@airtop/sdk/0.0.7-b",
+                "X-Fern-SDK-Version": "0.0.7-c",
+                "User-Agent": "@airtop/sdk/0.0.7-c",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -211,7 +202,10 @@ export class Profiles {
      * @example
      *     await client.profiles.getById("4a61a55c-391b-4f73-957e-ffbd29ac7cba")
      */
-    public async getById(id: string, requestOptions?: Profiles.RequestOptions): Promise<Airtop.ProfileOutputV1Body> {
+    public async getById(
+        id: string,
+        requestOptions?: Profiles.RequestOptions
+    ): Promise<Airtop.ProfileV1EnvelopeDefaultMetaWrapper> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -219,14 +213,11 @@ export class Profiles {
             ),
             method: "GET",
             headers: {
-                "x-airtop-token":
-                    (await core.Supplier.get(this._options.airtopToken)) != null
-                        ? await core.Supplier.get(this._options.airtopToken)
-                        : undefined,
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-b",
-                "User-Agent": "@airtop/sdk/0.0.7-b",
+                "X-Fern-SDK-Version": "0.0.7-c",
+                "User-Agent": "@airtop/sdk/0.0.7-c",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -237,7 +228,7 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ProfileOutputV1Body.parseOrThrow(_response.body, {
+            return serializers.ProfileV1EnvelopeDefaultMetaWrapper.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -250,7 +241,7 @@ export class Profiles {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new Airtop.NotFoundError(
-                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -260,7 +251,7 @@ export class Profiles {
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
-                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -270,7 +261,7 @@ export class Profiles {
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
-                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
+                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -299,5 +290,14 @@ export class Profiles {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const bearer = await core.Supplier.get(this._options.apiKey);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

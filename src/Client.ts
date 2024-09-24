@@ -6,12 +6,12 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Profiles } from "./api/resources/profiles/client/Client";
 import { Sessions } from "./api/resources/sessions/client/Client";
+import { Windows } from "./api/resources/windows/client/Client";
 
 export declare namespace AirtopClient {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        /** Override the x-airtop-token header */
-        airtopToken?: core.Supplier<string | undefined>;
+        apiKey?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -22,8 +22,6 @@ export declare namespace AirtopClient {
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
-        /** Override the x-airtop-token header */
-        airtopToken?: string | undefined;
     }
 }
 
@@ -40,5 +38,11 @@ export class AirtopClient {
 
     public get sessions(): Sessions {
         return (this._sessions ??= new Sessions(this._options));
+    }
+
+    protected _windows: Windows | undefined;
+
+    public get windows(): Windows {
+        return (this._windows ??= new Windows(this._options));
     }
 }

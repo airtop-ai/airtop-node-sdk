@@ -15,7 +15,7 @@ export const SessionConfigV1: core.serialization.ObjectSchema<serializers.Sessio
             core.serialization.list(core.serialization.string()).optional()
         ),
         profileId: core.serialization.property("profile_id", core.serialization.string().optional()),
-        timeout: core.serialization.number().optional(),
+        timeoutMinutes: core.serialization.number().optional(),
     });
 
 export declare namespace SessionConfigV1 {
@@ -24,6 +24,6 @@ export declare namespace SessionConfigV1 {
         persist_profile_name?: string | null;
         persist_profile_tags?: string[] | null;
         profile_id?: string | null;
-        timeout?: number | null;
+        timeoutMinutes?: number | null;
     }
 }

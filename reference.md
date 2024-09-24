@@ -2,7 +2,7 @@
 
 ## Profiles
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">get</a>({ ...params }) -> Airtop.ProfilesOutputV1Body</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">get</a>({ ...params }) -> Airtop.ListProfileV1EnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ await client.profiles.delete({
 </dl>
 </details>
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">getById</a>(id) -> Airtop.ProfileOutputV1Body</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">getById</a>(id) -> Airtop.ProfileV1EnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -197,7 +197,7 @@ await client.profiles.getById("4a61a55c-391b-4f73-957e-ffbd29ac7cba");
 
 ## Sessions
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.SessionsOutputV1Body</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.ListSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -260,7 +260,7 @@ await client.sessions.list();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">post</a>({ ...params }) -> Airtop.SessionOutputV1Body</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">post</a>({ ...params }) -> Airtop.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -308,7 +308,7 @@ await client.sessions.post();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">get</a>(id) -> Airtop.SessionOutputV1Body</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -336,7 +336,7 @@ Get a session by ID
 <dd>
 
 ```typescript
-await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+await client.sessions.getinfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
 
 </dd>
@@ -371,7 +371,7 @@ await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">delete</a>(id) -> void</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">terminate</a>(id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -383,7 +383,7 @@ await client.sessions.get("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dl>
 <dd>
 
-Ends a session by ID
+Ends a session by ID. If a given session id does not exist within the organization, it is ignored.
 
 </dd>
 </dl>
@@ -399,7 +399,7 @@ Ends a session by ID
 <dd>
 
 ```typescript
-await client.sessions.delete("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
 
 </dd>
@@ -497,7 +497,9 @@ await client.sessions.events("string");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">window</a>(id, windowId) -> Airtop.LiveViewUrlOutputV1Body</code></summary>
+## Windows
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">getWindowInfo</a>(sessionId, windowId, { ...params }) -> Airtop.WindowEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -510,7 +512,9 @@ await client.sessions.events("string");
 <dd>
 
 ```typescript
-await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430");
+await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430", {
+    screenResolution: "1920x1080",
+});
 ```
 
 </dd>
@@ -526,7 +530,7 @@ await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-9
 <dl>
 <dd>
 
-**id:** `string` — UUID of the session to create a url for
+**sessionId:** `string` — UUID of the session that owns the window
 
 </dd>
 </dl>
@@ -534,7 +538,7 @@ await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-9
 <dl>
 <dd>
 
-**windowId:** `string` — id of the browser window, either the browserId (uuid) or targetId (simple string)
+**windowId:** `string` — id of the browser window, either the windowId (uuid) or targetId (simple string)
 
 </dd>
 </dl>
@@ -542,7 +546,15 @@ await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-9
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**request:** `Airtop.GetWindowInfoRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
 
 </dd>
 </dl>
@@ -553,7 +565,7 @@ await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-9
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">cleanScrapeSession</a>(sessionId, windowId) -> Airtop.CleanScrapeResponse</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">promptContent</a>(sessionId, windowId, { ...params }) -> Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper</code></summary>
 <dl>
 <dd>
 
@@ -566,72 +578,9 @@ await client.sessions.window("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-9
 <dd>
 
 ```typescript
-await client.sessions.cleanScrapeSession(
-    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-    "0334da2a-91b0-42c5-6156-76a5eba87430"
-);
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**sessionId:** `string` — The session id to scrape
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**windowId:** `string` — The window id to scrape
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Sessions.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sessionPromptContent</a>(sessionId, windowId, { ...params }) -> Airtop.SessionAiResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sessions.sessionPromptContent(
-    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-    "0334da2a-91b0-42c5-6156-76a5eba87430",
-    {
-        prompt: "What is the main idea of this page?",
-    }
-);
+await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    prompt: "What is the main idea of this page?",
+});
 ```
 
 </dd>
@@ -663,7 +612,7 @@ await client.sessions.sessionPromptContent(
 <dl>
 <dd>
 
-**request:** `Airtop.SessionPromptContentRequest`
+**request:** `Airtop.PromptContentRequest`
 
 </dd>
 </dl>
@@ -671,7 +620,7 @@ await client.sessions.sessionPromptContent(
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Windows.RequestOptions`
 
 </dd>
 </dl>
@@ -682,7 +631,7 @@ await client.sessions.sessionPromptContent(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sessionPromptPaginatedExtraction</a>(sessionId, windowId, { ...params }) -> Airtop.SessionAiResponse</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">scrapeContent</a>(sessionId, windowId) -> Airtop.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper</code></summary>
 <dl>
 <dd>
 
@@ -695,13 +644,7 @@ await client.sessions.sessionPromptContent(
 <dd>
 
 ```typescript
-await client.sessions.sessionPromptPaginatedExtraction(
-    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-    "0334da2a-91b0-42c5-6156-76a5eba87430",
-    {
-        prompt: "For each page on return all the items listed including a subfield",
-    }
-);
+await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
 ```
 
 </dd>
@@ -717,7 +660,7 @@ await client.sessions.sessionPromptPaginatedExtraction(
 <dl>
 <dd>
 
-**sessionId:** `string` — The session id to perform a paginated extraction on
+**sessionId:** `string` — The session id to scrape
 
 </dd>
 </dl>
@@ -725,7 +668,7 @@ await client.sessions.sessionPromptPaginatedExtraction(
 <dl>
 <dd>
 
-**windowId:** `string` — The window id to perform a paginated extraction on
+**windowId:** `string` — The window id to scrape
 
 </dd>
 </dl>
@@ -733,15 +676,7 @@ await client.sessions.sessionPromptPaginatedExtraction(
 <dl>
 <dd>
 
-**request:** `Airtop.SessionPromptPaginatedExtractionRequest`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Sessions.RequestOptions`
+**requestOptions:** `Windows.RequestOptions`
 
 </dd>
 </dl>
@@ -752,7 +687,7 @@ await client.sessions.sessionPromptPaginatedExtraction(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">summary</a>(sessionId, windowId) -> Airtop.SessionAiResponse</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">summarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper</code></summary>
 <dl>
 <dd>
 
@@ -765,7 +700,7 @@ await client.sessions.sessionPromptPaginatedExtraction(
 <dd>
 
 ```typescript
-await client.sessions.summary("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+await client.windows.summarizeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
 ```
 
 </dd>
@@ -797,7 +732,15 @@ await client.sessions.summary("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-
 <dl>
 <dd>
 
-**requestOptions:** `Sessions.RequestOptions`
+**request:** `Airtop.SummarizeContentRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
 
 </dd>
 </dl>

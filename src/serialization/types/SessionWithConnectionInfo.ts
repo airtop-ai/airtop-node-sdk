@@ -5,20 +5,38 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { ConnectionInfo } from "./ConnectionInfo";
-import { Session } from "./Session";
+import { SessionConfig } from "./SessionConfig";
+import { LiveViewConnectionInfo } from "./LiveViewConnectionInfo";
 
 export const SessionWithConnectionInfo: core.serialization.ObjectSchema<
     serializers.SessionWithConnectionInfo.Raw,
     Airtop.SessionWithConnectionInfo
 > = core.serialization.object({
-    connectionInfo: core.serialization.property("connection_info", ConnectionInfo.optional()),
-    session: Session,
+    cdpUrl: core.serialization.property("cdp_url", core.serialization.string().optional()),
+    cdpWsUrl: core.serialization.property("cdp_ws_url", core.serialization.string().optional()),
+    chromedriverUrl: core.serialization.property("chromedriver_url", core.serialization.string().optional()),
+    configuration: SessionConfig,
+    currentUsage: core.serialization.property("current_usage", core.serialization.number().optional()),
+    dateCreated: core.serialization.property("date_created", core.serialization.date().optional()),
+    id: core.serialization.string(),
+    lastActivity: core.serialization.property("last_activity", core.serialization.date().optional()),
+    liveView: core.serialization.property("live_view", LiveViewConnectionInfo.optional()),
+    status: core.serialization.string(),
+    url: core.serialization.string().optional(),
 });
 
 export declare namespace SessionWithConnectionInfo {
     interface Raw {
-        connection_info?: ConnectionInfo.Raw | null;
-        session: Session.Raw;
+        cdp_url?: string | null;
+        cdp_ws_url?: string | null;
+        chromedriver_url?: string | null;
+        configuration: SessionConfig.Raw;
+        current_usage?: number | null;
+        date_created?: string | null;
+        id: string;
+        last_activity?: string | null;
+        live_view?: LiveViewConnectionInfo.Raw | null;
+        status: string;
+        url?: string | null;
     }
 }

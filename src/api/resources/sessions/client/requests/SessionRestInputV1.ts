@@ -9,8 +9,6 @@ import * as Airtop from "../../../../index";
  *     {}
  */
 export interface SessionRestInputV1 {
-    /** A URL to the JSON Schema for this object. */
-    schema?: string;
     /** Session configuration */
     configuration?: Airtop.SessionConfigV1;
 }

@@ -1,6 +1,6 @@
 {
     "name": "@airtop/sdk",
-    "version": "0.0.7-b",
+    "version": "0.0.7-c",
     "private": false,
     "repository": "https://github.com/airtop-ai/airtop-node-sdk",
     "main": "./index.js",
@@ -16,7 +16,8 @@
         "form-data": "^4.0.0",
         "formdata-node": "^6.0.3",
         "node-fetch": "2.7.0",
-        "qs": "6.11.2"
+        "qs": "6.11.2",
+        "js-base64": "3.7.2"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
@@ -35,5 +36,21 @@
         "fs": false,
         "os": false,
         "path": false
-    }
+    },
+    "author": {
+        "name": "airtop.ai",
+        "url": "https://www.airtop.ai/"
+    },
+    "description": "SDK for Airtop cloud browsers",
+    "keywords": [
+        "airtop",
+        "ai",
+        "cloud",
+        "browser",
+        "automation",
+        "agent",
+        "node",
+        "typescript"
+    ],
+    "license": "MIT"
 }

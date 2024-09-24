@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { AirtopClient } from "@airtop/sdk";
 
-const client = new AirtopClient({ airtopToken: "YOUR_AIRTOP_TOKEN" });
+const client = new AirtopClient({ apiKey: "YOUR_API_KEY" });
 await client.sessions.post();
 ```
 

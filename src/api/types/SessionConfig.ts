@@ -12,5 +12,5 @@ export interface SessionConfig {
     /** Id of a profile to use with this session */
     profileId?: string;
     /** Max length of session in minutes, after which it will terminate if not already deleted */
-    timeout?: number;
+    timeoutMinutes?: number;
 }

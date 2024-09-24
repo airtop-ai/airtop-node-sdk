@@ -3,5 +3,6 @@
  */
 
 export interface ClientProvidedResponseMetadata {
-    customerRequestId?: string;
+    clientRequestId?: string;
+    timeThresholdMs?: number;
 }

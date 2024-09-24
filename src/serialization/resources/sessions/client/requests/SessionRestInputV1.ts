@@ -11,13 +11,11 @@ export const SessionRestInputV1: core.serialization.Schema<
     serializers.SessionRestInputV1.Raw,
     Airtop.SessionRestInputV1
 > = core.serialization.object({
-    schema: core.serialization.property("$schema", core.serialization.string().optional()),
     configuration: SessionConfigV1.optional(),
 });
 
 export declare namespace SessionRestInputV1 {
     interface Raw {
-        $schema?: string | null;
         configuration?: SessionConfigV1.Raw | null;
     }
 }
