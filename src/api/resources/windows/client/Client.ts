@@ -70,8 +70,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-c",
-                "User-Agent": "@airtop/sdk/0.0.7-c",
+                "X-Fern-SDK-Version": "0.0.8",
+                "User-Agent": "@airtop/sdk/0.0.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -130,7 +130,7 @@ export class Windows {
         windowId: string,
         request: Airtop.PromptContentRequest,
         requestOptions?: Windows.RequestOptions
-    ): Promise<Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper> {
+    ): Promise<Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -141,8 +141,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-c",
-                "User-Agent": "@airtop/sdk/0.0.7-c",
+                "X-Fern-SDK-Version": "0.0.8",
+                "User-Agent": "@airtop/sdk/0.0.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -154,7 +154,7 @@ export class Windows {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ModelResponseExternalSessionAiResponseMetadataWrapper.parseOrThrow(_response.body, {
+            return serializers.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -188,6 +188,7 @@ export class Windows {
     /**
      * @param {string} sessionId - The session id to scrape
      * @param {string} windowId - The window id to scrape
+     * @param {Airtop.ScrapeContentRequest} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -196,31 +197,33 @@ export class Windows {
     public async scrapeContent(
         sessionId: string,
         windowId: string,
+        request: Airtop.ScrapeContentRequest = {},
         requestOptions?: Windows.RequestOptions
-    ): Promise<Airtop.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper> {
+    ): Promise<Airtop.ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
                 `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/scrape-content`
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-c",
-                "User-Agent": "@airtop/sdk/0.0.7-c",
+                "X-Fern-SDK-Version": "0.0.8",
+                "User-Agent": "@airtop/sdk/0.0.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
+            body: serializers.ScrapeContentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper.parseOrThrow(
+            return serializers.ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper.parseOrThrow(
                 _response.body,
                 {
                     unrecognizedObjectKeys: "passthrough",
@@ -268,7 +271,7 @@ export class Windows {
         windowId: string,
         request: Airtop.SummarizeContentRequest = {},
         requestOptions?: Windows.RequestOptions
-    ): Promise<Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper> {
+    ): Promise<Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -279,8 +282,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.7-c",
-                "User-Agent": "@airtop/sdk/0.0.7-c",
+                "X-Fern-SDK-Version": "0.0.8",
+                "User-Agent": "@airtop/sdk/0.0.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -292,7 +295,7 @@ export class Windows {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ModelResponseExternalSessionAiResponseMetadataWrapper.parseOrThrow(_response.body, {
+            return serializers.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

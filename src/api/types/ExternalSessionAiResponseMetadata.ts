@@ -6,6 +6,7 @@ import * as Airtop from "../index";
 
 export interface ExternalSessionAiResponseMetadata {
     clientProvided?: Airtop.ClientProvidedResponseMetadata;
+    requestId?: string;
     status: Airtop.ExternalSessionAiResponseMetadataStatus;
     usage: Airtop.ExternalSessionAiResponseMetadataUsage;
 }

@@ -11,12 +11,10 @@ export const ClientProvidedResponseMetadata: core.serialization.ObjectSchema<
     Airtop.ClientProvidedResponseMetadata
 > = core.serialization.object({
     clientRequestId: core.serialization.string().optional(),
-    timeThresholdMs: core.serialization.number().optional(),
 });
 
 export declare namespace ClientProvidedResponseMetadata {
     interface Raw {
         clientRequestId?: string | null;
-        timeThresholdMs?: number | null;
     }
 }

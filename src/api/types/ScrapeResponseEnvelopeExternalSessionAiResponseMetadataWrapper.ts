@@ -4,8 +4,8 @@
 
 import * as Airtop from "../index";
 
-export interface ModelResponseExternalSessionAiResponseMetadataWrapper {
-    data: Airtop.ModelResponse;
+export interface ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper {
+    data: Airtop.ScrapeResponseEnvelope;
     errors?: Airtop.Issue[];
     meta: Airtop.ExternalSessionAiResponseMetadata;
     warnings?: Airtop.Issue[];

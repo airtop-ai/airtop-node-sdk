@@ -2,7 +2,7 @@
 
 ## Profiles
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">get</a>({ ...params }) -> Airtop.ListProfileV1EnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">get</a>({ ...params }) -> Airtop.ListExternalProfileV1EnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 <dl>
 <dd>
 
-Get profiles, searching by name or tags
+Get profiles matching by id
 
 </dd>
 </dl>
@@ -30,9 +30,7 @@ Get profiles, searching by name or tags
 <dd>
 
 ```typescript
-await client.profiles.get({
-    name: "^Acme.*",
-});
+await client.profiles.get();
 ```
 
 </dd>
@@ -79,7 +77,7 @@ await client.profiles.get({
 <dl>
 <dd>
 
-Delete profiles matching query
+Delete profiles matching by id
 
 </dd>
 </dl>
@@ -95,9 +93,7 @@ Delete profiles matching query
 <dd>
 
 ```typescript
-await client.profiles.delete({
-    name: "^Acme.*",
-});
+await client.profiles.delete();
 ```
 
 </dd>
@@ -132,72 +128,9 @@ await client.profiles.delete({
 </dl>
 </details>
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">getById</a>(id) -> Airtop.ProfileV1EnvelopeDefaultMetaWrapper</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a profile by ID
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.profiles.getById("4a61a55c-391b-4f73-957e-ffbd29ac7cba");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — name of the profile to get
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Profiles.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 ## Sessions
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.ListSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -260,7 +193,7 @@ await client.sessions.list();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">post</a>({ ...params }) -> Airtop.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">create</a>({ ...params }) -> Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -273,7 +206,7 @@ await client.sessions.list();
 <dd>
 
 ```typescript
-await client.sessions.post();
+await client.sessions.create();
 ```
 
 </dd>
@@ -308,7 +241,7 @@ await client.sessions.post();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -434,69 +367,6 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">events</a>(id) -> core.Stream<Airtop.SessionsEventsResponse></code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a session event stream for a given session ID
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sessions.events("string");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — UUID of the session to get status info for
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Sessions.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 ## Windows
 
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">getWindowInfo</a>(sessionId, windowId, { ...params }) -> Airtop.WindowEnvelopeDefaultMetaWrapper</code></summary>
@@ -565,7 +435,7 @@ await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334
 </dl>
 </details>
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">promptContent</a>(sessionId, windowId, { ...params }) -> Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">promptContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper</code></summary>
 <dl>
 <dd>
 
@@ -631,7 +501,7 @@ await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 </dl>
 </details>
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">scrapeContent</a>(sessionId, windowId) -> Airtop.ScrapeModelResponseExternalSessionAiResponseMetadataWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">scrapeContent</a>(sessionId, windowId, { ...params }) -> Airtop.ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper</code></summary>
 <dl>
 <dd>
 
@@ -676,6 +546,14 @@ await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <dl>
 <dd>
 
+**request:** `Airtop.ScrapeContentRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **requestOptions:** `Windows.RequestOptions`
 
 </dd>
@@ -687,7 +565,7 @@ await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 </dl>
 </details>
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">summarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">summarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper</code></summary>
 <dl>
 <dd>
 

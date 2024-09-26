@@ -5,23 +5,23 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { SessionWithConnectionInfo } from "./SessionWithConnectionInfo";
+import { ExternalSessionWithConnectionInfo } from "./ExternalSessionWithConnectionInfo";
 import { Issue } from "./Issue";
 import { DefaultMetaWrapper } from "./DefaultMetaWrapper";
 
-export const ListSessionWithConnectionInfoEnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
-    serializers.ListSessionWithConnectionInfoEnvelopeDefaultMetaWrapper.Raw,
-    Airtop.ListSessionWithConnectionInfoEnvelopeDefaultMetaWrapper
+export const ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
+    serializers.ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper.Raw,
+    Airtop.ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper
 > = core.serialization.object({
-    data: core.serialization.list(SessionWithConnectionInfo).optional(),
+    data: core.serialization.list(ExternalSessionWithConnectionInfo).optional(),
     errors: core.serialization.list(Issue).optional(),
     meta: DefaultMetaWrapper,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace ListSessionWithConnectionInfoEnvelopeDefaultMetaWrapper {
+export declare namespace ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper {
     interface Raw {
-        data?: SessionWithConnectionInfo.Raw[] | null;
+        data?: ExternalSessionWithConnectionInfo.Raw[] | null;
         errors?: Issue.Raw[] | null;
         meta: DefaultMetaWrapper.Raw;
         warnings?: Issue.Raw[] | null;

@@ -5,23 +5,23 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { ModelResponse } from "./ModelResponse";
+import { AiResponseEnvelope } from "./AiResponseEnvelope";
 import { Issue } from "./Issue";
 import { ExternalSessionAiResponseMetadata } from "./ExternalSessionAiResponseMetadata";
 
-export const ModelResponseExternalSessionAiResponseMetadataWrapper: core.serialization.ObjectSchema<
-    serializers.ModelResponseExternalSessionAiResponseMetadataWrapper.Raw,
-    Airtop.ModelResponseExternalSessionAiResponseMetadataWrapper
+export const AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper: core.serialization.ObjectSchema<
+    serializers.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper.Raw,
+    Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper
 > = core.serialization.object({
-    data: ModelResponse,
+    data: AiResponseEnvelope,
     errors: core.serialization.list(Issue).optional(),
     meta: ExternalSessionAiResponseMetadata,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace ModelResponseExternalSessionAiResponseMetadataWrapper {
+export declare namespace AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper {
     interface Raw {
-        data: ModelResponse.Raw;
+        data: AiResponseEnvelope.Raw;
         errors?: Issue.Raw[] | null;
         meta: ExternalSessionAiResponseMetadata.Raw;
         warnings?: Issue.Raw[] | null;

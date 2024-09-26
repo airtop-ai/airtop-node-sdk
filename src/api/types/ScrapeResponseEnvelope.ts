@@ -4,6 +4,8 @@
 
 import * as Airtop from "../index";
 
-export interface ScrapeModelResponse {
+export interface ScrapeResponseEnvelope {
+    errors?: Airtop.Issue[];
     modelResponse: Airtop.ScrapeResponseOutput;
+    warnings?: Airtop.Issue[];
 }

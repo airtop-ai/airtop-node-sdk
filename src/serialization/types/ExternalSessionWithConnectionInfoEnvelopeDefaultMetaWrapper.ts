@@ -5,23 +5,23 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { SessionWithConnectionInfo } from "./SessionWithConnectionInfo";
+import { ExternalSessionWithConnectionInfo } from "./ExternalSessionWithConnectionInfo";
 import { Issue } from "./Issue";
 import { DefaultMetaWrapper } from "./DefaultMetaWrapper";
 
-export const SessionWithConnectionInfoEnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
-    serializers.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper.Raw,
-    Airtop.SessionWithConnectionInfoEnvelopeDefaultMetaWrapper
+export const ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
+    serializers.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper.Raw,
+    Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper
 > = core.serialization.object({
-    data: SessionWithConnectionInfo,
+    data: ExternalSessionWithConnectionInfo,
     errors: core.serialization.list(Issue).optional(),
     meta: DefaultMetaWrapper,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace SessionWithConnectionInfoEnvelopeDefaultMetaWrapper {
+export declare namespace ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper {
     interface Raw {
-        data: SessionWithConnectionInfo.Raw;
+        data: ExternalSessionWithConnectionInfo.Raw;
         errors?: Issue.Raw[] | null;
         meta: DefaultMetaWrapper.Raw;
         warnings?: Issue.Raw[] | null;

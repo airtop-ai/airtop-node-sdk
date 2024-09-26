@@ -4,8 +4,8 @@
 
 import * as Airtop from "../index";
 
-export interface ListProfileV1EnvelopeDefaultMetaWrapper {
-    data?: Airtop.ProfileV1[];
+export interface ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper {
+    data: Airtop.ExternalSessionWithConnectionInfo;
     errors?: Airtop.Issue[];
     meta: Airtop.DefaultMetaWrapper;
     warnings?: Airtop.Issue[];

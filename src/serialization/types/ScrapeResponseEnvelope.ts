@@ -5,25 +5,22 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { ProfileV1 } from "./ProfileV1";
 import { Issue } from "./Issue";
-import { DefaultMetaWrapper } from "./DefaultMetaWrapper";
+import { ScrapeResponseOutput } from "./ScrapeResponseOutput";
 
-export const ProfileV1EnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
-    serializers.ProfileV1EnvelopeDefaultMetaWrapper.Raw,
-    Airtop.ProfileV1EnvelopeDefaultMetaWrapper
+export const ScrapeResponseEnvelope: core.serialization.ObjectSchema<
+    serializers.ScrapeResponseEnvelope.Raw,
+    Airtop.ScrapeResponseEnvelope
 > = core.serialization.object({
-    data: ProfileV1,
     errors: core.serialization.list(Issue).optional(),
-    meta: DefaultMetaWrapper,
+    modelResponse: ScrapeResponseOutput,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace ProfileV1EnvelopeDefaultMetaWrapper {
+export declare namespace ScrapeResponseEnvelope {
     interface Raw {
-        data: ProfileV1.Raw;
         errors?: Issue.Raw[] | null;
-        meta: DefaultMetaWrapper.Raw;
+        modelResponse: ScrapeResponseOutput.Raw;
         warnings?: Issue.Raw[] | null;
     }
 }

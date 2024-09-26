@@ -4,5 +4,4 @@
 
 export interface ClientProvidedResponseMetadata {
     clientRequestId?: string;
-    timeThresholdMs?: number;
 }

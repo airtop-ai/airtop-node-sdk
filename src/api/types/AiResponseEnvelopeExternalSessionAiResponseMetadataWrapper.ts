@@ -4,9 +4,9 @@
 
 import * as Airtop from "../index";
 
-export interface ProfileV1EnvelopeDefaultMetaWrapper {
-    data: Airtop.ProfileV1;
+export interface AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper {
+    data: Airtop.AiResponseEnvelope;
     errors?: Airtop.Issue[];
-    meta: Airtop.DefaultMetaWrapper;
+    meta: Airtop.ExternalSessionAiResponseMetadata;
     warnings?: Airtop.Issue[];
 }

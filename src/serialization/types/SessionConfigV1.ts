@@ -8,22 +8,15 @@ import * as core from "../../core";
 
 export const SessionConfigV1: core.serialization.ObjectSchema<serializers.SessionConfigV1.Raw, Airtop.SessionConfigV1> =
     core.serialization.object({
-        persistProfile: core.serialization.property("persist_profile", core.serialization.boolean().optional()),
-        persistProfileName: core.serialization.property("persist_profile_name", core.serialization.string().optional()),
-        persistProfileTags: core.serialization.property(
-            "persist_profile_tags",
-            core.serialization.list(core.serialization.string()).optional()
-        ),
-        profileId: core.serialization.property("profile_id", core.serialization.string().optional()),
+        persistProfile: core.serialization.boolean().optional(),
+        profileId: core.serialization.string().optional(),
         timeoutMinutes: core.serialization.number().optional(),
     });
 
 export declare namespace SessionConfigV1 {
     interface Raw {
-        persist_profile?: boolean | null;
-        persist_profile_name?: string | null;
-        persist_profile_tags?: string[] | null;
-        profile_id?: string | null;
+        persistProfile?: boolean | null;
+        profileId?: string | null;
         timeoutMinutes?: number | null;
     }
 }

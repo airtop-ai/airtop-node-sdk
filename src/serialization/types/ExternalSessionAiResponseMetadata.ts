@@ -14,6 +14,7 @@ export const ExternalSessionAiResponseMetadata: core.serialization.ObjectSchema<
     Airtop.ExternalSessionAiResponseMetadata
 > = core.serialization.object({
     clientProvided: ClientProvidedResponseMetadata.optional(),
+    requestId: core.serialization.string().optional(),
     status: ExternalSessionAiResponseMetadataStatus,
     usage: ExternalSessionAiResponseMetadataUsage,
 });
@@ -21,6 +22,7 @@ export const ExternalSessionAiResponseMetadata: core.serialization.ObjectSchema<
 export declare namespace ExternalSessionAiResponseMetadata {
     interface Raw {
         clientProvided?: ClientProvidedResponseMetadata.Raw | null;
+        requestId?: string | null;
         status: ExternalSessionAiResponseMetadataStatus.Raw;
         usage: ExternalSessionAiResponseMetadataUsage.Raw;
     }

@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const ExternalSessionAiResponseMetadataStatus: core.serialization.Schema<
     serializers.ExternalSessionAiResponseMetadataStatus.Raw,
     Airtop.ExternalSessionAiResponseMetadataStatus
-> = core.serialization.enum_(["success", "partial_success", "failure"]);
+> = core.serialization.enum_(["success", "partial", "failure"]);
 
 export declare namespace ExternalSessionAiResponseMetadataStatus {
-    type Raw = "success" | "partial_success" | "failure";
+    type Raw = "success" | "partial" | "failure";
 }

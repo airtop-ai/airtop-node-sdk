@@ -4,17 +4,11 @@
 
 /**
  * @example
- *     {
- *         name: "^Acme.*"
- *     }
+ *     {}
  */
 export interface ProfilesDeleteRequest {
     /**
-     * Name to search for, supports regex, case insensitive
+     * A comma separated list of profile ids to search for
      */
-    name?: string;
-    /**
-     * a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)
-     */
-    tags?: string | string[];
+    profileIds?: string | string[];
 }
