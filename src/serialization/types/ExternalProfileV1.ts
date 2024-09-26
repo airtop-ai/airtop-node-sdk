@@ -12,13 +12,11 @@ export const ExternalProfileV1: core.serialization.ObjectSchema<
 > = core.serialization.object({
     profileId: core.serialization.string(),
     status: core.serialization.string().optional(),
-    uploadUri: core.serialization.string().optional(),
 });
 
 export declare namespace ExternalProfileV1 {
     interface Raw {
         profileId: string;
         status?: string | null;
-        uploadUri?: string | null;
     }
 }

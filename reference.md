@@ -130,7 +130,7 @@ await client.profiles.delete();
 
 ## Sessions
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.SessionsWithPaginationEnvelopeDefaultMetaWrapper</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,10 @@ Get a list of sessions by ID
 <dd>
 
 ```typescript
-await client.sessions.list();
+await client.sessions.list({
+    offset: 1,
+    limit: 10,
+});
 ```
 
 </dd>
@@ -285,7 +288,7 @@ await client.sessions.getinfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dl>
 <dd>
 
-**id:** `string` — UUID of the session to get
+**id:** `string` — Id of the session to get
 
 </dd>
 </dl>
@@ -348,7 +351,7 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dl>
 <dd>
 
-**id:** `string` — UUID of the session to delete
+**id:** `string` — ID of the session to delete
 
 </dd>
 </dl>
@@ -400,7 +403,7 @@ await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334
 <dl>
 <dd>
 
-**sessionId:** `string` — UUID of the session that owns the window
+**sessionId:** `string` — ID of the session that owns the window
 
 </dd>
 </dl>

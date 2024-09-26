@@ -1,6 +1,6 @@
 {
     "name": "@airtop/sdk",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "private": false,
     "repository": "https://github.com/airtop-ai/airtop-node-sdk",
     "main": "./index.js",
@@ -52,5 +52,13 @@
         "node",
         "typescript"
     ],
-    "license": "MIT"
+    "license": "MIT",
+    "extraDependencies": {
+        "playwright": "1.47.2",
+        "puppeteer": "22.14.0",
+        "selenium-webdriver": "4.25.0"
+    },
+    "extraDevDependencies": {
+        "@types/selenium-webdriver": "4.1.26"
+    }
 }

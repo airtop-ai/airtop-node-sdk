@@ -5,8 +5,6 @@
 export interface Window {
     /** Url for live view session */
     liveViewUrl: string;
-    /** Token for authenticating to a live view session */
-    token: string;
     /** Window ID for live view session */
     windowId: string;
 }

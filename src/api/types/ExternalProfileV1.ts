@@ -7,6 +7,4 @@ export interface ExternalProfileV1 {
     profileId: string;
     /** Status of the profile */
     status?: string;
-    /** URI to upload profile data to */
-    uploadUri?: string;
 }
