@@ -31,7 +31,7 @@ export class AirtopSessions {
   list(
     request?: Airtop.SessionsListRequest,
     requestOptions?: SessionsNamespace.RequestOptions,
-  ): Promise<Airtop.ListExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper> {
+  ): Promise<Airtop.SessionsWithPaginationEnvelopeDefaultMetaWrapper> {
     return this._sessions.list(request, requestOptions);
   }
 
