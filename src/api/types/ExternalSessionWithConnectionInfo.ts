@@ -21,6 +21,8 @@ export interface ExternalSessionWithConnectionInfo {
     id: string;
     /** Date of the last activity */
     lastActivity?: Date;
+    /** Id of a newly persisted profile */
+    profileId?: string;
     /** Session status */
     status: string;
 }

@@ -19,6 +19,7 @@ export const ExternalSessionWithConnectionInfo: core.serialization.ObjectSchema<
     dateCreated: core.serialization.date().optional(),
     id: core.serialization.string(),
     lastActivity: core.serialization.date().optional(),
+    profileId: core.serialization.string().optional(),
     status: core.serialization.string(),
 });
 
@@ -32,6 +33,7 @@ export declare namespace ExternalSessionWithConnectionInfo {
         dateCreated?: string | null;
         id: string;
         lastActivity?: string | null;
+        profileId?: string | null;
         status: string;
     }
 }

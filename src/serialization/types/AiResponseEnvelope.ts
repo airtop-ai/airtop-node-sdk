@@ -5,21 +5,16 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { Issue } from "./Issue";
 
 export const AiResponseEnvelope: core.serialization.ObjectSchema<
     serializers.AiResponseEnvelope.Raw,
     Airtop.AiResponseEnvelope
 > = core.serialization.object({
-    errors: core.serialization.list(Issue).optional(),
     modelResponse: core.serialization.string(),
-    warnings: core.serialization.list(Issue).optional(),
 });
 
 export declare namespace AiResponseEnvelope {
     interface Raw {
-        errors?: Issue.Raw[] | null;
         modelResponse: string;
-        warnings?: Issue.Raw[] | null;
     }
 }

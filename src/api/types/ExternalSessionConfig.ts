@@ -3,7 +3,7 @@
  */
 
 export interface ExternalSessionConfig {
-    /** Id of a profile to use with this session */
+    /** Id of a profile to load into the session */
     baseProfileId?: string;
     /** Persist the profile */
     persistProfile?: boolean;
