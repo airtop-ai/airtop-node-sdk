@@ -12,6 +12,7 @@ declare namespace playwright {
 
 declare namespace seleniumWebdriver {
   interface WebDriver {
+    getSession(): Promise<any>;
     createCDPConnection(domain: string): Promise<any>;
   }
 }
@@ -95,7 +96,7 @@ export class AirtopWindows {
   }
 
   private async executeSeleniumCDPCommand(
-    driver: WebDriver,
+    driver: seleniumWebdriver.WebDriver,
     session: Airtop.ExternalSessionWithConnectionInfo,
     apiKey: string,
   ) {
