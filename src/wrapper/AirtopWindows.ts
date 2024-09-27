@@ -17,9 +17,6 @@ declare namespace seleniumWebdriver {
   }
 }
 
-import { Page as PuppeteerPage } from 'puppeteer';
-import { Page as PlaywrightPage } from 'playwright';
-import { WebDriver } from 'selenium-webdriver';
 import fetch from 'node-fetch';
 import { AirtopClient as FernClient } from '../Client';
 import * as Airtop from '../api';
