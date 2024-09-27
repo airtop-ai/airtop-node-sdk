@@ -1,6 +1,21 @@
-import { Page as PuppeteerPage } from 'puppeteer';
-import { Page as PlaywrightPage } from 'playwright';
-import { WebDriver } from 'selenium-webdriver';
+declare namespace puppeteer {
+  interface Page {
+    mainFrame(): any;
+  }
+}
+
+declare namespace playwright {
+  interface Page {
+    context(): any;
+  }
+}
+
+declare namespace seleniumWebdriver {
+  interface WebDriver {
+    createCDPConnection(domain: string): Promise<any>;
+  }
+}
+
 import { AirtopClient as FernClient } from '../Client';
 import * as Airtop from '../api';
 import { Windows as WindowsClass, Windows as WindowsNamespace } from '../api/resources/windows/client/Client';
@@ -49,7 +64,7 @@ export class AirtopWindows {
 
   async getWindowInfoForPuppeteerPage(
     sessionId: string,
-    page: PuppeteerPage,
+    page: puppeteer.Page,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.WindowEnvelopeDefaultMetaWrapper> {
@@ -59,7 +74,7 @@ export class AirtopWindows {
 
   async getWindowInfoForPlaywrightPage(
     sessionId: string,
-    page: PlaywrightPage,
+    page: playwright.Page,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.WindowEnvelopeDefaultMetaWrapper> {
@@ -75,7 +90,7 @@ export class AirtopWindows {
 
   async getWindowInfoForSeleniumDriver(
     sessionId: string,
-    driver: WebDriver,
+    driver: seleniumWebdriver.WebDriver,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.WindowEnvelopeDefaultMetaWrapper> {
