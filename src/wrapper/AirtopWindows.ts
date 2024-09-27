@@ -12,18 +12,22 @@ declare namespace playwright {
 
 declare namespace seleniumWebdriver {
   interface WebDriver {
+    getSession(): Promise<any>;
     createCDPConnection(domain: string): Promise<any>;
   }
 }
 
+import fetch from 'node-fetch';
 import { AirtopClient as FernClient } from '../Client';
 import * as Airtop from '../api';
 import { Windows as WindowsClass, Windows as WindowsNamespace } from '../api/resources/windows/client/Client';
+import * as core from '../core';
+
 
 export class AirtopWindows {
   private _windows: WindowsClass;
 
-  constructor(private airtopClient: FernClient) {
+  constructor(private airtopClient: FernClient, private apiKeySupplier: core.Supplier<core.BearerToken | undefined>) {
     this._windows = airtopClient.windows;
   }
 
@@ -63,17 +67,17 @@ export class AirtopWindows {
   }
 
   async getWindowInfoForPuppeteerPage(
-    sessionId: string,
+    session: Airtop.ExternalSessionWithConnectionInfo,
     page: puppeteer.Page,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.WindowEnvelopeDefaultMetaWrapper> {
     const targetId = await (page.mainFrame() as any)._id;
-    return await this.getWindowInfo(sessionId, targetId, request, requestOptions);
+    return await this.getWindowInfo(session.id, targetId, request, requestOptions);
   }
 
   async getWindowInfoForPlaywrightPage(
-    sessionId: string,
+    session: Airtop.ExternalSessionWithConnectionInfo,
     page: playwright.Page,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
@@ -85,22 +89,47 @@ export class AirtopWindows {
     if (!targetId) {
       throw new Error('TargetId not found');
     }
-    return await this.getWindowInfo(sessionId, targetId, request, requestOptions);
+    return await this.getWindowInfo(session.id, targetId, request, requestOptions);
+  }
+
+  private async executeSeleniumCDPCommand(
+    driver: seleniumWebdriver.WebDriver,
+    session: Airtop.ExternalSessionWithConnectionInfo,
+    apiKey: string,
+  ) {
+    // Get the current WebDriver session ID
+    const webDriverSessionId = (await driver.getSession()).getId();
+    if (!webDriverSessionId) {
+      throw new Error('No WebDriver session available');
+    }
+    const chromedriverSessionUrl = `${session.chromedriverUrl}/session/${webDriverSessionId}/chromium/send_command_and_get_result`;
+    const response = await fetch(chromedriverSessionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        cmd: 'Target.getTargetInfo',
+        params: {},
+      }),
+    });
+
+    return response.json();
   }
 
   async getWindowInfoForSeleniumDriver(
-    sessionId: string,
+    session: Airtop.ExternalSessionWithConnectionInfo,
     driver: seleniumWebdriver.WebDriver,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.WindowEnvelopeDefaultMetaWrapper> {
-    const cdpSession = await driver.createCDPConnection('page');
-    // Fetch the available targets using the Target domain
-    const { targetInfo } = await cdpSession.send('Target.getTargetInfo');
-    const targetId = targetInfo.targetId;
+    const apiKey = await core.Supplier.get(this.apiKeySupplier);
+    const result = await this.executeSeleniumCDPCommand(driver, session, apiKey || '');
+    const targetId = result?.value?.targetInfo?.targetId;
     if (!targetId) {
       throw new Error('TargetId not found');
     }
-    return await this.getWindowInfo(sessionId, targetId, request, requestOptions);
+    return await this.getWindowInfo(session.id, targetId, request, requestOptions);
   }
 }

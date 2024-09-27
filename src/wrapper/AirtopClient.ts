@@ -13,7 +13,7 @@ export class AirtopClient {
   constructor(options?: AugmentedOptions) {
     this._client = new FernClient(options);
     this.debug = options?.debug || false;
-    this._windowsWrapper = new AirtopWindows(this._client);
+    this._windowsWrapper = new AirtopWindows(this._client, options?.apiKey);
     this._sessionsWrapper = new AirtopSessions(this._client, options?.debug);
   }
 
