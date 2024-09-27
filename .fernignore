@@ -2,4 +2,5 @@
 src/wrapper/AirtopClient.ts
 src/wrapper/AirtopSessions.ts
 src/wrapper/AirtopWindows.ts
+src/live-view/types.ts
 src/index.ts
