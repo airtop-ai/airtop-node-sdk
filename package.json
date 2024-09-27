@@ -3,13 +3,18 @@
     "version": "0.0.11",
     "private": false,
     "repository": "https://github.com/airtop-ai/airtop-node-sdk",
-    "main": "./index.js",
-    "types": "./index.d.ts",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
         "prepack": "cp -rv dist/. .",
         "test": "jest"
+    },
+    "peerDependencies": {
+        "playwright": "1.47.2",
+        "puppeteer": "22.14.0",
+        "selenium-webdriver": "4.25.0"
     },
     "dependencies": {
         "url-join": "4.0.1",
@@ -17,10 +22,7 @@
         "formdata-node": "^6.0.3",
         "node-fetch": "2.7.0",
         "qs": "6.11.2",
-        "js-base64": "3.7.2",
-        "playwright": "1.47.2",
-        "puppeteer": "22.14.0",
-        "selenium-webdriver": "4.25.0"
+        "js-base64": "3.7.2"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
