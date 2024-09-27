@@ -5,10 +5,10 @@
 import * as Airtop from "../index";
 
 export interface ScrapeResponseOutput {
-    /** The scraped content of the browser window */
+    /** The scraped content of the browser window. */
     scrapedContent: Airtop.ScrapeResponseContent;
-    /** Any text that was highlighted in the browser window */
+    /** Any text that was highlighted in the browser window. */
     selectedText?: string;
-    /** The title of the browser page */
+    /** The title of the browser page. */
     title: string;
 }

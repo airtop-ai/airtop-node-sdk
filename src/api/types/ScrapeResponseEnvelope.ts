@@ -5,5 +5,6 @@
 import * as Airtop from "../index";
 
 export interface ScrapeResponseEnvelope {
+    /** The response from the Airtop AI model. */
     modelResponse: Airtop.ScrapeResponseOutput;
 }

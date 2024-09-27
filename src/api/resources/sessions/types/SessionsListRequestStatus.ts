@@ -3,12 +3,12 @@
  */
 
 /**
- * status of the session to get
+ * Status of the session to get.
  */
-export type SessionsListRequestStatus = "awaiting_capacity" | "initializing" | "running" | "ended";
+export type SessionsListRequestStatus = "awaitingCapacity" | "initializing" | "running" | "ended";
 
 export const SessionsListRequestStatus = {
-    AwaitingCapacity: "awaiting_capacity",
+    AwaitingCapacity: "awaitingCapacity",
     Initializing: "initializing",
     Running: "running",
     Ended: "ended",

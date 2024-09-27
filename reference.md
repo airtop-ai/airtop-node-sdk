@@ -351,7 +351,7 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dl>
 <dd>
 
-**id:** `string` — ID of the session to delete
+**id:** `string` — ID of the session to delete.
 
 </dd>
 </dl>
@@ -449,7 +449,7 @@ await client.sessions.events("string");
 
 ```typescript
 await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430", {
-    screenResolution: "1920x1080",
+    screenResolution: "1280x720",
 });
 ```
 
@@ -466,7 +466,7 @@ await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334
 <dl>
 <dd>
 
-**sessionId:** `string` — ID of the session that owns the window
+**sessionId:** `string` — ID of the session that owns the window.
 
 </dd>
 </dl>
@@ -474,7 +474,7 @@ await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334
 <dl>
 <dd>
 
-**windowId:** `string` — id of the browser window, either the windowId (uuid) or targetId (simple string)
+**windowId:** `string` — ID of the browser window, which can either be a normal AirTop windowId or a [CDP TargetId](https://chromedevtools.github.io/devtools-protocol/tot/Target/#type-TargetID) from a browser automation library like Puppeteer (typically associated with the page or main frame). Our SDKs will handle retrieving a TargetId for you from various popular browser automation libraries, but we also have details in our guides on how to do it manually.
 
 </dd>
 </dl>
@@ -532,7 +532,7 @@ await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <dl>
 <dd>
 
-**sessionId:** `string` — The session id to submit a prompt about
+**sessionId:** `string` — The session id for the window.
 
 </dd>
 </dl>
@@ -540,7 +540,7 @@ await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <dl>
 <dd>
 
-**windowId:** `string` — The window id to submit a prompt about
+**windowId:** `string` — The Airtop window id of the browser window to target with an Airtop AI prompt.
 
 </dd>
 </dl>
@@ -596,7 +596,7 @@ await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <dl>
 <dd>
 
-**sessionId:** `string` — The session id to scrape
+**sessionId:** `string` — The session id for the window.
 
 </dd>
 </dl>
@@ -604,7 +604,7 @@ await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <dl>
 <dd>
 
-**windowId:** `string` — The window id to scrape
+**windowId:** `string` — The Airtop window id of the browser window to scrape.
 
 </dd>
 </dl>
@@ -660,7 +660,7 @@ await client.windows.summarizeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0
 <dl>
 <dd>
 
-**sessionId:** `string` — The session id to summarize
+**sessionId:** `string` — The session id for the window.
 
 </dd>
 </dl>
@@ -668,7 +668,7 @@ await client.windows.summarizeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0
 <dl>
 <dd>
 
-**windowId:** `string` — The window id to summarize
+**windowId:** `string` — The Airtop window id of the browser window to summarize.
 
 </dd>
 </dl>

@@ -13,19 +13,19 @@ import * as Airtop from "../../../../index";
  */
 export interface SessionsListRequest {
     /**
-     * a comma separated list of IDs of the session to get
+     * A comma-separated list of IDs of the sessions to retrieve.
      */
     sessionIds?: string | string[];
     /**
-     * status of the session to get
+     * Status of the session to get.
      */
     status?: Airtop.SessionsListRequestStatus;
     /**
-     * offset for pagination
+     * Offset for pagination.
      */
     offset?: number;
     /**
-     * limit for pagination
+     * Limit for pagination.
      */
     limit?: number;
 }

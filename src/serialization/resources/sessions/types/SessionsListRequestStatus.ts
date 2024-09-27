@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const SessionsListRequestStatus: core.serialization.Schema<
     serializers.SessionsListRequestStatus.Raw,
     Airtop.SessionsListRequestStatus
-> = core.serialization.enum_(["awaiting_capacity", "initializing", "running", "ended"]);
+> = core.serialization.enum_(["awaitingCapacity", "initializing", "running", "ended"]);
 
 export declare namespace SessionsListRequestStatus {
-    type Raw = "awaiting_capacity" | "initializing" | "running" | "ended";
+    type Raw = "awaitingCapacity" | "initializing" | "running" | "ended";
 }

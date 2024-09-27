@@ -3,8 +3,8 @@
  */
 
 export interface ScrapeResponseContent {
-    /** The mime type of content extracted from the browser window */
+    /** The mime type of content extracted from the browser window (usually text/plain but could be text/csv or other types depending on the site). */
     contentType: string;
-    /** The text content of the browser window */
+    /** The text content of the browser window. */
     text: string;
 }

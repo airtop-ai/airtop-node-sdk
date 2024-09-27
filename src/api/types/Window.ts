@@ -3,8 +3,8 @@
  */
 
 export interface Window {
-    /** Url for live view session */
+    /** Url for loading a browser window live view that is configured according to the request options like screenResolution, disableResize, etc. */
     liveViewUrl: string;
-    /** Window ID for live view session */
+    /** Airtop window ID of the browser window */
     windowId: string;
 }

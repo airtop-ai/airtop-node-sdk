@@ -3,10 +3,10 @@
  */
 
 export interface Issue {
-    /** Issue code */
+    /** Issue code. */
     code?: string;
-    /** Any associated details */
+    /** Any associated details. */
     details?: Record<string, unknown>;
-    /** Message describing the issue */
+    /** Message describing the issue. */
     message: string;
 }

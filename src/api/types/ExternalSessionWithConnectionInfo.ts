@@ -5,24 +5,24 @@
 import * as Airtop from "../index";
 
 export interface ExternalSessionWithConnectionInfo {
-    /** Url to connect to chrome devtools protocol port on the airtop browser. Include the header 'Authorization: Bearer <api-key>.' */
+    /** Url to connect to chrome devtools protocol port on the Airtop browser. Include the header 'Authorization: Bearer <api-key>.' */
     cdpUrl?: string;
-    /** Websocket url to connect to CDP webSocketDebuggerUrl on the airtop browser. Include the header 'Authorization: Bearer <api-key>.' */
+    /** Websocket url to connect to the Airtop browser for CDP-based automation frameworks (e.g. Puppeteer or Playwright). Include the header 'Authorization: Bearer <airtop-api-key>.' */
     cdpWsUrl?: string;
-    /** Websocket url to connect to the chromedriver on the airtop browser. Include the header 'Authorization: Bearer <api-key>.' */
+    /** Websocket url to connect to the Airtop browser for webdriver-based automation frameworks (e.g. Selenium). Include the header 'Authorization: Bearer <airtop-api-key>.' */
     chromedriverUrl?: string;
-    /** Session configuration */
+    /** Session configuration details. */
     configuration: Airtop.ExternalSessionConfig;
-    /** Current usage in minutes */
+    /** Current usage in minutes. */
     currentUsage?: number;
-    /** Date the session was created */
+    /** Date the session was created. */
     dateCreated?: Date;
-    /** UUID of the session */
+    /** Id of the session. */
     id: string;
-    /** Date of the last activity */
+    /** Date of the last activity. */
     lastActivity?: Date;
-    /** Id of a newly persisted profile */
+    /** Id of a newly persisted profile. */
     profileId?: string;
-    /** Session status */
+    /** Session status. */
     status: string;
 }

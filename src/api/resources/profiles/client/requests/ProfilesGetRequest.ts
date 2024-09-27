@@ -8,7 +8,7 @@
  */
 export interface ProfilesGetRequest {
     /**
-     * A comma separated list of profile ids to search for
+     * A comma-separated list of profile ids.
      */
     profileIds?: string | string[];
 }

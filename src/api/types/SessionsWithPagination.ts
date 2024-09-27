@@ -5,8 +5,8 @@
 import * as Airtop from "../index";
 
 export interface SessionsWithPagination {
-    /** Pagination info */
+    /** Pagination details. */
     pagination: Airtop.Pagination;
-    /** List of sessions */
+    /** List of sessions. */
     sessions?: Airtop.ExternalSessionWithConnectionInfo[];
 }

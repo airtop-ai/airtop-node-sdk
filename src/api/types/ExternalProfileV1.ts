@@ -3,8 +3,8 @@
  */
 
 export interface ExternalProfileV1 {
-    /** Id of the profile */
+    /** Id of the profile. */
     profileId: string;
-    /** Status of the profile */
+    /** Status of the profile. */
     status?: string;
 }

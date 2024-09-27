@@ -30,14 +30,14 @@ export class Windows {
     constructor(protected readonly _options: Windows.Options = {}) {}
 
     /**
-     * @param {string} sessionId - ID of the session that owns the window
-     * @param {string} windowId - id of the browser window, either the windowId (uuid) or targetId (simple string)
+     * @param {string} sessionId - ID of the session that owns the window.
+     * @param {string} windowId - ID of the browser window, which can either be a normal AirTop windowId or a [CDP TargetId](https://chromedevtools.github.io/devtools-protocol/tot/Target/#type-TargetID) from a browser automation library like Puppeteer (typically associated with the page or main frame). Our SDKs will handle retrieving a TargetId for you from various popular browser automation libraries, but we also have details in our guides on how to do it manually.
      * @param {Airtop.GetWindowInfoRequest} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430", {
-     *         screenResolution: "1920x1080"
+     *         screenResolution: "1280x720"
      *     })
      */
     public async getWindowInfo(
@@ -57,7 +57,7 @@ export class Windows {
         }
 
         if (screenResolution != null) {
-            _queryParams["Screen resolution"] = screenResolution;
+            _queryParams["screenResolution"] = screenResolution;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -70,8 +70,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "@airtop/sdk/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "@airtop/sdk/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -115,8 +115,8 @@ export class Windows {
     }
 
     /**
-     * @param {string} sessionId - The session id to submit a prompt about
-     * @param {string} windowId - The window id to submit a prompt about
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
      * @param {Airtop.PromptContentRequest} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -141,8 +141,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "@airtop/sdk/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "@airtop/sdk/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -186,8 +186,8 @@ export class Windows {
     }
 
     /**
-     * @param {string} sessionId - The session id to scrape
-     * @param {string} windowId - The window id to scrape
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window to scrape.
      * @param {Airtop.ScrapeContentRequest} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -210,8 +210,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "@airtop/sdk/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "@airtop/sdk/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -258,8 +258,8 @@ export class Windows {
     }
 
     /**
-     * @param {string} sessionId - The session id to summarize
-     * @param {string} windowId - The window id to summarize
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window to summarize.
      * @param {Airtop.SummarizeContentRequest} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -282,8 +282,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "@airtop/sdk/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "@airtop/sdk/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
