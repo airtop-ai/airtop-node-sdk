@@ -56,7 +56,16 @@ export class AirtopSessions {
         this.log('No browser created, timed out?');
         throw new Error(`Waiting for session ready timed out`);
       }
-      return this.getInfo(createSessionResponse.data.id, requestOptions);
+      const getInfoResponse = await this.getInfo(createSessionResponse.data.id, requestOptions);
+
+      // Merge the createSessionResponse with any new data from getInfoResponse
+      return {
+        ...createSessionResponse,
+        data: {
+          ...createSessionResponse.data,
+          ...getInfoResponse.data,
+        },
+      };
     } catch (e) {
       this.log(e);
       throw new Error(`Error creating a new browser ${e}`);
