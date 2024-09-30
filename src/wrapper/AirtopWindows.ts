@@ -36,7 +36,7 @@ export class AirtopWindows {
     windowId: string,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.WindowResponse> {
+  ) {
     return this._windows.getWindowInfo(sessionId, windowId, request, requestOptions);
   }
 
@@ -45,7 +45,7 @@ export class AirtopWindows {
     windowId: string,
     request: Airtop.PromptContentRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.AiPromptResponse> {
+  ) {
     return this._windows.promptContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
   }
 
@@ -54,7 +54,7 @@ export class AirtopWindows {
     windowId: string,
     request?: Airtop.ScrapeContentRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.ScrapeResponse> {
+  ) {
     return this._windows.scrapeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
   }
 
@@ -63,7 +63,7 @@ export class AirtopWindows {
     windowId: string,
     request?: Airtop.SummarizeContentRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.AiPromptResponse> {
+  ) {
     return this._windows.summarizeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
   }
 
@@ -72,7 +72,7 @@ export class AirtopWindows {
     page: puppeteer.Page,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.WindowResponse> {
+  ) {
     const targetId = await (page.mainFrame() as any)._id;
     return await this.getWindowInfo(session.id, targetId, request, requestOptions);
   }
@@ -82,7 +82,7 @@ export class AirtopWindows {
     page: playwright.Page,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.WindowResponse> {
+  ) {
     // Retrieve target information
     const cdpSession = await page.context().newCDPSession(page);
     const { targetInfo } = await cdpSession.send('Target.getTargetInfo');
@@ -124,7 +124,7 @@ export class AirtopWindows {
     driver: seleniumWebdriver.WebDriver,
     request?: Airtop.GetWindowInfoRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
-  ): Promise<Airtop.WindowResponse> {
+  ) {
     const apiKey = await core.Supplier.get(this.apiKeySupplier);
     const result = await this.executeSeleniumCDPCommand(driver, session, apiKey || '');
     const targetId = result?.value?.targetInfo?.targetId;
