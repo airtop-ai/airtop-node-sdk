@@ -4,9 +4,9 @@
 
 import * as Airtop from "../index";
 
-export interface SessionsWithPaginationEnvelopeDefaultMetaWrapper {
-    data: Airtop.SessionsWithPagination;
+export interface ProfilesResponse {
+    data?: Airtop.ExternalProfileV1[];
     errors?: Airtop.Issue[];
-    meta: Airtop.DefaultMetaWrapper;
+    meta: Airtop.EnvelopeDefaultMeta;
     warnings?: Airtop.Issue[];
 }

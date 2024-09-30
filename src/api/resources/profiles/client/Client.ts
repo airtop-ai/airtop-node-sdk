@@ -41,7 +41,7 @@ export class Profiles {
     public async get(
         request: Airtop.ProfilesGetRequest = {},
         requestOptions?: Profiles.RequestOptions
-    ): Promise<Airtop.ListExternalProfileV1EnvelopeDefaultMetaWrapper> {
+    ): Promise<Airtop.ProfilesResponse> {
         const { profileIds } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (profileIds != null) {
@@ -62,8 +62,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -75,7 +75,7 @@ export class Profiles {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListExternalProfileV1EnvelopeDefaultMetaWrapper.parseOrThrow(_response.body, {
+            return serializers.ProfilesResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -139,8 +139,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

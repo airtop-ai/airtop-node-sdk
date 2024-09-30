@@ -6,14 +6,14 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 
-export const DefaultMetaWrapper: core.serialization.ObjectSchema<
-    serializers.DefaultMetaWrapper.Raw,
-    Airtop.DefaultMetaWrapper
+export const EnvelopeDefaultMeta: core.serialization.ObjectSchema<
+    serializers.EnvelopeDefaultMeta.Raw,
+    Airtop.EnvelopeDefaultMeta
 > = core.serialization.object({
     requestId: core.serialization.string().optional(),
 });
 
-export declare namespace DefaultMetaWrapper {
+export declare namespace EnvelopeDefaultMeta {
     interface Raw {
         requestId?: string | null;
     }

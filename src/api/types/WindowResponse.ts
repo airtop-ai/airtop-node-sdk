@@ -4,9 +4,9 @@
 
 import * as Airtop from "../index";
 
-export interface ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper {
-    data: Airtop.ExternalSessionWithConnectionInfo;
+export interface WindowResponse {
+    data: Airtop.Window;
     errors?: Airtop.Issue[];
-    meta: Airtop.DefaultMetaWrapper;
+    meta: Airtop.EnvelopeDefaultMeta;
     warnings?: Airtop.Issue[];
 }

@@ -49,7 +49,7 @@ export class Sessions {
     public async list(
         request: Airtop.SessionsListRequest = {},
         requestOptions?: Sessions.RequestOptions
-    ): Promise<Airtop.SessionsWithPaginationEnvelopeDefaultMetaWrapper> {
+    ): Promise<Airtop.SessionsResponse> {
         const { sessionIds, status, offset, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (sessionIds != null) {
@@ -82,8 +82,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -95,7 +95,7 @@ export class Sessions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SessionsWithPaginationEnvelopeDefaultMetaWrapper.parseOrThrow(_response.body, {
+            return serializers.SessionsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -169,7 +169,7 @@ export class Sessions {
     public async create(
         request: Airtop.SessionRestInputV1 = {},
         requestOptions?: Sessions.RequestOptions
-    ): Promise<Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper> {
+    ): Promise<Airtop.SessionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -180,8 +180,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -193,16 +193,13 @@ export class Sessions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.SessionResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -240,10 +237,7 @@ export class Sessions {
      * @example
      *     await client.sessions.getinfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b")
      */
-    public async getinfo(
-        id: string,
-        requestOptions?: Sessions.RequestOptions
-    ): Promise<Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper> {
+    public async getinfo(id: string, requestOptions?: Sessions.RequestOptions): Promise<Airtop.SessionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -254,8 +248,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -266,16 +260,13 @@ export class Sessions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper.parseOrThrow(
-                _response.body,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }
-            );
+            return serializers.SessionResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -353,8 +344,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -407,8 +398,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.0.14",
-                "User-Agent": "@airtop/sdk/0.0.14",
+                "X-Fern-SDK-Version": "0.0.15",
+                "User-Agent": "@airtop/sdk/0.0.15",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

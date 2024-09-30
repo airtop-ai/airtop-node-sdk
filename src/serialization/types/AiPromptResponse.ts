@@ -5,23 +5,23 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { ScrapeResponseEnvelope } from "./ScrapeResponseEnvelope";
+import { AiResponseEnvelope } from "./AiResponseEnvelope";
 import { Issue } from "./Issue";
 import { ExternalSessionAiResponseMetadata } from "./ExternalSessionAiResponseMetadata";
 
-export const ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper: core.serialization.ObjectSchema<
-    serializers.ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper.Raw,
-    Airtop.ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper
+export const AiPromptResponse: core.serialization.ObjectSchema<
+    serializers.AiPromptResponse.Raw,
+    Airtop.AiPromptResponse
 > = core.serialization.object({
-    data: ScrapeResponseEnvelope,
+    data: AiResponseEnvelope,
     errors: core.serialization.list(Issue).optional(),
     meta: ExternalSessionAiResponseMetadata,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper {
+export declare namespace AiPromptResponse {
     interface Raw {
-        data: ScrapeResponseEnvelope.Raw;
+        data: AiResponseEnvelope.Raw;
         errors?: Issue.Raw[] | null;
         meta: ExternalSessionAiResponseMetadata.Raw;
         warnings?: Issue.Raw[] | null;

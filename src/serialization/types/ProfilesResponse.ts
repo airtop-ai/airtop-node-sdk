@@ -5,25 +5,25 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { Window } from "./Window";
+import { ExternalProfileV1 } from "./ExternalProfileV1";
 import { Issue } from "./Issue";
-import { DefaultMetaWrapper } from "./DefaultMetaWrapper";
+import { EnvelopeDefaultMeta } from "./EnvelopeDefaultMeta";
 
-export const WindowEnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
-    serializers.WindowEnvelopeDefaultMetaWrapper.Raw,
-    Airtop.WindowEnvelopeDefaultMetaWrapper
+export const ProfilesResponse: core.serialization.ObjectSchema<
+    serializers.ProfilesResponse.Raw,
+    Airtop.ProfilesResponse
 > = core.serialization.object({
-    data: Window,
+    data: core.serialization.list(ExternalProfileV1).optional(),
     errors: core.serialization.list(Issue).optional(),
-    meta: DefaultMetaWrapper,
+    meta: EnvelopeDefaultMeta,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace WindowEnvelopeDefaultMetaWrapper {
+export declare namespace ProfilesResponse {
     interface Raw {
-        data: Window.Raw;
+        data?: ExternalProfileV1.Raw[] | null;
         errors?: Issue.Raw[] | null;
-        meta: DefaultMetaWrapper.Raw;
+        meta: EnvelopeDefaultMeta.Raw;
         warnings?: Issue.Raw[] | null;
     }
 }

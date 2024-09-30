@@ -3,7 +3,7 @@
  */
 
 export const AirtopEnvironment = {
-    Default: "https://api.airtop.ai/v1",
+    Default: "https://api.airtop.ai/api/v1",
 } as const;
 
 export type AirtopEnvironment = typeof AirtopEnvironment.Default;

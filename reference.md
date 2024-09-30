@@ -2,7 +2,7 @@
 
 ## Profiles
 
-<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">get</a>({ ...params }) -> Airtop.ListExternalProfileV1EnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">get</a>({ ...params }) -> Airtop.ProfilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ await client.profiles.delete();
 
 ## Sessions
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.SessionsWithPaginationEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">list</a>({ ...params }) -> Airtop.SessionsResponse</code></summary>
 <dl>
 <dd>
 
@@ -196,7 +196,7 @@ await client.sessions.list({
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">create</a>({ ...params }) -> Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">create</a>({ ...params }) -> Airtop.SessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -244,7 +244,7 @@ await client.sessions.create();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.SessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -435,7 +435,7 @@ await client.sessions.events("string");
 
 ## Windows
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">getWindowInfo</a>(sessionId, windowId, { ...params }) -> Airtop.WindowEnvelopeDefaultMetaWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">getWindowInfo</a>(sessionId, windowId, { ...params }) -> Airtop.WindowResponse</code></summary>
 <dl>
 <dd>
 
@@ -501,7 +501,7 @@ await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334
 </dl>
 </details>
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">promptContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">promptContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
 <dl>
 <dd>
 
@@ -567,7 +567,7 @@ await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 </dl>
 </details>
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">scrapeContent</a>(sessionId, windowId, { ...params }) -> Airtop.ScrapeResponseEnvelopeExternalSessionAiResponseMetadataWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">scrapeContent</a>(sessionId, windowId, { ...params }) -> Airtop.ScrapeResponse</code></summary>
 <dl>
 <dd>
 
@@ -631,7 +631,7 @@ await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 </dl>
 </details>
 
-<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">summarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiResponseEnvelopeExternalSessionAiResponseMetadataWrapper</code></summary>
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">summarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
 <dl>
 <dd>
 

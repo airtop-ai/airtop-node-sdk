@@ -8,7 +8,7 @@ export interface StatusMessage {
     /** Event name */
     event: string;
     /** Time of the event in milliseconds since epoch */
-    eventTimeMillis: number;
+    eventTime: Date;
     /** ID of the session */
     id: string;
     /** Status of the session */

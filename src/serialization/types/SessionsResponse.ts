@@ -7,23 +7,23 @@ import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { SessionsWithPagination } from "./SessionsWithPagination";
 import { Issue } from "./Issue";
-import { DefaultMetaWrapper } from "./DefaultMetaWrapper";
+import { EnvelopeDefaultMeta } from "./EnvelopeDefaultMeta";
 
-export const SessionsWithPaginationEnvelopeDefaultMetaWrapper: core.serialization.ObjectSchema<
-    serializers.SessionsWithPaginationEnvelopeDefaultMetaWrapper.Raw,
-    Airtop.SessionsWithPaginationEnvelopeDefaultMetaWrapper
+export const SessionsResponse: core.serialization.ObjectSchema<
+    serializers.SessionsResponse.Raw,
+    Airtop.SessionsResponse
 > = core.serialization.object({
     data: SessionsWithPagination,
     errors: core.serialization.list(Issue).optional(),
-    meta: DefaultMetaWrapper,
+    meta: EnvelopeDefaultMeta,
     warnings: core.serialization.list(Issue).optional(),
 });
 
-export declare namespace SessionsWithPaginationEnvelopeDefaultMetaWrapper {
+export declare namespace SessionsResponse {
     interface Raw {
         data: SessionsWithPagination.Raw;
         errors?: Issue.Raw[] | null;
-        meta: DefaultMetaWrapper.Raw;
+        meta: EnvelopeDefaultMeta.Raw;
         warnings?: Issue.Raw[] | null;
     }
 }
