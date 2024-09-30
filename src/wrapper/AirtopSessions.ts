@@ -31,14 +31,14 @@ export class AirtopSessions {
   list(
     request?: Airtop.SessionsListRequest,
     requestOptions?: SessionsNamespace.RequestOptions,
-  ): Promise<Airtop.SessionsWithPaginationEnvelopeDefaultMetaWrapper> {
+  ): Promise<Airtop.SessionsResponse> {
     return this._sessions.list(request, requestOptions);
   }
 
   async create(
     request?: AirtopSessionRestInputV1,
     requestOptions?: SessionsNamespace.RequestOptions,
-  ): Promise<Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper> {
+  ): Promise<Airtop.SessionResponse> {
     const createSessionResponse = await this._sessions.create(request, requestOptions);
 
     if (!createSessionResponse.data) {
@@ -90,7 +90,7 @@ export class AirtopSessions {
   getInfo(
     id: string,
     requestOptions?: SessionsNamespace.RequestOptions,
-  ): Promise<Airtop.ExternalSessionWithConnectionInfoEnvelopeDefaultMetaWrapper> {
+  ): Promise<Airtop.SessionResponse> {
     return this._sessions.getinfo(id, requestOptions);
   }
 
