@@ -46,7 +46,7 @@ export class AirtopWindows {
     request: Airtop.PromptContentRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.promptContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
+    return this._windows.promptContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions, maxRetries: 0 });
   }
 
   scrapeContent(
@@ -64,7 +64,7 @@ export class AirtopWindows {
     request?: Airtop.SummarizeContentRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.summarizeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
+    return this._windows.summarizeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions, maxRetries: 0 });
   }
 
   async getWindowInfoForPuppeteerPage(
