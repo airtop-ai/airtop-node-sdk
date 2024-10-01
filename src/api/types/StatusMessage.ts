@@ -7,7 +7,7 @@ import * as Airtop from "../index";
 export interface StatusMessage {
     /** Event name */
     event: string;
-    /** Time of the event in milliseconds since epoch */
+    /** Date and Time of the event */
     eventTime: Date;
     /** ID of the session */
     id: string;
