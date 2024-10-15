@@ -4,5 +4,3 @@ export { AirtopEnvironment } from "./environments";
 export { AirtopError, AirtopTimeoutError } from "./errors";
 export { AirtopClient } from './wrapper/AirtopClient';
 export { LiveViewEventName, LiveViewMessage } from './live-view/types';
-
-console.log('loading airtop sdk')
