@@ -5,12 +5,14 @@
 import * as serializers from "../../../../index";
 import * as Airtop from "../../../../../api/index";
 import * as core from "../../../../../core";
+import { SummaryConfig } from "../../../../types/SummaryConfig";
 
 export const SummarizeContentRequest: core.serialization.Schema<
     serializers.SummarizeContentRequest.Raw,
     Airtop.SummarizeContentRequest
 > = core.serialization.object({
     clientRequestId: core.serialization.string().optional(),
+    configuration: SummaryConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
     prompt: core.serialization.string().optional(),
     timeThresholdSeconds: core.serialization.number().optional(),
@@ -19,6 +21,7 @@ export const SummarizeContentRequest: core.serialization.Schema<
 export declare namespace SummarizeContentRequest {
     interface Raw {
         clientRequestId?: string | null;
+        configuration?: SummaryConfig.Raw | null;
         costThresholdCredits?: number | null;
         prompt?: string | null;
         timeThresholdSeconds?: number | null;

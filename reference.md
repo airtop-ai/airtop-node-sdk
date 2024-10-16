@@ -435,6 +435,62 @@ await client.sessions.events("string");
 
 ## Windows
 
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">create</a>(sessionId, { ...params }) -> Airtop.WindowIdResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.create("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — ID of the session that owns the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.CreateWindowInputV1Body`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">getWindowInfo</a>(sessionId, windowId, { ...params }) -> Airtop.WindowResponse</code></summary>
 <dl>
 <dd>
@@ -483,6 +539,128 @@ await client.windows.getWindowInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334
 <dd>
 
 **request:** `Airtop.GetWindowInfoRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">loadUrl</a>(sessionId, windowId, { ...params }) -> Airtop.EmptyResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.loadUrl("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430", {
+    url: "https://www.airtop.ai",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — ID of the session that owns the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — Airtop window ID of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.WindowLoadUrlV1Body`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">close</a>(sessionId, windowId) -> Airtop.WindowIdResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.close("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "7334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — ID of the session that owns the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — Airtop window ID of the browser window.
 
 </dd>
 </dl>
