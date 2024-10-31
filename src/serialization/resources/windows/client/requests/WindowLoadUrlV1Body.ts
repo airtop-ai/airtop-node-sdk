@@ -13,11 +13,13 @@ export const WindowLoadUrlV1Body: core.serialization.Schema<
 > = core.serialization.object({
     url: core.serialization.string(),
     waitUntil: WindowLoadUrlV1BodyWaitUntil.optional(),
+    waitUntilTimeoutSeconds: core.serialization.number().optional(),
 });
 
 export declare namespace WindowLoadUrlV1Body {
     interface Raw {
         url: string;
         waitUntil?: WindowLoadUrlV1BodyWaitUntil.Raw | null;
+        waitUntilTimeoutSeconds?: number | null;
     }
 }

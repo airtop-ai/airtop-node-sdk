@@ -12,7 +12,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Profiles {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        apiKey?: core.Supplier<core.BearerToken | undefined>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
@@ -27,7 +27,7 @@ export declare namespace Profiles {
 }
 
 export class Profiles {
-    constructor(protected readonly _options: Profiles.Options = {}) {}
+    constructor(protected readonly _options: Profiles.Options) {}
 
     /**
      * Get profiles matching by id
@@ -62,8 +62,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -139,8 +139,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -177,12 +177,7 @@ export class Profiles {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.apiKey);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+    protected async _getAuthorizationHeader(): Promise<string> {
+        return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
     }
 }

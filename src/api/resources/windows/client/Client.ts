@@ -12,7 +12,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Windows {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        apiKey?: core.Supplier<core.BearerToken | undefined>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
@@ -27,7 +27,7 @@ export declare namespace Windows {
 }
 
 export class Windows {
-    constructor(protected readonly _options: Windows.Options = {}) {}
+    constructor(protected readonly _options: Windows.Options) {}
 
     /**
      * @param {string} sessionId - ID of the session that owns the window.
@@ -52,8 +52,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -137,8 +137,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -208,8 +208,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -275,8 +275,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -321,7 +321,7 @@ export class Windows {
     /**
      * @param {string} sessionId - The session id for the window.
      * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
-     * @param {Airtop.PromptContentRequest} request
+     * @param {Airtop.SessionContentPromptHandlerRequestBody} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -332,7 +332,7 @@ export class Windows {
     public async promptContent(
         sessionId: string,
         windowId: string,
-        request: Airtop.PromptContentRequest,
+        request: Airtop.SessionContentPromptHandlerRequestBody,
         requestOptions?: Windows.RequestOptions
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -345,14 +345,16 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.PromptContentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.SessionContentPromptHandlerRequestBody.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -414,8 +416,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -461,7 +463,7 @@ export class Windows {
     /**
      * @param {string} sessionId - The session id for the window.
      * @param {string} windowId - The Airtop window id of the browser window to summarize.
-     * @param {Airtop.SummarizeContentRequest} request
+     * @param {Airtop.SessionSummaryHandlerRequestBody} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -470,7 +472,7 @@ export class Windows {
     public async summarizeContent(
         sessionId: string,
         windowId: string,
-        request: Airtop.SummarizeContentRequest = {},
+        request: Airtop.SessionSummaryHandlerRequestBody = {},
         requestOptions?: Windows.RequestOptions
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -483,14 +485,16 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.SummarizeContentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.SessionSummaryHandlerRequestBody.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -527,12 +531,7 @@ export class Windows {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.apiKey);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+    protected async _getAuthorizationHeader(): Promise<string> {
+        return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
     }
 }

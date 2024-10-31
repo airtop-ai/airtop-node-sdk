@@ -11,7 +11,7 @@ import { Windows } from "./api/resources/windows/client/Client";
 export declare namespace AirtopClient {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        apiKey?: core.Supplier<core.BearerToken | undefined>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
@@ -26,7 +26,7 @@ export declare namespace AirtopClient {
 }
 
 export class AirtopClient {
-    constructor(protected readonly _options: AirtopClient.Options = {}) {}
+    constructor(protected readonly _options: AirtopClient.Options) {}
 
     protected _profiles: Profiles | undefined;
 

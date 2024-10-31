@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const CreateWindowInputV1BodyWaitUntil: core.serialization.Schema<
     serializers.CreateWindowInputV1BodyWaitUntil.Raw,
     Airtop.CreateWindowInputV1BodyWaitUntil
-> = core.serialization.enum_(["load", "domContentLoaded"]);
+> = core.serialization.enum_(["load", "domContentLoaded", "complete"]);
 
 export declare namespace CreateWindowInputV1BodyWaitUntil {
-    type Raw = "load" | "domContentLoaded";
+    type Raw = "load" | "domContentLoaded" | "complete";
 }

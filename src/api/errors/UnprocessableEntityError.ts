@@ -6,7 +6,7 @@ import * as errors from "../../errors/index";
 import * as Airtop from "../index";
 
 export class UnprocessableEntityError extends errors.AirtopError {
-    constructor(body: Airtop.ErrorEnvelope) {
+    constructor(body: Airtop.ErrorModel) {
         super({
             message: "UnprocessableEntityError",
             statusCode: 422,

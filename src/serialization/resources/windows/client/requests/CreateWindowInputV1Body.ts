@@ -14,6 +14,7 @@ export const CreateWindowInputV1Body: core.serialization.Schema<
     screenResolution: core.serialization.string().optional(),
     url: core.serialization.string().optional(),
     waitUntil: CreateWindowInputV1BodyWaitUntil.optional(),
+    waitUntilTimeoutSeconds: core.serialization.number().optional(),
 });
 
 export declare namespace CreateWindowInputV1Body {
@@ -21,5 +22,6 @@ export declare namespace CreateWindowInputV1Body {
         screenResolution?: string | null;
         url?: string | null;
         waitUntil?: CreateWindowInputV1BodyWaitUntil.Raw | null;
+        waitUntilTimeoutSeconds?: number | null;
     }
 }

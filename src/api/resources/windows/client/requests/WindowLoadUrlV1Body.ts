@@ -13,6 +13,8 @@ import * as Airtop from "../../../../index";
 export interface WindowLoadUrlV1Body {
     /** Url to navigate to */
     url: string;
-    /** Wait until the specified loading event occurs. Defaults to 'load', which waits until the page has loaded */
+    /** Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, and 'complete' will wait until the page and all it's iframes have loaded it's dom and assets. */
     waitUntil?: Airtop.WindowLoadUrlV1BodyWaitUntil;
+    /** Maximum time in seconds to wait for the specified loading event to occur before timing out. */
+    waitUntilTimeoutSeconds?: number;
 }
