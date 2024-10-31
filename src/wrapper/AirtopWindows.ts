@@ -60,7 +60,7 @@ export class AirtopWindows {
   async promptContent(
     sessionId: string,
     windowId: string,
-    request: Airtop.PromptContentRequest,
+    request: Airtop.SessionContentPromptHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
     return this._windows.promptContent(sessionId, windowId, request, {
@@ -82,7 +82,7 @@ export class AirtopWindows {
   summarizeContent(
     sessionId: string,
     windowId: string,
-    request?: Airtop.SummarizeContentRequest,
+    request?: Airtop.SessionSummaryHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
     return this._windows.summarizeContent(sessionId, windowId, request, {
