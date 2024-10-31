@@ -13,7 +13,7 @@ import * as stream from "stream";
 export declare namespace Sessions {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        apiKey?: core.Supplier<core.BearerToken | undefined>;
+        apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
@@ -28,7 +28,7 @@ export declare namespace Sessions {
 }
 
 export class Sessions {
-    constructor(protected readonly _options: Sessions.Options = {}) {}
+    constructor(protected readonly _options: Sessions.Options) {}
 
     /**
      * Get a list of sessions by ID
@@ -82,8 +82,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -108,7 +108,7 @@ export class Sessions {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new Airtop.NotFoundError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -118,7 +118,7 @@ export class Sessions {
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -128,7 +128,7 @@ export class Sessions {
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -180,8 +180,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -248,8 +248,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -273,7 +273,7 @@ export class Sessions {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new Airtop.NotFoundError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -283,7 +283,7 @@ export class Sessions {
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -293,7 +293,7 @@ export class Sessions {
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -344,8 +344,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -398,8 +398,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.2",
-                "User-Agent": "@airtop/sdk/0.1.2",
+                "X-Fern-SDK-Version": "0.1.3",
+                "User-Agent": "@airtop/sdk/0.1.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -434,7 +434,7 @@ export class Sessions {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new Airtop.NotFoundError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -444,7 +444,7 @@ export class Sessions {
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -454,7 +454,7 @@ export class Sessions {
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
-                        serializers.ErrorEnvelope.parseOrThrow(_response.error.body, {
+                        serializers.ErrorModel.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -485,12 +485,7 @@ export class Sessions {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.apiKey);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+    protected async _getAuthorizationHeader(): Promise<string> {
+        return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
     }
 }

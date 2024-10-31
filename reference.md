@@ -726,7 +726,7 @@ await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <dl>
 <dd>
 
-**request:** `Airtop.PromptContentRequest`
+**request:** `Airtop.SessionContentPromptHandlerRequestBody`
 
 </dd>
 </dl>
@@ -854,7 +854,7 @@ await client.windows.summarizeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0
 <dl>
 <dd>
 
-**request:** `Airtop.SummarizeContentRequest`
+**request:** `Airtop.SessionSummaryHandlerRequestBody`
 
 </dd>
 </dl>

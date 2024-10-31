@@ -5,11 +5,13 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { SessionConfigV1Proxy } from "./SessionConfigV1Proxy";
 
 export const SessionConfigV1: core.serialization.ObjectSchema<serializers.SessionConfigV1.Raw, Airtop.SessionConfigV1> =
     core.serialization.object({
         baseProfileId: core.serialization.string().optional(),
         persistProfile: core.serialization.boolean().optional(),
+        proxy: SessionConfigV1Proxy.optional(),
         timeoutMinutes: core.serialization.number().optional(),
     });
 
@@ -17,6 +19,7 @@ export declare namespace SessionConfigV1 {
     interface Raw {
         baseProfileId?: string | null;
         persistProfile?: boolean | null;
+        proxy?: SessionConfigV1Proxy.Raw | null;
         timeoutMinutes?: number | null;
     }
 }
