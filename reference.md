@@ -244,7 +244,7 @@ await client.sessions.create();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.SessionResponse</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getInfo</a>(id) -> Airtop.SessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -272,7 +272,7 @@ Get a session by ID
 <dd>
 
 ```typescript
-await client.sessions.getinfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+await client.sessions.getInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
 
 </dd>

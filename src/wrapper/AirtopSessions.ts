@@ -1,10 +1,10 @@
 import { AirtopClient as FernClient } from '../Client';
 import * as Airtop from '../api';
-import * as core from '../core';
 import {
   Sessions as SessionsClass,
   Sessions as SessionsNamespace,
 } from '../api/resources/sessions/client/Client';
+import * as core from '../core';
 
 export interface AirtopSessionConfigV1 extends Airtop.SessionConfigV1 {
   skipWaitSessionReady?: boolean;
@@ -15,11 +15,10 @@ export interface AirtopSessionRestInputV1 {
   configuration?: AirtopSessionConfigV1;
 }
 
-export class AirtopSessions {
-  private _sessions: SessionsClass;
+export class AirtopSessions extends SessionsClass {
 
-  constructor(private airtopClient: FernClient, private debug: boolean = false) {
-    this._sessions = airtopClient.sessions;
+  constructor(readonly _options: SessionsNamespace.Options, private debug: boolean = false) {
+    super(_options);
   }
 
   log(message: any) {
@@ -28,18 +27,19 @@ export class AirtopSessions {
     }
   }
 
-  list(
-    request?: Airtop.SessionsListRequest,
-    requestOptions?: SessionsNamespace.RequestOptions,
-  ) {
-    return this._sessions.list(request, requestOptions);
-  }
 
+  /**
+   * @param {Airtop.SessionRestInputV1} request
+   * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+   *
+   * @example
+   *     await client.sessions.create()
+   */
   async create(
     request?: AirtopSessionRestInputV1,
     requestOptions?: SessionsNamespace.RequestOptions,
   ) {
-    const createSessionResponse = await this._sessions.create(request, requestOptions);
+    const createSessionResponse = await super.create(request, requestOptions);
 
     if (!createSessionResponse.data) {
       throw new Error(`Error creating browser session`);
@@ -87,21 +87,4 @@ export class AirtopSessions {
     return null;
   }
 
-  getInfo(
-    id: string,
-    requestOptions?: SessionsNamespace.RequestOptions,
-  ) {
-    return this._sessions.getinfo(id, requestOptions);
-  }
-
-  terminate(id: string, requestOptions?: SessionsNamespace.RequestOptions): Promise<void> {
-    return this._sessions.terminate(id, requestOptions);
-  }
-
-  events(
-    id: string,
-    requestOptions?: SessionsNamespace.RequestOptions,
-  ): Promise<core.Stream<Airtop.SessionsEventsResponse>> {
-    return this._sessions.events(id, requestOptions);
-  }
 }
