@@ -6,14 +6,14 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 
-export const PromptContentExperimentalConfig: core.serialization.ObjectSchema<
-    serializers.PromptContentExperimentalConfig.Raw,
-    Airtop.PromptContentExperimentalConfig
+export const PageQueryExperimentalConfig: core.serialization.ObjectSchema<
+    serializers.PageQueryExperimentalConfig.Raw,
+    Airtop.PageQueryExperimentalConfig
 > = core.serialization.object({
     includeVisualAnalysis: core.serialization.string().optional(),
 });
 
-export declare namespace PromptContentExperimentalConfig {
+export declare namespace PageQueryExperimentalConfig {
     interface Raw {
         includeVisualAnalysis?: string | null;
     }

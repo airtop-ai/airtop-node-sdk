@@ -4,7 +4,7 @@
 
 import * as Airtop from "../index";
 
-export interface PromptContentConfig {
+export interface PageQueryConfig {
     /** Experimental configuration options. These may be subject to change and are not guaranteed to be stable across versions. */
-    experimental?: Airtop.PromptContentExperimentalConfig;
+    experimental?: Airtop.PageQueryExperimentalConfig;
 }
