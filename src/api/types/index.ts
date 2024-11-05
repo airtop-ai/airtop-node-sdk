@@ -29,6 +29,7 @@ export * from "./CustomProxy";
 export * from "./SessionConfigV1ProxyItem";
 export * from "./SessionConfigV1Proxy";
 export * from "./SessionConfigV1";
+export * from "./SessionContentPromptHandlerRequestBody";
 export * from "./SessionResponse";
 export * from "./SessionsResponse";
 export * from "./SessionsWithPagination";
