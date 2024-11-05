@@ -5,17 +5,16 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { PromptContentExperimentalConfig } from "./PromptContentExperimentalConfig";
 
 export const PromptContentConfig: core.serialization.ObjectSchema<
     serializers.PromptContentConfig.Raw,
     Airtop.PromptContentConfig
 > = core.serialization.object({
-    experimental: PromptContentExperimentalConfig.optional(),
+    outputSchema: core.serialization.string().optional(),
 });
 
 export declare namespace PromptContentConfig {
     interface Raw {
-        experimental?: PromptContentExperimentalConfig.Raw | null;
+        outputSchema?: string | null;
     }
 }
