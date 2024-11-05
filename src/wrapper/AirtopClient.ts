@@ -1,28 +1,26 @@
 import { AirtopClient as FernClient } from '../Client'; // alias the Fern generated client
-import { AirtopWindows } from './AirtopWindows';
 import { AirtopSessions } from './AirtopSessions';
+import { AirtopWindows } from './AirtopWindows';
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
 export class AirtopClient {
   public debug: boolean;
   private _client: FernClient;
-  private _windowsWrapper: AirtopWindows;
-  private _sessionsWrapper: AirtopSessions;
+  private _windows: AirtopWindows | undefined;
+  private _sessions: AirtopSessions | undefined;
 
-  constructor(options: AugmentedOptions) {
-    this._client = new FernClient(options);
-    this.debug = options?.debug || false;
-    this._windowsWrapper = new AirtopWindows(this._client, options?.apiKey);
-    this._sessionsWrapper = new AirtopSessions(this._client, options?.debug);
+  constructor(private _options: AugmentedOptions) {
+    this._client = new FernClient(_options);
+    this.debug = _options?.debug || false;
   }
 
-  get windows() {
-    return this._windowsWrapper;
+  public get sessions(): AirtopSessions {
+    return (this._sessions ??= new AirtopSessions(this._options, this.debug));
   }
 
-  get sessions() {
-    return this._sessionsWrapper;
+  public get windows(): AirtopWindows {
+    return (this._windows ??= new AirtopWindows(this._options, this._options.apiKey));
   }
 
   get profiles() {

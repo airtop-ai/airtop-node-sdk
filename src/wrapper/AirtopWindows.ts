@@ -24,49 +24,31 @@ import { Windows as WindowsClass, Windows as WindowsNamespace } from '../api/res
 import * as core from '../core';
 
 
-export class AirtopWindows {
-  private _windows: WindowsClass;
+export class AirtopWindows extends WindowsClass {
 
-  constructor(private airtopClient: FernClient, private apiKeySupplier: core.Supplier<core.BearerToken | undefined>) {
-    this._windows = airtopClient.windows;
-  }
-
-  async create(sessionId: string, request: Airtop.CreateWindowInputV1Body, requestOptions?: WindowsNamespace.RequestOptions) {
-    return this._windows.create(sessionId, request, requestOptions);
-  }
-
-  async loadUrl(
-    sessionId: string,
-    windowId: string,
-    request: Airtop.WindowLoadUrlV1Body,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.loadUrl(sessionId, windowId, request, requestOptions);
-  }
-
-  async close(sessionId: string, windowId: string, requestOptions?: WindowsNamespace.RequestOptions) {
-    return this._windows.close(sessionId, windowId, requestOptions);
-  }
-
-  async getWindowInfo(
-    sessionId: string,
-    windowId: string,
-    request?: Airtop.GetWindowInfoRequest,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.getWindowInfo(sessionId, windowId, request, requestOptions);
+  constructor(readonly _options: WindowsNamespace.Options, private apiKeySupplier: core.Supplier<core.BearerToken | undefined>) {
+    super(_options);
   }
 
   /**
-   * @deprecated Use pageQuery instead
-   */
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
+     * @param {Airtop.SessionContentPromptHandlerRequestBody} request
+     * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @deprecated Use pageQuery instead
+     * @example
+     *     await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+     *         prompt: "What is the main idea of this page?"
+     *     })
+     */
   async promptContent(
     sessionId: string,
     windowId: string,
     request: Airtop.SessionPageQueryHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.promptContent(sessionId, windowId, request, {
+    return super.promptContent(sessionId, windowId, request, {
       timeoutInSeconds: 600,
       ...requestOptions,
       maxRetries: 0,
@@ -79,29 +61,47 @@ export class AirtopWindows {
     request: Airtop.SessionPageQueryHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.pageQuery(sessionId, windowId, request, {
+    return super.pageQuery(sessionId, windowId, request, {
       timeoutInSeconds: 600,
       ...requestOptions,
       maxRetries: 0,
     });
   }
 
+  /**
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window to scrape.
+     * @param {Airtop.ScrapeContentRequest} request
+     * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+     */
   scrapeContent(
     sessionId: string,
     windowId: string,
     request?: Airtop.ScrapeContentRequest,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.scrapeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
+    return super.scrapeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
   }
 
+  /**
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window to summarize.
+     * @param {Airtop.SessionSummaryHandlerRequestBody} request
+     * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.windows.summarizeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+     */
   summarizeContent(
     sessionId: string,
     windowId: string,
     request?: Airtop.SessionSummaryHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.summarizeContent(sessionId, windowId, request, {
+    return super.summarizeContent(sessionId, windowId, request, {
       timeoutInSeconds: 600,
       ...requestOptions,
       maxRetries: 0,
