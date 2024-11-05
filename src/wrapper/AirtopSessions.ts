@@ -28,6 +28,13 @@ export class AirtopSessions extends SessionsClass {
   }
 
 
+  /**
+   * @param {Airtop.SessionRestInputV1} request
+   * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
+   *
+   * @example
+   *     await client.sessions.create()
+   */
   async create(
     request?: AirtopSessionRestInputV1,
     requestOptions?: SessionsNamespace.RequestOptions,
