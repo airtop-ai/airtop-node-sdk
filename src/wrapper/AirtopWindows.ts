@@ -88,10 +88,10 @@ export class AirtopWindows {
 			...request,
 			configuration: {
 				...request.configuration,
-				outputSchema: request.configuration?.outputSchema
-					? JSON.stringify(request.configuration.outputSchema)
-					: undefined,
-			},
+			outputSchema: typeof request.configuration?.outputSchema === "object"
+				? JSON.stringify(request.configuration.outputSchema)
+				: request.configuration?.outputSchema,
+				},
 		},
 		{
 			timeoutInSeconds: 600,
@@ -120,9 +120,9 @@ export class AirtopWindows {
       ...request,
       configuration: {
         ...request?.configuration,
-        outputSchema: request?.configuration?.outputSchema
-			? JSON.stringify(request.configuration.outputSchema)
-			: undefined,
+          outputSchema: typeof request?.configuration?.outputSchema === "object"
+            ? JSON.stringify(request.configuration.outputSchema)
+            : request?.configuration?.outputSchema,
 		},
 	},
     {
