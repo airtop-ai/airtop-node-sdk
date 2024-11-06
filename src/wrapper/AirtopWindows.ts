@@ -57,13 +57,29 @@ export class AirtopWindows {
     return this._windows.getWindowInfo(sessionId, windowId, request, requestOptions);
   }
 
+  /**
+   * @deprecated Use pageQuery instead
+   */
   async promptContent(
     sessionId: string,
     windowId: string,
-    request: Airtop.SessionContentPromptHandlerRequestBody,
+    request: Airtop.SessionPageQueryHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
     return this._windows.promptContent(sessionId, windowId, request, {
+      timeoutInSeconds: 600,
+      ...requestOptions,
+      maxRetries: 0,
+    });
+  }
+
+  async pageQuery(
+    sessionId: string,
+    windowId: string,
+    request: Airtop.SessionPageQueryHandlerRequestBody,
+    requestOptions?: WindowsNamespace.RequestOptions,
+  ) {
+    return this._windows.pageQuery(sessionId, windowId, request, {
       timeoutInSeconds: 600,
       ...requestOptions,
       maxRetries: 0,
