@@ -23,6 +23,24 @@ import * as Airtop from '../api';
 import { Windows as WindowsClass, Windows as WindowsNamespace } from '../api/resources/windows/client/Client';
 import * as core from '../core';
 
+type PromptContentRequestWrapper = Omit<
+	Airtop.SessionContentPromptHandlerRequestBody,
+	"configuration"
+> & {
+	configuration?: Omit<
+		Airtop.SessionContentPromptHandlerRequestBody["configuration"],
+		"outputSchema"
+	> & {
+		outputSchema?: string | object;
+	};
+};
+
+type SummarizeContentRequestWrapper = Omit<
+	Airtop.SessionSummaryHandlerRequestBody,
+	"configuration"
+> & {
+	configuration?: Omit<Airtop.SessionSummaryHandlerRequestBody["configuration"], "outputSchema"> & { outputSchema?: string | object };
+};
 
 export class AirtopWindows {
   private _windows: WindowsClass;
@@ -60,14 +78,27 @@ export class AirtopWindows {
   async promptContent(
     sessionId: string,
     windowId: string,
-    request: Airtop.SessionContentPromptHandlerRequestBody,
+    request: PromptContentRequestWrapper,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.promptContent(sessionId, windowId, request, {
-      timeoutInSeconds: 600,
-      ...requestOptions,
-      maxRetries: 0,
-    });
+    return this._windows.promptContent(
+		sessionId,
+		windowId,
+		{
+			...request,
+			configuration: {
+				...request.configuration,
+				outputSchema: request.configuration?.outputSchema
+					? JSON.stringify(request.configuration.outputSchema)
+					: undefined,
+			},
+		},
+		{
+			timeoutInSeconds: 600,
+			...requestOptions,
+			maxRetries: 0,
+		},
+	);
   }
 
   scrapeContent(
@@ -82,10 +113,19 @@ export class AirtopWindows {
   summarizeContent(
     sessionId: string,
     windowId: string,
-    request?: Airtop.SessionSummaryHandlerRequestBody,
+    request?: SummarizeContentRequestWrapper,
     requestOptions?: WindowsNamespace.RequestOptions,
   ) {
-    return this._windows.summarizeContent(sessionId, windowId, request, {
+    return this._windows.summarizeContent(sessionId, windowId, {
+      ...request,
+      configuration: {
+        ...request?.configuration,
+        outputSchema: request?.configuration?.outputSchema
+			? JSON.stringify(request.configuration.outputSchema)
+			: undefined,
+		},
+	},
+    {
       timeoutInSeconds: 600,
       ...requestOptions,
       maxRetries: 0,
