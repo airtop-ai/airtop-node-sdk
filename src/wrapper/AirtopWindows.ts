@@ -51,11 +51,25 @@ export class AirtopWindows extends WindowsClass {
 		request: Airtop.SessionPageQueryHandlerRequestBody,
 		requestOptions?: WindowsNamespace.RequestOptions,
 	) {
-		return super.promptContent(sessionId, windowId, request, {
-			timeoutInSeconds: 600,
-			...requestOptions,
-			maxRetries: 0,
-		});
+		return super.promptContent(
+			sessionId,
+			windowId,
+			{
+				...request,
+				configuration: {
+					...request.configuration,
+					outputSchema:
+						typeof request.configuration?.outputSchema === "object"
+							? JSON.stringify(request.configuration.outputSchema)
+							: request.configuration?.outputSchema,
+				},
+			},
+			{
+				timeoutInSeconds: 600,
+				...requestOptions,
+				maxRetries: 0,
+			},
+		);
 	}
 
 	/**
@@ -75,11 +89,25 @@ export class AirtopWindows extends WindowsClass {
 		request: Airtop.SessionPageQueryHandlerRequestBody,
 		requestOptions?: WindowsNamespace.RequestOptions,
 	) {
-		return super.pageQuery(sessionId, windowId, request, {
-			timeoutInSeconds: 600,
-			...requestOptions,
-			maxRetries: 0,
-		});
+		return super.pageQuery(
+			sessionId,
+			windowId,
+			{
+				...request,
+				configuration: {
+					...request.configuration,
+					outputSchema:
+						typeof request.configuration?.outputSchema === "object"
+							? JSON.stringify(request.configuration.outputSchema)
+							: request.configuration?.outputSchema,
+				},
+			},
+			{
+				timeoutInSeconds: 600,
+				...requestOptions,
+				maxRetries: 0,
+			},
+		);
 	}
 
 	/**
@@ -118,11 +146,25 @@ export class AirtopWindows extends WindowsClass {
 		request?: Airtop.SessionSummaryHandlerRequestBody,
 		requestOptions?: WindowsNamespace.RequestOptions,
 	) {
-		return super.summarizeContent(sessionId, windowId, request, {
-			timeoutInSeconds: 600,
-			...requestOptions,
-			maxRetries: 0,
-		});
+		return super.summarizeContent(
+			sessionId,
+			windowId,
+			{
+				...request,
+				configuration: {
+					...request?.configuration,
+					outputSchema:
+						typeof request?.configuration?.outputSchema === "object"
+							? JSON.stringify(request?.configuration?.outputSchema)
+							: request?.configuration?.outputSchema,
+				},
+			},
+			{
+				timeoutInSeconds: 600,
+				...requestOptions,
+				maxRetries: 0,
+			},
+		);
 	}
 
 	async getWindowInfoForPuppeteerPage(
