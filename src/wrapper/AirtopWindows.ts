@@ -18,7 +18,6 @@ declare namespace seleniumWebdriver {
 }
 
 import fetch from 'node-fetch';
-import { AirtopClient as FernClient } from '../Client';
 import * as Airtop from '../api';
 import { Windows as WindowsClass, Windows as WindowsNamespace } from '../api/resources/windows/client/Client';
 import * as core from '../core';
@@ -55,6 +54,17 @@ export class AirtopWindows extends WindowsClass {
     });
   }
 
+  /**
+   * @param {string} sessionId - The session id for the window.
+   * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
+   * @param {Airtop.SessionPageQueryHandlerRequestBody} request
+   * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+   *
+   * @example
+   *     await client.windows.pageQuery("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+   *         prompt: "What is the main idea of this page?"
+   *     })
+   */
   async pageQuery(
     sessionId: string,
     windowId: string,
