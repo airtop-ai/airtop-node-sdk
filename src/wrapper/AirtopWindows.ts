@@ -1,177 +1,282 @@
 declare namespace puppeteer {
-  interface Page {
-    mainFrame(): any;
-  }
+	interface Page {
+		mainFrame(): any;
+	}
 }
 
 declare namespace playwright {
-  interface Page {
-    context(): any;
-  }
+	interface Page {
+		context(): any;
+	}
 }
 
 declare namespace seleniumWebdriver {
-  interface WebDriver {
-    getSession(): Promise<any>;
-    createCDPConnection(domain: string): Promise<any>;
-  }
+	interface WebDriver {
+		getSession(): Promise<any>;
+		createCDPConnection(domain: string): Promise<any>;
+	}
 }
 
-import fetch from 'node-fetch';
-import { AirtopClient as FernClient } from '../Client';
-import * as Airtop from '../api';
-import { Windows as WindowsClass, Windows as WindowsNamespace } from '../api/resources/windows/client/Client';
-import * as core from '../core';
+import fetch from "node-fetch";
+import * as Airtop from "../api";
+import {
+	Windows as WindowsClass,
+	Windows as WindowsNamespace,
+} from "../api/resources/windows/client/Client";
+import * as core from "../core";
 
+export class AirtopWindows extends WindowsClass {
+	constructor(
+		readonly _options: WindowsNamespace.Options,
+		private apiKeySupplier: core.Supplier<core.BearerToken | undefined>,
+	) {
+		super(_options);
+	}
 
-export class AirtopWindows {
-  private _windows: WindowsClass;
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
+	 * @param {Airtop.SessionContentPromptHandlerRequestBody} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @deprecated Use pageQuery instead
+	 * @example
+	 *     await client.windows.promptContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+	 *         prompt: "What is the main idea of this page?"
+	 *     })
+	 */
+	async promptContent(
+		sessionId: string,
+		windowId: string,
+		request: Omit<
+			Airtop.SessionPageQueryHandlerRequestBody,
+			"configuration"
+		> & {
+			configuration?: Omit<
+				Airtop.SessionPageQueryHandlerRequestBody["configuration"],
+				"outputSchema"
+			> & {
+				outputSchema?: string | object;
+			};
+		},
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		return super.promptContent(
+			sessionId,
+			windowId,
+			{
+				...request,
+				configuration: {
+					...request.configuration,
+					outputSchema:
+						typeof request.configuration?.outputSchema === "object"
+							? JSON.stringify(request.configuration.outputSchema)
+							: request.configuration?.outputSchema,
+				},
+			},
+			{
+				timeoutInSeconds: 600,
+				...requestOptions,
+				maxRetries: 0,
+			},
+		);
+	}
 
-  constructor(private airtopClient: FernClient, private apiKeySupplier: core.Supplier<core.BearerToken | undefined>) {
-    this._windows = airtopClient.windows;
-  }
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
+	 * @param {Airtop.SessionPageQueryHandlerRequestBody} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.windows.pageQuery("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+	 *         prompt: "What is the main idea of this page?"
+	 *     })
+	 */
+	async pageQuery(
+		sessionId: string,
+		windowId: string,
+		request: Omit<
+			Airtop.SessionPageQueryHandlerRequestBody,
+			"configuration"
+		> & {
+			configuration?: Omit<
+				Airtop.SessionPageQueryHandlerRequestBody["configuration"],
+				"outputSchema"
+			> & {
+				outputSchema?: string | object;
+			};
+		},
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		return super.pageQuery(
+			sessionId,
+			windowId,
+			{
+				...request,
+				configuration: {
+					...request.configuration,
+					outputSchema:
+						typeof request.configuration?.outputSchema === "object"
+							? JSON.stringify(request.configuration.outputSchema)
+							: request.configuration?.outputSchema,
+				},
+			},
+			{
+				timeoutInSeconds: 600,
+				...requestOptions,
+				maxRetries: 0,
+			},
+		);
+	}
 
-  async create(sessionId: string, request: Airtop.CreateWindowInputV1Body, requestOptions?: WindowsNamespace.RequestOptions) {
-    return this._windows.create(sessionId, request, requestOptions);
-  }
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window to scrape.
+	 * @param {Airtop.ScrapeContentRequest} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+	 */
+	scrapeContent(
+		sessionId: string,
+		windowId: string,
+		request?: Airtop.ScrapeContentRequest,
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		return super.scrapeContent(sessionId, windowId, request, {
+			timeoutInSeconds: 600,
+			...requestOptions,
+		});
+	}
 
-  async loadUrl(
-    sessionId: string,
-    windowId: string,
-    request: Airtop.WindowLoadUrlV1Body,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.loadUrl(sessionId, windowId, request, requestOptions);
-  }
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window to summarize.
+	 * @param {Airtop.SessionSummaryHandlerRequestBody} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.windows.summarizeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+	 */
+	summarizeContent(
+		sessionId: string,
+		windowId: string,
+		request?: Omit<Airtop.SessionSummaryHandlerRequestBody, "configuration"> & {
+			configuration?: Omit<
+				Airtop.SessionSummaryHandlerRequestBody["configuration"],
+				"outputSchema"
+			> & {
+				outputSchema?: string | object;
+			};
+		},
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		return super.summarizeContent(
+			sessionId,
+			windowId,
+			{
+				...request,
+				configuration: {
+					...request?.configuration,
+					outputSchema:
+						typeof request?.configuration?.outputSchema === "object"
+							? JSON.stringify(request?.configuration?.outputSchema)
+							: request?.configuration?.outputSchema,
+				},
+			},
+			{
+				timeoutInSeconds: 600,
+				...requestOptions,
+				maxRetries: 0,
+			},
+		);
+	}
 
-  async close(sessionId: string, windowId: string, requestOptions?: WindowsNamespace.RequestOptions) {
-    return this._windows.close(sessionId, windowId, requestOptions);
-  }
+	async getWindowInfoForPuppeteerPage(
+		session: Airtop.ExternalSessionWithConnectionInfo,
+		page: puppeteer.Page,
+		request?: Airtop.GetWindowInfoRequest,
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		const targetId = await (page.mainFrame() as any)._id;
+		return await this.getWindowInfo(
+			session.id,
+			targetId,
+			request,
+			requestOptions,
+		);
+	}
 
-  async getWindowInfo(
-    sessionId: string,
-    windowId: string,
-    request?: Airtop.GetWindowInfoRequest,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.getWindowInfo(sessionId, windowId, request, requestOptions);
-  }
+	async getWindowInfoForPlaywrightPage(
+		session: Airtop.ExternalSessionWithConnectionInfo,
+		page: playwright.Page,
+		request?: Airtop.GetWindowInfoRequest,
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		// Retrieve target information
+		const cdpSession = await page.context().newCDPSession(page);
+		const { targetInfo } = await cdpSession.send("Target.getTargetInfo");
+		const targetId = targetInfo.targetId;
+		if (!targetId) {
+			throw new Error("TargetId not found");
+		}
+		return await this.getWindowInfo(
+			session.id,
+			targetId,
+			request,
+			requestOptions,
+		);
+	}
 
-  /**
-   * @deprecated Use pageQuery instead
-   */
-  async promptContent(
-    sessionId: string,
-    windowId: string,
-    request: Airtop.SessionPageQueryHandlerRequestBody,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.promptContent(sessionId, windowId, request, {
-      timeoutInSeconds: 600,
-      ...requestOptions,
-      maxRetries: 0,
-    });
-  }
+	private async executeSeleniumCDPCommand(
+		driver: seleniumWebdriver.WebDriver,
+		session: Airtop.ExternalSessionWithConnectionInfo,
+		apiKey: string,
+	) {
+		// Get the current WebDriver session ID
+		const webDriverSessionId = (await driver.getSession()).getId();
+		if (!webDriverSessionId) {
+			throw new Error("No WebDriver session available");
+		}
+		const chromedriverSessionUrl = `${session.chromedriverUrl}/session/${webDriverSessionId}/chromium/send_command_and_get_result`;
+		const response = await fetch(chromedriverSessionUrl, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${apiKey}`,
+			},
+			body: JSON.stringify({
+				cmd: "Target.getTargetInfo",
+				params: {},
+			}),
+		});
 
-  async pageQuery(
-    sessionId: string,
-    windowId: string,
-    request: Airtop.SessionPageQueryHandlerRequestBody,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.pageQuery(sessionId, windowId, request, {
-      timeoutInSeconds: 600,
-      ...requestOptions,
-      maxRetries: 0,
-    });
-  }
+		return response.json();
+	}
 
-  scrapeContent(
-    sessionId: string,
-    windowId: string,
-    request?: Airtop.ScrapeContentRequest,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.scrapeContent(sessionId, windowId, request, { timeoutInSeconds: 600, ...requestOptions });
-  }
-
-  summarizeContent(
-    sessionId: string,
-    windowId: string,
-    request?: Airtop.SessionSummaryHandlerRequestBody,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    return this._windows.summarizeContent(sessionId, windowId, request, {
-      timeoutInSeconds: 600,
-      ...requestOptions,
-      maxRetries: 0,
-    });
-  }
-
-  async getWindowInfoForPuppeteerPage(
-    session: Airtop.ExternalSessionWithConnectionInfo,
-    page: puppeteer.Page,
-    request?: Airtop.GetWindowInfoRequest,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    const targetId = await (page.mainFrame() as any)._id;
-    return await this.getWindowInfo(session.id, targetId, request, requestOptions);
-  }
-
-  async getWindowInfoForPlaywrightPage(
-    session: Airtop.ExternalSessionWithConnectionInfo,
-    page: playwright.Page,
-    request?: Airtop.GetWindowInfoRequest,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    // Retrieve target information
-    const cdpSession = await page.context().newCDPSession(page);
-    const { targetInfo } = await cdpSession.send('Target.getTargetInfo');
-    const targetId = targetInfo.targetId;
-    if (!targetId) {
-      throw new Error('TargetId not found');
-    }
-    return await this.getWindowInfo(session.id, targetId, request, requestOptions);
-  }
-
-  private async executeSeleniumCDPCommand(
-    driver: seleniumWebdriver.WebDriver,
-    session: Airtop.ExternalSessionWithConnectionInfo,
-    apiKey: string,
-  ) {
-    // Get the current WebDriver session ID
-    const webDriverSessionId = (await driver.getSession()).getId();
-    if (!webDriverSessionId) {
-      throw new Error('No WebDriver session available');
-    }
-    const chromedriverSessionUrl = `${session.chromedriverUrl}/session/${webDriverSessionId}/chromium/send_command_and_get_result`;
-    const response = await fetch(chromedriverSessionUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        cmd: 'Target.getTargetInfo',
-        params: {},
-      }),
-    });
-
-    return response.json();
-  }
-
-  async getWindowInfoForSeleniumDriver(
-    session: Airtop.ExternalSessionWithConnectionInfo,
-    driver: seleniumWebdriver.WebDriver,
-    request?: Airtop.GetWindowInfoRequest,
-    requestOptions?: WindowsNamespace.RequestOptions,
-  ) {
-    const apiKey = await core.Supplier.get(this.apiKeySupplier);
-    const result = await this.executeSeleniumCDPCommand(driver, session, apiKey || '');
-    const targetId = result?.value?.targetInfo?.targetId;
-    if (!targetId) {
-      throw new Error('TargetId not found');
-    }
-    return await this.getWindowInfo(session.id, targetId, request, requestOptions);
-  }
+	async getWindowInfoForSeleniumDriver(
+		session: Airtop.ExternalSessionWithConnectionInfo,
+		driver: seleniumWebdriver.WebDriver,
+		request?: Airtop.GetWindowInfoRequest,
+		requestOptions?: WindowsNamespace.RequestOptions,
+	) {
+		const apiKey = await core.Supplier.get(this.apiKeySupplier);
+		const result = await this.executeSeleniumCDPCommand(
+			driver,
+			session,
+			apiKey || "",
+		);
+		const targetId = result?.value?.targetInfo?.targetId;
+		if (!targetId) {
+			throw new Error("TargetId not found");
+		}
+		return await this.getWindowInfo(
+			session.id,
+			targetId,
+			request,
+			requestOptions,
+		);
+	}
 }

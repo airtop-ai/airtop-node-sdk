@@ -235,9 +235,9 @@ export class Sessions {
      * @throws {@link Airtop.InternalServerError}
      *
      * @example
-     *     await client.sessions.getinfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b")
+     *     await client.sessions.getInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b")
      */
-    public async getinfo(id: string, requestOptions?: Sessions.RequestOptions): Promise<Airtop.SessionResponse> {
+    public async getInfo(id: string, requestOptions?: Sessions.RequestOptions): Promise<Airtop.SessionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
