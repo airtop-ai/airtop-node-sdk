@@ -5,12 +5,14 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { PageQueryConfig } from "./PageQueryConfig";
 
 export const SessionPageQueryHandlerRequestBody: core.serialization.ObjectSchema<
     serializers.SessionPageQueryHandlerRequestBody.Raw,
     Airtop.SessionPageQueryHandlerRequestBody
 > = core.serialization.object({
     clientRequestId: core.serialization.string().optional(),
+    configuration: PageQueryConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
     followPaginationLinks: core.serialization.boolean().optional(),
     prompt: core.serialization.string(),
@@ -20,6 +22,7 @@ export const SessionPageQueryHandlerRequestBody: core.serialization.ObjectSchema
 export declare namespace SessionPageQueryHandlerRequestBody {
     interface Raw {
         clientRequestId?: string | null;
+        configuration?: PageQueryConfig.Raw | null;
         costThresholdCredits?: number | null;
         followPaginationLinks?: boolean | null;
         prompt: string;

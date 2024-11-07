@@ -244,7 +244,7 @@ await client.sessions.create();
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getinfo</a>(id) -> Airtop.SessionResponse</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">getInfo</a>(id) -> Airtop.SessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -272,7 +272,7 @@ Get a session by ID
 <dd>
 
 ```typescript
-await client.sessions.getinfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+await client.sessions.getInfo("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
 
 </dd>
@@ -749,6 +749,21 @@ await client.windows.pageQuery("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint is deprecated. Please use the `pageQuery` endpoint instead.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -878,6 +893,21 @@ await client.windows.scrapeContent("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">summarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint is deprecated. Please use the `pageQuery` endpoint and ask for a summary in the prompt instead.
+
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 

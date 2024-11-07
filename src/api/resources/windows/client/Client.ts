@@ -392,6 +392,8 @@ export class Windows {
     }
 
     /**
+     * This endpoint is deprecated. Please use the `pageQuery` endpoint instead.
+     *
      * @param {string} sessionId - The session id for the window.
      * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
      * @param {Airtop.SessionPageQueryHandlerRequestBody} request
@@ -534,6 +536,8 @@ export class Windows {
     }
 
     /**
+     * This endpoint is deprecated. Please use the `pageQuery` endpoint and ask for a summary in the prompt instead.
+     *
      * @param {string} sessionId - The session id for the window.
      * @param {string} windowId - The Airtop window id of the browser window to summarize.
      * @param {Airtop.SessionSummaryHandlerRequestBody} request

@@ -5,16 +5,16 @@
 import * as serializers from "../../../index";
 import * as Airtop from "../../../../api/index";
 import * as core from "../../../../core";
-import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 import { SessionsEventsResponseStatus } from "./SessionsEventsResponseStatus";
+import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 
 export const SessionsEventsResponse: core.serialization.Schema<
     serializers.SessionsEventsResponse.Raw,
     Airtop.SessionsEventsResponse
 > = core.serialization
     .union("event", {
-        error: SessionsEventsResponseError,
         status: SessionsEventsResponseStatus,
+        error: SessionsEventsResponseError,
     })
     .transform<Airtop.SessionsEventsResponse>({
         transform: (value) => value,
@@ -22,13 +22,13 @@ export const SessionsEventsResponse: core.serialization.Schema<
     });
 
 export declare namespace SessionsEventsResponse {
-    type Raw = SessionsEventsResponse.Error | SessionsEventsResponse.Status;
-
-    interface Error extends SessionsEventsResponseError.Raw {
-        event: "error";
-    }
+    type Raw = SessionsEventsResponse.Status | SessionsEventsResponse.Error;
 
     interface Status extends SessionsEventsResponseStatus.Raw {
         event: "status";
+    }
+
+    interface Error extends SessionsEventsResponseError.Raw {
+        event: "error";
     }
 }
