@@ -48,7 +48,17 @@ export class AirtopWindows extends WindowsClass {
 	async promptContent(
 		sessionId: string,
 		windowId: string,
-		request: Airtop.SessionPageQueryHandlerRequestBody,
+		request: Omit<
+			Airtop.SessionPageQueryHandlerRequestBody,
+			"configuration"
+		> & {
+			configuration?: Omit<
+				Airtop.SessionPageQueryHandlerRequestBody["configuration"],
+				"outputSchema"
+			> & {
+				outputSchema?: string | object;
+			};
+		},
 		requestOptions?: WindowsNamespace.RequestOptions,
 	) {
 		return super.promptContent(
@@ -86,7 +96,17 @@ export class AirtopWindows extends WindowsClass {
 	async pageQuery(
 		sessionId: string,
 		windowId: string,
-		request: Airtop.SessionPageQueryHandlerRequestBody,
+		request: Omit<
+			Airtop.SessionPageQueryHandlerRequestBody,
+			"configuration"
+		> & {
+			configuration?: Omit<
+				Airtop.SessionPageQueryHandlerRequestBody["configuration"],
+				"outputSchema"
+			> & {
+				outputSchema?: string | object;
+			};
+		},
 		requestOptions?: WindowsNamespace.RequestOptions,
 	) {
 		return super.pageQuery(
@@ -143,7 +163,14 @@ export class AirtopWindows extends WindowsClass {
 	summarizeContent(
 		sessionId: string,
 		windowId: string,
-		request?: Airtop.SessionSummaryHandlerRequestBody,
+		request?: Omit<Airtop.SessionSummaryHandlerRequestBody, "configuration"> & {
+			configuration?: Omit<
+				Airtop.SessionSummaryHandlerRequestBody["configuration"],
+				"outputSchema"
+			> & {
+				outputSchema?: string | object;
+			};
+		},
 		requestOptions?: WindowsNamespace.RequestOptions,
 	) {
 		return super.summarizeContent(
