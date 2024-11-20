@@ -9,7 +9,7 @@ import * as Airtop from "../index";
  */
 export type CustomProxy =
     /**
-     * Url of the proxy. */
+     * url of the proxy. Or "default" to use airtop provided proxy. */
     | string
     /**
      * Proxy object with url of the proxy as a parameter. Takes optional username and password. */

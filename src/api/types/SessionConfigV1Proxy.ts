@@ -9,6 +9,9 @@ import * as Airtop from "../index";
  */
 export type SessionConfigV1Proxy =
     /**
+     * True to use airtop provided proxy */
+    | boolean
+    /**
      * Configuration for a single custom proxy. */
     | Airtop.CustomProxy
     /**

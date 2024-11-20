@@ -11,8 +11,12 @@ import { SessionConfigV1ProxyItem } from "./SessionConfigV1ProxyItem";
 export const SessionConfigV1Proxy: core.serialization.Schema<
     serializers.SessionConfigV1Proxy.Raw,
     Airtop.SessionConfigV1Proxy
-> = core.serialization.undiscriminatedUnion([CustomProxy, core.serialization.list(SessionConfigV1ProxyItem)]);
+> = core.serialization.undiscriminatedUnion([
+    core.serialization.boolean(),
+    CustomProxy,
+    core.serialization.list(SessionConfigV1ProxyItem),
+]);
 
 export declare namespace SessionConfigV1Proxy {
-    type Raw = CustomProxy.Raw | SessionConfigV1ProxyItem.Raw[];
+    type Raw = boolean | CustomProxy.Raw | SessionConfigV1ProxyItem.Raw[];
 }

@@ -1,5 +1,6 @@
 export * from "./AiPromptResponse";
 export * from "./AiResponseEnvelope";
+export * from "./ClickConfig";
 export * from "./ClientProvidedResponseMetadata";
 export * from "./EmptyResponse";
 export * from "./EmptyResponseJson";
