@@ -7,7 +7,7 @@ import {
 	type BatchOperationInput,
 	type BatchOperationResponse,
 	type BatchOperationUrl,
-} from "utils";
+} from "../utils";
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
