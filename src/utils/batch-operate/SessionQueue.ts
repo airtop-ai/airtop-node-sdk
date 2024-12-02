@@ -94,57 +94,58 @@ export class SessionQueue {
 
 	private async processPendingBatches(): Promise<void> {
 		while (this.batchQueue.length > 0) {
-			if (this.activePromises.length < this.maxConcurrentSessions) {
-				const batch = this.batchQueue.shift();
-				if (!batch || batch.length === 0) break;
-
-				const promise = (async () => {
-					let sessionId: string | undefined;
-					try {
-						const { data: session } = await this.client.sessions.create({
-							configuration: this.sessionConfig,
-						});
-						sessionId = session.id;
-
-						const queue = new WindowQueue(
-							this.maxWindowsPerSession,
-							this.runEmitter,
-							sessionId,
-							this.client,
-							this.operation,
-							this.onError,
-						);
-						await queue.processInBatches(batch);
-					} catch (error) {
-						if (this.onError) {
-							this.onError(
-								error instanceof Error ? error.message : String(error),
-							);
-						} else {
-							this.client.error(
-								error instanceof Error ? error.message : String(error),
-							);
-						}
-					} finally {
-						if (sessionId) {
-							await this.client.sessions.terminate(sessionId);
-						}
-					}
-				})();
-
-				this.activePromises.push(promise);
-
-				// Remove the promise when it completes
-				promise.finally(() => {
-					const index = this.activePromises.indexOf(promise);
-					if (index > -1) {
-						this.activePromises.splice(index, 1);
-					}
-				});
-			} else {
-				// Wait for any session to complete before starting a new one
+			// Wait for any session to complete before starting a new one
+			if (this.activePromises.length >= this.maxConcurrentSessions) {
 				await Promise.race(this.activePromises);
+				continue;
 			}
+
+			const batch = this.batchQueue.shift();
+			if (!batch || batch.length === 0) break;
+
+			const promise = (async () => {
+				let sessionId: string | undefined;
+				try {
+					const { data: session } = await this.client.sessions.create({
+						configuration: this.sessionConfig,
+					});
+					sessionId = session.id;
+
+					const queue = new WindowQueue(
+						this.maxWindowsPerSession,
+						this.runEmitter,
+						sessionId,
+						this.client,
+						this.operation,
+						this.onError,
+					);
+					await queue.processInBatches(batch);
+				} catch (error) {
+					if (this.onError) {
+						this.onError(
+							error instanceof Error ? error.message : String(error),
+						);
+					} else {
+						this.client.error(
+							error instanceof Error ? error.message : String(error),
+						);
+					}
+				} finally {
+					if (sessionId) {
+						await this.client.sessions.terminate(sessionId);
+					}
+				}
+			})();
+
+			this.activePromises.push(promise);
+
+			// Remove the promise when it completes
+			promise.finally(() => {
+				const index = this.activePromises.indexOf(promise);
+				if (index > -1) {
+					this.activePromises.splice(index, 1);
+				}
+			});
 		}
 
 		// Wait for all remaining sessions to complete
