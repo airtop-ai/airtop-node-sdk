@@ -22,9 +22,11 @@ export class SessionQueue {
 	private onError?: (data: {error: Error | string, urls?: string[]}) => void;
 
 	private batchQueue: BatchOperationUrl[][] = [];
-	private processingPromise: Promise<void> | null = null;
+	private latestProcessingPromise: Promise<void> | null = null;
+	private processingPromisesCount = 0;
 
 	private client: AirtopClient;
+	private sessionPool: string[] = [];
 
 	constructor({
 		maxConcurrentSessions,
@@ -59,7 +61,7 @@ export class SessionQueue {
 		this.initialBatches = initialBatches;
 		this.operation = operation;
 		this.onError = onError;
-		this.processingPromise = null;
+		this.latestProcessingPromise = null;
 
 		this.client = client;
 	}
@@ -79,17 +81,29 @@ export class SessionQueue {
 		this.batchQueue.push(...newBatches);
 
 		// Update existing processing promise
-		this.processingPromise = this.processPendingBatches();
+		this.processingPromisesCount++;
+		this.latestProcessingPromise = this.processPendingBatches();
 	}
 
 	public async processInitialBatches(): Promise<void> {
 		this.batchQueue = [...this.initialBatches];
-		this.processingPromise = this.processPendingBatches();
-		await this.processingPromise;
+		this.processingPromisesCount++;
+		this.latestProcessingPromise = this.processPendingBatches();
+		await this.latestProcessingPromise;
 	}
 
 	public async waitForProcessingToComplete(): Promise<void> {
-		await this.processingPromise;
+		while (this.processingPromisesCount > 0) {
+			await this.latestProcessingPromise;
+		}
+
+		await this.terminateAllSessions();
+	}
+
+	private async terminateAllSessions(): Promise<void> {
+		for (const sessionId of this.sessionPool) {
+			await this.client.sessions.terminate(sessionId);
+		}
 	}
 
 	private async processPendingBatches(): Promise<void> {
@@ -106,10 +120,19 @@ export class SessionQueue {
 			const promise = (async () => {
 				let sessionId: string | undefined;
 				try {
-					const { data: session } = await this.client.sessions.create({
-						configuration: this.sessionConfig,
-					});
-					sessionId = session.id;
+					// Check if there's an available session in the pool
+					if (this.sessionPool.length > 0) {
+						sessionId = this.sessionPool.pop();
+					} else {
+						const { data: session } = await this.client.sessions.create({
+							configuration: this.sessionConfig,
+						});
+						sessionId = session.id;
+					}
+
+					if (!sessionId) {
+						throw new Error("No session available for batch");
+					}
 
 					const queue = new WindowQueue(
 						this.maxWindowsPerSession,
@@ -120,6 +143,9 @@ export class SessionQueue {
 						this.onError,
 					);
 					await queue.processInBatches(batch);
+
+					// Return the session to the pool
+					this.sessionPool.push(sessionId);
 				} catch (error) {
 					const urls = batch.map((url) => url.url);
 					if (this.onError) {
@@ -132,7 +158,8 @@ export class SessionQueue {
 						const message = `Error for URLs ${JSON.stringify(urls)}: ${error instanceof Error ? error.message : String(error)}`;
 						this.client.error(message);
 					}
-				} finally {
+
+					// Clean up the session in case of error
 					if (sessionId) {
 						await this.client.sessions.terminate(sessionId);
 					}
@@ -152,5 +179,6 @@ export class SessionQueue {
 
 		// Wait for all remaining sessions to complete
 		await Promise.allSettled(this.activePromises);
+		this.processingPromisesCount--;
 	}
 }
