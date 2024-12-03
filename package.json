@@ -10,7 +10,7 @@
         "build:cjs": "tsc --project tsconfig.cjs.json",
         "build": "rm -rf dist/ && yarn build:cjs",
         "test": "jest",
-        "pre-package": "yarn build && rm -rf publish/ && mkdir -p publish && copy-files-from-to"
+        "pre-package": "yarn build && rm -rf publish/ && mkdir -p publish && copy-files-from-to && cd publish && yarn install"
     },
     "dependencies": {
         "form-data": "^4.0.0",
