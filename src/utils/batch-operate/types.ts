@@ -4,6 +4,7 @@ export type BatchOperateConfig = {
 	maxConcurrentSessions?: number;
 	maxWindowsPerSession?: number;
 	sessionConfig?: AirtopSessionConfigV1;
+	onError?: (error: Error | string) => void;
 };
 
 export type BatchOperationUrl = {

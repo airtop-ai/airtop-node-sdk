@@ -24,6 +24,7 @@ export const batchOperate = async (
 		maxConcurrentSessions = DEFAULT_MAX_CONCURRENT_SESSIONS,
 		maxWindowsPerSession = DEFAULT_MAX_WINDOWS_PER_SESSION,
 		sessionConfig,
+		onError,
 	} = config ?? {};
 
 	// Split the urls into batches
@@ -36,6 +37,7 @@ export const batchOperate = async (
 		operation,
 		client,
 		sessionConfig,
+		onError,
 	});
 
 	runEmitter.on("addUrls", (additionalUrls: BatchOperationUrl[]) => {
