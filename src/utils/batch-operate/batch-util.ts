@@ -14,7 +14,7 @@ const DEFAULT_MAX_CONCURRENT_SESSIONS = 30;
 
 export const batchOperate = async (
 	urls: BatchOperationUrl[],
-	operation: (input: BatchOperationInput) => Promise<BatchOperationResponse>, // operation to invoke on each url
+	operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>, // operation to invoke on each url
 	client: AirtopClient,
 	config?: BatchOperateConfig,
 ): Promise<void> => {

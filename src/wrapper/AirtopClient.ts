@@ -46,7 +46,7 @@ export class AirtopClient {
 
 	batchOperate = async (
 		urls: BatchOperationUrl[],
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse>, // operation to invoke on each url
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>, // operation to invoke on each url
 		config?: BatchOperateConfig,
 	): Promise<void> => {
 		return await batchOperate(urls, operation, this, config);

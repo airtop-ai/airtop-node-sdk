@@ -15,7 +15,7 @@ export class WindowQueue {
 	private client: AirtopClient;
 	private operation: (
 		input: BatchOperationInput,
-	) => Promise<BatchOperationResponse>;
+	) => Promise<BatchOperationResponse | undefined>;
 	private onError?: (error: Error | string) => void;
 	private isHalted = false;
 
@@ -24,7 +24,7 @@ export class WindowQueue {
 		runEmitter: EventEmitter,
 		sessionId: string,
 		client: AirtopClient,
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse>,
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>,
 		onError?: (error: Error | string) => void,
 	) {
 		if (!Number.isInteger(maxWindowsPerSession) || maxWindowsPerSession <= 0) {
@@ -103,19 +103,22 @@ export class WindowQueue {
 						context: urlData.context,
 					});
 
-					const { shouldHaltBatch, additionalUrls } = result;
+					if (result) {
+						const { shouldHaltBatch, additionalUrls } = result;
 
-					if (shouldHaltBatch) {
-						this.client.log("Emitting halt event");
-						this.runEmitter.emit("halt");
+						if (shouldHaltBatch) {
+							this.client.log("Emitting halt event");
+							this.runEmitter.emit("halt");
+						}
+	
+						if (additionalUrls && additionalUrls.length > 0) {
+							this.client.log(
+								`Emitting addUrls event with urls: ${JSON.stringify(additionalUrls)}`,
+							);
+							this.runEmitter.emit("addUrls", additionalUrls);
+						}
 					}
 
-					if (additionalUrls && additionalUrls.length > 0) {
-						this.client.log(
-							`Emitting addUrls event with urls: ${JSON.stringify(additionalUrls)}`,
-						);
-						this.runEmitter.emit("addUrls", additionalUrls);
-					}
 				} catch (error) {
 					if (this.onError) {
 						this.onError(

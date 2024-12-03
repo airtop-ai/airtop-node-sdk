@@ -18,7 +18,7 @@ export class SessionQueue {
 	private initialBatches: BatchOperationUrl[][] = [];
 	private operation: (
 		input: BatchOperationInput,
-	) => Promise<BatchOperationResponse>;
+	) => Promise<BatchOperationResponse | undefined>;
 	private onError?: (error: Error | string) => void;
 
 	private batchQueue: BatchOperationUrl[][] = [];
@@ -40,7 +40,7 @@ export class SessionQueue {
 		runEmitter: EventEmitter;
 		maxWindowsPerSession: number;
 		initialBatches: BatchOperationUrl[][];
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse>;
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>;
 		client: AirtopClient;
 		sessionConfig?: AirtopSessionConfigV1;
 		onError?: (error: Error | string) => void;
