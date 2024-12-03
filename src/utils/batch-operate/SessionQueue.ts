@@ -19,7 +19,7 @@ export class SessionQueue {
 	private operation: (
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse | undefined>;
-	private onError?: (error: Error | string) => void;
+	private onError?: (data: {error: Error | string, urls?: string[]}) => void;
 
 	private batchQueue: BatchOperationUrl[][] = [];
 	private processingPromise: Promise<void> | null = null;
@@ -43,7 +43,7 @@ export class SessionQueue {
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>;
 		client: AirtopClient;
 		sessionConfig?: AirtopSessionConfigV1;
-		onError?: (error: Error | string) => void;
+		onError?: (data: {error: Error | string, urls?: string[]}) => void;
 	}) {
 		if (
 			!Number.isInteger(maxConcurrentSessions) ||
@@ -121,14 +121,16 @@ export class SessionQueue {
 					);
 					await queue.processInBatches(batch);
 				} catch (error) {
+					const urls = batch.map((url) => url.url);
 					if (this.onError) {
-						this.onError(
-							error instanceof Error ? error.message : String(error),
-						);
+						this.onError({
+							error: error instanceof Error || typeof error === 'string' ? error : String(error),
+							urls,
+						});
 					} else {
-						this.client.error(
-							error instanceof Error ? error.message : String(error),
-						);
+						// By default, log the error and continue
+						const message = `Error for URLs ${JSON.stringify(urls)}: ${error instanceof Error ? error.message : String(error)}`;
+						this.client.error(message);
 					}
 				} finally {
 					if (sessionId) {

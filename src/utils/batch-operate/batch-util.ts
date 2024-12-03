@@ -27,6 +27,9 @@ export const batchOperate = async (
 		onError,
 	} = config ?? {};
 
+	// Set the max listeners to the total number of windows that can be open at once plus one for the addUrls event
+	runEmitter.setMaxListeners((maxConcurrentSessions * maxWindowsPerSession) + 1);
+
 	// Split the urls into batches
 	const initialBatches = distributeUrlsToBatches(urls, maxConcurrentSessions);
 	const sessionQueue = new SessionQueue({

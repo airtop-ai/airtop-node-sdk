@@ -16,7 +16,7 @@ export class WindowQueue {
 	private operation: (
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse | undefined>;
-	private onError?: (error: Error | string) => void;
+	private onError?: (data: {error: Error | string, urls?: string[]}) => void;
 	private isHalted = false;
 
 	constructor(
@@ -25,7 +25,7 @@ export class WindowQueue {
 		sessionId: string,
 		client: AirtopClient,
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>,
-		onError?: (error: Error | string) => void,
+		onError?: (data: {error: Error | string, urls?: string[]}) => void,
 	) {
 		if (!Number.isInteger(maxWindowsPerSession) || maxWindowsPerSession <= 0) {
 			throw new Error("maxWindowsPerSession must be a positive integer");
@@ -82,13 +82,13 @@ export class WindowQueue {
 					this.client.log(
 						`Creating window for ${urlData.url} in session ${this.sessionId}`,
 					);
-					const { data } = await this.client.windows.create(this.sessionId, {
+					const { data, errors } = await this.client.windows.create(this.sessionId, {
 						url: urlData.url,
 					});
 					windowId = data.windowId;
 
 					if (!windowId) {
-						throw new Error("WindowId not found");
+						throw new Error(`WindowId not found, errors: ${JSON.stringify(errors)}`);
 					}
 
 					const { data: windowInfo } =
@@ -121,14 +121,14 @@ export class WindowQueue {
 
 				} catch (error) {
 					if (this.onError) {
-						this.onError(
-							error instanceof Error ? error.message : String(error),
-						);
+						this.onError({
+							error: error instanceof Error || typeof error === 'string' ? error : String(error),
+							urls: [urlData.url],
+						});
 					} else {
 						// By default, log the error and continue
-						this.client.error(
-							error instanceof Error ? error.message : String(error),
-						);
+						const message = `Error for URL ${urlData.url}: ${error instanceof Error ? error.message : String(error)}`;
+						this.client.error(message);
 					}
 				} finally {
 					if (windowId) {
