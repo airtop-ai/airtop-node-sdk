@@ -1,0 +1,23 @@
+{
+  "copyFilesSettings": {
+    "whenFileExists": "overwrite"
+  },
+  "copyFiles": [
+    {
+      "from": "dist/cjs/**/*",
+      "to": "publish"
+    },
+    {
+      "from": "package.json",
+      "to": "publish/package.json"
+    },
+    {
+      "from": "*.md",
+      "to": "publish"
+    },
+    {
+      "from": ".npmignore",
+      "to": "publish/.npmignore"
+    }
+  ]
+}

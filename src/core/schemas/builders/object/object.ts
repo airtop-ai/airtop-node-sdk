@@ -281,6 +281,13 @@ function validateAndTransformExtendedObject<PreTransformedExtension, Transformed
     transformBase: (value: unknown) => MaybeValid<TransformedBase>;
     transformExtension: (value: unknown) => MaybeValid<TransformedExtension>;
 }): MaybeValid<TransformedBase & TransformedExtension> {
+    if (!isPlainObject(value)) {
+        return {
+            ok: false,
+            errors: [{ message: getErrorMessageForIncorrectType(value, "object"), path: [] }],
+        };
+    }
+
     const extensionPropertiesSet = new Set(extensionKeys);
     const [extensionProperties, baseProperties] = partition(keys(value), (key) =>
         extensionPropertiesSet.has(key as keyof PreTransformedExtension)
