@@ -84,18 +84,26 @@ export class WindowQueue {
 					this.client.log(
 						`Creating window for ${urlData.url} in session ${this.sessionId}`,
 					);
-					const { data, errors } = await this.client.windows.create(this.sessionId, {
+					const { data, errors, warnings } = await this.client.windows.create(this.sessionId, {
 						url: urlData.url,
 					});
 					windowId = data.windowId;
+
+					if (warnings) {
+						this.client.warn(`Warnings received creating window ${windowId}: ${JSON.stringify(warnings)}`);
+					}
 
 					if (!windowId) {
 						throw new Error(`WindowId not found, errors: ${JSON.stringify(errors)}`);
 					}
 
-					const { data: windowInfo } =
+					const { data: windowInfo, warnings: windowWarnings } =
 						await this.client.windows.getWindowInfo(this.sessionId, windowId);
 					liveViewUrl = windowInfo.liveViewUrl;
+
+					if (windowWarnings) {
+						this.client.warn(`Warnings received getting window info for ${windowId}: ${JSON.stringify(windowWarnings)}`);
+					}
 
 					// Run the operation on the window
 					const result = await this.operation({

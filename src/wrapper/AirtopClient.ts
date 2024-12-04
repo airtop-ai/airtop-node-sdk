@@ -40,6 +40,10 @@ export class AirtopClient {
     }
   }
 
+  warn(message: string) {
+    console.warn(message);
+  }
+
   error(err: any) {
     console.error(err);
   }
