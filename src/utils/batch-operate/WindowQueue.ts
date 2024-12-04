@@ -17,7 +17,7 @@ export class WindowQueue {
 	private operation: (
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse | undefined>;
-	private onError?: (error: BatchOperationError) => void;
+	private onError?: (error: BatchOperationError) => Promise<void>;
 	private isHalted = false;
 
 	constructor(
@@ -26,7 +26,7 @@ export class WindowQueue {
 		sessionId: string,
 		client: AirtopClient,
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>,
-		onError?: (error: BatchOperationError) => void,
+		onError?: (error: BatchOperationError) => Promise<void>,
 	) {
 		if (!Number.isInteger(maxWindowsPerSession) || maxWindowsPerSession <= 0) {
 			throw new Error("maxWindowsPerSession must be a positive integer");
@@ -123,7 +123,7 @@ export class WindowQueue {
 
 				} catch (error) {
 					if (this.onError) {
-						this.onError({
+						await this.onError({
 							error: error instanceof Error || typeof error === 'string' ? error : String(error),
 							operationUrls: [urlData],
 							sessionId: this.sessionId,

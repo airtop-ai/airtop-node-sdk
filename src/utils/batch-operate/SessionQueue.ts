@@ -20,7 +20,7 @@ export class SessionQueue {
 	private operation: (
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse | undefined>;
-	private onError?: (error: BatchOperationError) => void;
+	private onError?: (error: BatchOperationError) => Promise<void>;
 
 	private batchQueue: BatchOperationUrl[][] = [];
 	private latestProcessingPromise: Promise<void> | null = null;
@@ -46,7 +46,7 @@ export class SessionQueue {
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>;
 		client: AirtopClient;
 		sessionConfig?: AirtopSessionConfigV1;
-		onError?: (error: BatchOperationError) => void;
+		onError?: (error: BatchOperationError) => Promise<void>;
 	}) {
 		if (
 			!Number.isInteger(maxConcurrentSessions) ||
@@ -150,7 +150,7 @@ export class SessionQueue {
 				} catch (error) {
 					const urls = batch.map((url) => url.url);
 					if (this.onError) {
-						this.onError({
+						await this.onError({
 							error: error instanceof Error || typeof error === 'string' ? error : String(error),
 							operationUrls: batch,
 							sessionId,
