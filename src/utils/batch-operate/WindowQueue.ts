@@ -7,7 +7,7 @@ import type {
 } from "./types";
 import type { EventEmitter } from "node:events";
 
-export class WindowQueue {
+export class WindowQueue<T> {
 	private activePromises: Promise<void>[] = [];
 	private urlQueue: BatchOperationUrl[] = [];
 	private maxWindowsPerSession: number;
@@ -16,7 +16,7 @@ export class WindowQueue {
 	private client: AirtopClient;
 	private operation: (
 		input: BatchOperationInput,
-	) => Promise<BatchOperationResponse | undefined>;
+	) => Promise<BatchOperationResponse<T>>;
 	private onError?: (error: BatchOperationError) => Promise<void>;
 	private isHalted = false;
 
@@ -25,7 +25,7 @@ export class WindowQueue {
 		runEmitter: EventEmitter,
 		sessionId: string,
 		client: AirtopClient,
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>,
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
 		onError?: (error: BatchOperationError) => Promise<void>,
 	) {
 		if (!Number.isInteger(maxWindowsPerSession) || maxWindowsPerSession <= 0) {
@@ -49,7 +49,8 @@ export class WindowQueue {
 		this.isHalted = true;
 	}
 
-	async processInBatches(urls: BatchOperationUrl[]): Promise<void> {
+	async processInBatches(urls: BatchOperationUrl[]): Promise<T[]> {
+		const results: T[] = [];
 		this.runEmitter.once("halt", this.handleHaltEvent);
 
 		this.urlQueue = [...urls];
@@ -114,7 +115,11 @@ export class WindowQueue {
 					});
 
 					if (result) {
-						const { shouldHaltBatch, additionalUrls } = result;
+						const { shouldHaltBatch, additionalUrls, data } = result;
+
+						if (data){
+							results.push(data);
+						}
 
 						if (shouldHaltBatch) {
 							this.client.log("Emitting halt event");
@@ -176,5 +181,7 @@ export class WindowQueue {
 
 		// Remove the halt listener
 		this.runEmitter.removeListener("halt", this.handleHaltEvent);
+
+		return results;
 	}
 }

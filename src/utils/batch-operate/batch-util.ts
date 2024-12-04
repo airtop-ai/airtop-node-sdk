@@ -12,12 +12,12 @@ import { SessionQueue } from "./SessionQueue";
 const DEFAULT_MAX_WINDOWS_PER_SESSION = 1;
 const DEFAULT_MAX_CONCURRENT_SESSIONS = 30;
 
-export const batchOperate = async (
+export const batchOperate = async<T> (
 	urls: BatchOperationUrl[],
-	operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>, // operation to invoke on each url
+	operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>, // operation to invoke on each url
 	client: AirtopClient,
 	config?: BatchOperateConfig,
-): Promise<void> => {
+): Promise<T[]> => {
 	const runEmitter = new EventEmitter();
 
 	const {
@@ -49,5 +49,5 @@ export const batchOperate = async (
 
 	await sessionQueue.processInitialBatches();
 
-	await sessionQueue.waitForProcessingToComplete();
+	return await sessionQueue.waitForProcessingToComplete();
 };

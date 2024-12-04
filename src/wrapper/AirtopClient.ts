@@ -48,11 +48,11 @@ export class AirtopClient {
     console.error(err);
   }
 
-	batchOperate = async (
+	batchOperate = async<T> (
 		urls: BatchOperationUrl[],
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>, // operation to invoke on each url
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
 		config?: BatchOperateConfig,
-	): Promise<void> => {
+	): Promise<T[]> => {
 		return await batchOperate(urls, operation, this, config);
 	};
 }

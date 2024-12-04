@@ -19,9 +19,10 @@ export type BatchOperationInput = {
 	operationUrl: BatchOperationUrl;
 };
 
-export type BatchOperationResponse = {
+export type BatchOperationResponse<T> = {
 	shouldHaltBatch?: boolean;
 	additionalUrls?: BatchOperationUrl[];
+	data?: T;
 };
 
 export type BatchOperationError = {

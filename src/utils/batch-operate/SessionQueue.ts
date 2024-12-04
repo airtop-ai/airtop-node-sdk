@@ -10,7 +10,7 @@ import type { AirtopSessionConfigV1 } from "wrapper/AirtopSessions";
 import { distributeUrlsToBatches } from "./helpers";
 import { WindowQueue } from "./WindowQueue";
 
-export class SessionQueue {
+export class SessionQueue<T> {
 	private activePromises: Promise<void>[] = [];
 	private maxConcurrentSessions: number;
 	private runEmitter: EventEmitter;
@@ -19,7 +19,7 @@ export class SessionQueue {
 	private initialBatches: BatchOperationUrl[][] = [];
 	private operation: (
 		input: BatchOperationInput,
-	) => Promise<BatchOperationResponse | undefined>;
+	) => Promise<BatchOperationResponse<T>>;
 	private onError?: (error: BatchOperationError) => Promise<void>;
 
 	private batchQueue: BatchOperationUrl[][] = [];
@@ -28,6 +28,8 @@ export class SessionQueue {
 
 	private client: AirtopClient;
 	private sessionPool: string[] = [];
+
+	private results: T[];
 
 	constructor({
 		maxConcurrentSessions,
@@ -43,7 +45,7 @@ export class SessionQueue {
 		runEmitter: EventEmitter;
 		maxWindowsPerSession: number;
 		initialBatches: BatchOperationUrl[][];
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>;
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>;
 		client: AirtopClient;
 		sessionConfig?: AirtopSessionConfigV1;
 		onError?: (error: BatchOperationError) => Promise<void>;
@@ -63,7 +65,7 @@ export class SessionQueue {
 		this.operation = operation;
 		this.onError = onError;
 		this.latestProcessingPromise = null;
-
+		this.results = [];
 		this.client = client;
 	}
 
@@ -93,12 +95,14 @@ export class SessionQueue {
 		await this.latestProcessingPromise;
 	}
 
-	public async waitForProcessingToComplete(): Promise<void> {
+	public async waitForProcessingToComplete(): Promise<T[]> {
 		while (this.processingPromisesCount > 0) {
 			await this.latestProcessingPromise;
 		}
 
 		await this.terminateAllSessions();
+
+		return this.results;
 	}
 
 	private async terminateAllSessions(): Promise<void> {
@@ -147,7 +151,8 @@ export class SessionQueue {
 						this.operation,
 						this.onError,
 					);
-					await queue.processInBatches(batch);
+					const windowResults = await queue.processInBatches(batch);
+					this.results.push(...windowResults);
 
 					// Return the session to the pool
 					this.sessionPool.push(sessionId);
