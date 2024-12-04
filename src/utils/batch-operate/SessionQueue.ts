@@ -150,11 +150,16 @@ export class SessionQueue {
 				} catch (error) {
 					const urls = batch.map((url) => url.url);
 					if (this.onError) {
-						await this.onError({
-							error: error instanceof Error || typeof error === 'string' ? error : String(error),
+						// Catch any errors in the onError callback to avoid halting the entire process
+						try {
+							await this.onError({
+								error: error instanceof Error || typeof error === 'string' ? error : String(error),
 							operationUrls: batch,
-							sessionId,
-						});
+								sessionId,
+							});
+						} catch (onErrorError) {
+							this.client.error(`Error in onError callback: ${onErrorError instanceof Error ? onErrorError.message : String(onErrorError)}. Original error: ${error instanceof Error ? error.message : String(error)}`);
+						}
 					} else {
 						// By default, log the error and continue
 						const message = `Error for URLs ${JSON.stringify(urls)}: ${error instanceof Error ? error.message : String(error)}`;
@@ -163,7 +168,12 @@ export class SessionQueue {
 
 					// Clean up the session in case of error
 					if (sessionId) {
-						await this.client.sessions.terminate(sessionId);
+						// Catch any errors terminating the session to avoid halting the entire processß
+						try {
+							await this.client.sessions.terminate(sessionId);
+						} catch (error) {
+							this.client.error(`Error terminating session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`);
+						}
 					}
 				}
 			})();

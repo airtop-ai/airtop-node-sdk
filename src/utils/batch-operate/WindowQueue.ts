@@ -123,13 +123,18 @@ export class WindowQueue {
 
 				} catch (error) {
 					if (this.onError) {
-						await this.onError({
-							error: error instanceof Error || typeof error === 'string' ? error : String(error),
+						// Catch any errors in the onError callback to avoid halting the entire process
+						try {
+							await this.onError({
+								error: error instanceof Error || typeof error === 'string' ? error : String(error),
 							operationUrls: [urlData],
 							sessionId: this.sessionId,
 							windowId,
-							liveViewUrl,
-						});
+								liveViewUrl,
+							});
+						} catch (onErrorError) {
+							this.client.error(`Error in onError callback: ${onErrorError instanceof Error ? onErrorError.message : String(onErrorError)}. Original error: ${error instanceof Error ? error.message : String(error)}`);
+						}
 					} else {
 						// By default, log the error and continue
 						const message = `Error for URL ${urlData.url}: ${error instanceof Error ? error.message : String(error)}`;
@@ -137,7 +142,12 @@ export class WindowQueue {
 					}
 				} finally {
 					if (windowId) {
-						await this.client.windows.close(this.sessionId, windowId);
+						// Catch any errors closing the window to avoid halting the entire process
+						try {
+							await this.client.windows.close(this.sessionId, windowId);
+						} catch (error) {
+							this.client.error(`Error closing window ${windowId}: ${error instanceof Error ? error.message : String(error)}`);
+						}
 					}
 				}
 			})();
