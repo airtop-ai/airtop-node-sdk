@@ -1,5 +1,6 @@
 import type { AirtopClient } from "wrapper/AirtopClient";
 import type {
+	BatchOperationError,
 	BatchOperationInput,
 	BatchOperationResponse,
 	BatchOperationUrl,
@@ -16,7 +17,7 @@ export class WindowQueue {
 	private operation: (
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse | undefined>;
-	private onError?: (data: {error: Error | string, urls?: string[]}) => void;
+	private onError?: (error: BatchOperationError) => void;
 	private isHalted = false;
 
 	constructor(
@@ -25,7 +26,7 @@ export class WindowQueue {
 		sessionId: string,
 		client: AirtopClient,
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>,
-		onError?: (data: {error: Error | string, urls?: string[]}) => void,
+		onError?: (error: BatchOperationError) => void,
 	) {
 		if (!Number.isInteger(maxWindowsPerSession) || maxWindowsPerSession <= 0) {
 			throw new Error("maxWindowsPerSession must be a positive integer");
@@ -67,7 +68,6 @@ export class WindowQueue {
 			if (!urlData) break; // No more urls to process
 
 			// If we have less than the max concurrent operations, start a new one
-			let windowId: string | undefined;
 			const promise = (async () => {
 				// Do not process any more urls if the processing has been halted
 				if (this.isHalted) {
@@ -77,6 +77,8 @@ export class WindowQueue {
 					return;
 				}
 
+				let windowId: string | undefined;
+				let liveViewUrl: string | undefined;
 				try {
 					// Create a new window pointed to the url
 					this.client.log(
@@ -93,14 +95,14 @@ export class WindowQueue {
 
 					const { data: windowInfo } =
 						await this.client.windows.getWindowInfo(this.sessionId, windowId);
+					liveViewUrl = windowInfo.liveViewUrl;
 
 					// Run the operation on the window
 					const result = await this.operation({
 						windowId,
 						sessionId: this.sessionId,
-						liveViewUrl: windowInfo.liveViewUrl,
-						url: urlData.url,
-						context: urlData.context,
+						liveViewUrl,
+						operationUrl: urlData,
 					});
 
 					if (result) {
@@ -123,7 +125,10 @@ export class WindowQueue {
 					if (this.onError) {
 						this.onError({
 							error: error instanceof Error || typeof error === 'string' ? error : String(error),
-							urls: [urlData.url],
+							operationUrls: [urlData],
+							sessionId: this.sessionId,
+							windowId,
+							liveViewUrl,
 						});
 					} else {
 						// By default, log the error and continue

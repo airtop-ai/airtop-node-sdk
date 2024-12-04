@@ -1,5 +1,6 @@
 import type { AirtopClient } from "wrapper/AirtopClient";
 import type {
+	BatchOperationError,
 	BatchOperationInput,
 	BatchOperationResponse,
 	BatchOperationUrl,
@@ -19,7 +20,7 @@ export class SessionQueue {
 	private operation: (
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse | undefined>;
-	private onError?: (data: {error: Error | string, urls?: string[]}) => void;
+	private onError?: (error: BatchOperationError) => void;
 
 	private batchQueue: BatchOperationUrl[][] = [];
 	private latestProcessingPromise: Promise<void> | null = null;
@@ -45,7 +46,7 @@ export class SessionQueue {
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse | undefined>;
 		client: AirtopClient;
 		sessionConfig?: AirtopSessionConfigV1;
-		onError?: (data: {error: Error | string, urls?: string[]}) => void;
+		onError?: (error: BatchOperationError) => void;
 	}) {
 		if (
 			!Number.isInteger(maxConcurrentSessions) ||
@@ -151,7 +152,8 @@ export class SessionQueue {
 					if (this.onError) {
 						this.onError({
 							error: error instanceof Error || typeof error === 'string' ? error : String(error),
-							urls,
+							operationUrls: batch,
+							sessionId,
 						});
 					} else {
 						// By default, log the error and continue

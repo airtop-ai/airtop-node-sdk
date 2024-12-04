@@ -4,7 +4,7 @@ export type BatchOperateConfig = {
 	maxConcurrentSessions?: number;
 	maxWindowsPerSession?: number;
 	sessionConfig?: AirtopSessionConfigV1;
-	onError?: (data: {error: Error | string, urls?: string[]}) => void;
+	onError?: (error: BatchOperationError) => void;
 };
 
 export type BatchOperationUrl = {
@@ -16,11 +16,18 @@ export type BatchOperationInput = {
 	windowId: string;
 	sessionId: string;
 	liveViewUrl: string;
-	url: string;
-	context?: Record<string, unknown>;
+	operationUrl: BatchOperationUrl;
 };
 
 export type BatchOperationResponse = {
 	shouldHaltBatch?: boolean;
 	additionalUrls?: BatchOperationUrl[];
+};
+
+export type BatchOperationError = {
+	error: Error | string;
+	operationUrls: BatchOperationUrl[];
+	sessionId?: string; // Optional in case of error before session was created
+	windowId?: string; // Optional in case of error before window was opened
+	liveViewUrl?: string; // Optional in case of error before window was opened
 };
