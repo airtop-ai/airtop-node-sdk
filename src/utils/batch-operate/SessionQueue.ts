@@ -157,32 +157,17 @@ export class SessionQueue<T> {
 					// Return the session to the pool
 					this.sessionPool.push(sessionId);
 				} catch (error) {
-					const urls = batch.map((url) => url.url);
 					if (this.onError) {
-						// Catch any errors in the onError callback to avoid halting the entire process
-						try {
-							await this.onError({
-								error: error instanceof Error || typeof error === 'string' ? error : String(error),
-							operationUrls: batch,
-								sessionId,
-							});
-						} catch (onErrorError) {
-							this.client.error(`Error in onError callback: ${onErrorError instanceof Error ? onErrorError.message : String(onErrorError)}. Original error: ${error instanceof Error ? error.message : String(error)}`);
-						}
+						await this.handleErrorWithCallback({ error, batch, sessionId, callback: this.onError });
 					} else {
 						// By default, log the error and continue
-						const message = `Error for URLs ${JSON.stringify(urls)}: ${error instanceof Error ? error.message : String(error)}`;
-						this.client.error(message);
+						const urls = batch.map((url) => url.url);
+						this.logErrorForUrls(urls, error);
 					}
 
 					// Clean up the session in case of error
 					if (sessionId) {
-						// Catch any errors terminating the session to avoid halting the entire processß
-						try {
-							await this.client.sessions.terminate(sessionId);
-						} catch (error) {
-							this.client.error(`Error terminating session ${sessionId}: ${error instanceof Error ? error.message : String(error)}`);
-						}
+						await this.safelyTerminateSession(sessionId);
 					}
 				}
 			})();
@@ -201,5 +186,45 @@ export class SessionQueue<T> {
 		// Wait for all remaining sessions to complete
 		await Promise.allSettled(this.activePromises);
 		this.processingPromisesCount--;
+	}
+
+	private async handleErrorWithCallback({
+		originalError,
+		batch,
+		sessionId,
+		callback,
+	}: {
+		originalError: unknown;
+		batch: BatchOperationUrl[];
+		sessionId?: string;
+		callback: (error: BatchOperationError) => Promise<void>;
+	}): Promise<void> {
+		// Catch any errors in the onError callback to avoid halting the entire process
+		try {
+			await callback({
+				error: this.formatError(originalError),
+				operationUrls: batch,
+				sessionId,
+			});
+		} catch (newError) {
+			this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+		}
+	}
+
+	private logErrorForUrls(urls: string[], error: unknown): void {
+		const message = `Error for URLs ${JSON.stringify(urls)}: ${this.formatError(error)}`;
+		this.client.error(message);
+	}
+
+	private async safelyTerminateSession(sessionId: string): Promise<void> {
+		try {
+			await this.client.sessions.terminate(sessionId);
+		} catch (error) {
+			this.client.error(`Error terminating session ${sessionId}: ${this.formatError(error)}`);
+		}
+	}
+
+	private formatError(error: unknown): string {
+		return error instanceof Error ? error.message : String(error);
 	}
 }

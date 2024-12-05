@@ -136,31 +136,21 @@ export class WindowQueue<T> {
 
 				} catch (error) {
 					if (this.onError) {
-						// Catch any errors in the onError callback to avoid halting the entire process
-						try {
-							await this.onError({
-								error: error instanceof Error || typeof error === 'string' ? error : String(error),
-							operationUrls: [urlData],
-							sessionId: this.sessionId,
+						await this.handleErrorWithCallback({
+							originalError: error,
+							url: urlData,
+							callback: this.onError,
 							windowId,
-								liveViewUrl,
-							});
-						} catch (onErrorError) {
-							this.client.error(`Error in onError callback: ${onErrorError instanceof Error ? onErrorError.message : String(onErrorError)}. Original error: ${error instanceof Error ? error.message : String(error)}`);
-						}
+							liveViewUrl,
+						});
 					} else {
 						// By default, log the error and continue
-						const message = `Error for URL ${urlData.url}: ${error instanceof Error ? error.message : String(error)}`;
+						const message = `Error for URL ${urlData.url}: ${this.formatError(error)}`;
 						this.client.error(message);
 					}
 				} finally {
 					if (windowId) {
-						// Catch any errors closing the window to avoid halting the entire process
-						try {
-							await this.client.windows.close(this.sessionId, windowId);
-						} catch (error) {
-							this.client.error(`Error closing window ${windowId}: ${error instanceof Error ? error.message : String(error)}`);
-						}
+						await this.safelyTerminateWindow(windowId);
 					}
 				}
 			})();
@@ -183,5 +173,44 @@ export class WindowQueue<T> {
 		this.runEmitter.removeListener("halt", this.handleHaltEvent);
 
 		return results;
+	}
+
+	private async handleErrorWithCallback({
+		originalError,
+		url,
+		windowId,
+		liveViewUrl,
+		callback,
+	}: {
+		originalError: unknown;
+		url: BatchOperationUrl;
+		windowId?: string;
+		liveViewUrl?: string;
+		callback: (error: BatchOperationError) => Promise<void>;
+	}): Promise<void> {
+		// Catch any errors in the onError callback to avoid halting the entire process
+		try {
+			await callback({
+			error: this.formatError(originalError),
+			operationUrls: [url],
+			sessionId: this.sessionId,
+			windowId,
+			liveViewUrl,
+			});
+		} catch (newError) {
+			this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+		}
+	}
+
+	private async safelyTerminateWindow(windowId: string): Promise<void> {
+		try {
+			await this.client.windows.close(this.sessionId, windowId);
+		} catch (error) {
+			this.client.error(`Error closing window ${windowId}: ${this.formatError(error)}`);
+		}
+	}
+
+	private formatError(error: unknown): string {
+		return error instanceof Error ? error.message : String(error);
 	}
 }
