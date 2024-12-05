@@ -90,6 +90,9 @@ export class WindowQueue<T> {
 					});
 					windowId = data.windowId;
 
+					// TODO: Remove this debug log
+					this.client.log(`Created window ${windowId} for ${urlData.url}.  Data: ${JSON.stringify(data)}. Errors: ${JSON.stringify(errors)}. Warnings: ${JSON.stringify(warnings)}`);
+
 					if (warnings) {
 						this.client.warn(`Warnings received creating window ${windowId}: ${JSON.stringify(warnings)}`);
 					}
