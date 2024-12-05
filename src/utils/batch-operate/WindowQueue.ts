@@ -6,6 +6,7 @@ import type {
 	BatchOperationUrl,
 } from "./types";
 import type { EventEmitter } from "node:events";
+import type { Issue } from "api";
 
 export class WindowQueue<T> {
 	private activePromises: Promise<void>[] = [];
@@ -90,29 +91,17 @@ export class WindowQueue<T> {
 					});
 					windowId = data.windowId;
 
-					if (warnings) {
-						this.client.warn(`Warnings received creating window ${windowId}: ${JSON.stringify(warnings)}`);
-					}
+					this.handleErrorAndWarningResponses({ warnings, errors, sessionId: this.sessionId, url: urlData, operation: "window creation" });
 
 					if (!windowId) {
 						throw new Error(`WindowId not found, errors: ${JSON.stringify(errors)}`);
 					}
 
-					if (errors) {
-						this.client.error(`Errors received creating window ${windowId}: ${JSON.stringify(errors)}`);
-					}
-
 					const { data: windowInfo, warnings: windowWarnings, errors: windowErrors } =
 						await this.client.windows.getWindowInfo(this.sessionId, windowId);
 					liveViewUrl = windowInfo.liveViewUrl;
-
-					if (windowWarnings) {
-						this.client.warn(`Warnings received getting window info for ${windowId}: ${JSON.stringify(windowWarnings)}`);
-					}
-
-					if (windowErrors) {
-						this.client.error(`Errors received getting window info for ${windowId}: ${JSON.stringify(windowErrors)}`);
-					}
+						
+					this.handleErrorAndWarningResponses({ warnings: windowWarnings, errors: windowErrors, sessionId: this.sessionId, url: urlData, operation: "window info retrieval" });
 
 					// Run the operation on the window
 					const result = await this.operation({
@@ -220,5 +209,24 @@ export class WindowQueue<T> {
 
 	private formatError(error: unknown): string {
 		return error instanceof Error ? error.message : String(error);
+	}
+
+	private handleErrorAndWarningResponses({ warnings, errors, sessionId, url, operation }: { warnings?: Issue[]; errors?: Issue[]; sessionId: string; url: BatchOperationUrl; operation: string }): void {
+		if (!warnings && !errors) return;
+
+		const details: { sessionId: string; url: BatchOperationUrl; warnings?: Issue[]; errors?: Issue[] } = {
+			sessionId,
+			url,
+		};
+
+		if (warnings) {
+			details.warnings = warnings;
+			this.client.warn(`Received warnings for ${operation}: ${JSON.stringify(details)}`);
+		}
+
+		if (errors) {
+			details.errors = errors;
+			this.client.error(`Received errors for ${operation}: ${JSON.stringify(details)}`);
+		}
 	}
 }

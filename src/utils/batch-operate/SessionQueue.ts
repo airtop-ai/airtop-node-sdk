@@ -9,6 +9,7 @@ import type { EventEmitter } from "node:events";
 import type { AirtopSessionConfigV1 } from "wrapper/AirtopSessions";
 import { distributeUrlsToBatches } from "./helpers";
 import { WindowQueue } from "./WindowQueue";
+import type { Issue } from "api";
 
 export class SessionQueue<T> {
 	private activePromises: Promise<void>[] = [];
@@ -134,13 +135,7 @@ export class SessionQueue<T> {
 						});
 						sessionId = session.id;
 
-						if (warnings) {
-							this.client.warn(`Warnings received creating session ${sessionId}: ${JSON.stringify(warnings)}`);
-						}
-
-						if (errors) {
-							this.client.error(`Errors received creating session ${sessionId}: ${JSON.stringify(errors)}`);
-						}
+						this.handleErrorAndWarningResponses({ warnings, errors, sessionId, batch });
 					}
 
 					if (!sessionId) {
@@ -230,5 +225,25 @@ export class SessionQueue<T> {
 
 	private formatError(error: unknown): string {
 		return error instanceof Error ? error.message : String(error);
+	}
+
+	private handleErrorAndWarningResponses({ warnings, errors, sessionId, batch }: { warnings?: Issue[]; errors?: Issue[]; sessionId: string; batch: BatchOperationUrl[] }): void {
+		if (!warnings && !errors) return;
+
+		const details: { sessionId: string; urls: BatchOperationUrl[]; warnings?: Issue[]; errors?: Issue[] } = {
+			sessionId,
+			urls: batch,
+		};
+		
+		if (warnings) {
+			details.warnings = warnings;
+			this.client.warn(`Received warnings creating session: ${JSON.stringify(details)}`);
+		}
+
+		// Log an object with the errors and the URL
+		if (errors) {
+			details.errors = errors;
+			this.client.error(`Received errors creating session: ${JSON.stringify(details)}`);
+		}
 	}
 }
