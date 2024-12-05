@@ -129,13 +129,17 @@ export class SessionQueue<T> {
 					if (this.sessionPool.length > 0) {
 						sessionId = this.sessionPool.pop();
 					} else {
-						const { data: session, warnings } = await this.client.sessions.create({
+						const { data: session, warnings, errors } = await this.client.sessions.create({
 							configuration: this.sessionConfig,
 						});
 						sessionId = session.id;
 
 						if (warnings) {
 							this.client.warn(`Warnings received creating session ${sessionId}: ${JSON.stringify(warnings)}`);
+						}
+
+						if (errors) {
+							this.client.error(`Errors received creating session ${sessionId}: ${JSON.stringify(errors)}`);
 						}
 					}
 
