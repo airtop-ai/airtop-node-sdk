@@ -158,7 +158,7 @@ export class SessionQueue<T> {
 					this.sessionPool.push(sessionId);
 				} catch (error) {
 					if (this.onError) {
-						await this.handleErrorWithCallback({ error, batch, sessionId, callback: this.onError });
+						await this.handleErrorWithCallback({ originalError: error, batch, sessionId, callback: this.onError });
 					} else {
 						// By default, log the error and continue
 						const urls = batch.map((url) => url.url);
