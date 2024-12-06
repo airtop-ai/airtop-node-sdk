@@ -119,7 +119,7 @@ export class SessionQueue<T> {
 
 	private async terminateAllSessions(): Promise<void> {
 		for (const sessionId of this.sessionPool) {
-			await this.safelyTerminateSession(sessionId);
+			this.safelyTerminateSession(sessionId);
 		}
 	}
 
@@ -194,7 +194,7 @@ export class SessionQueue<T> {
 
 						// Clean up the session in case of error
 						if (sessionId) {
-							await this.safelyTerminateSession(sessionId);
+							this.safelyTerminateSession(sessionId);
 						}
 					}
 				})();
@@ -249,12 +249,11 @@ export class SessionQueue<T> {
 		this.client.error(message);
 	}
 
-	private async safelyTerminateSession(sessionId: string): Promise<void> {
-		try {
-			await this.client.sessions.terminate(sessionId);
-		} catch (error) {
+	private safelyTerminateSession(sessionId: string): void {
+		// Do not await since we don't want to block the main thread
+		this.client.sessions.terminate(sessionId).catch((error) => {
 			this.client.error(`Error terminating session ${sessionId}: ${this.formatError(error)}`);
-		}
+		});
 	}
 
 	private formatError(error: unknown): string {
