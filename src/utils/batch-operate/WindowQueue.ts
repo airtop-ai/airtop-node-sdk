@@ -7,10 +7,14 @@ import type {
 } from "./types";
 import type { EventEmitter } from "node:events";
 import type { Issue } from "api";
+import Mutex from "async-mutex/lib/Mutex";
 
 export class WindowQueue<T> {
 	private activePromises: Promise<void>[] = [];
 	private urlQueue: BatchOperationUrl[] = [];
+	private activePromisesMutex = new Mutex();
+	private urlQueueMutex = new Mutex();
+
 	private maxWindowsPerSession: number;
 	private runEmitter: EventEmitter;
 	private sessionId: string;
@@ -41,8 +45,10 @@ export class WindowQueue<T> {
 		this.onError = onError;
 	}
 
-	public addUrlToQueue(url: BatchOperationUrl): void {
-		this.urlQueue.push(url);
+	public async addUrlToQueue(url: BatchOperationUrl): Promise<void> {
+		await this.urlQueueMutex.runExclusive(() => {
+			this.urlQueue.push(url);
+		});
 	}
 
 	private handleHaltEvent(): void {
@@ -54,19 +60,29 @@ export class WindowQueue<T> {
 		const results: T[] = [];
 		this.runEmitter.once("halt", this.handleHaltEvent);
 
-		this.urlQueue = [...urls];
+		await this.urlQueueMutex.runExclusive(() => {
+			this.urlQueue = [...urls];
+		});
 		this.client.log(
 			`Processing batch: ${JSON.stringify(urls)} for session ${this.sessionId}`,
 		);
 
 		while (this.urlQueue.length > 0) {
 			// Wait for any window to complete before starting a new one
-			if (this.activePromises.length >= this.maxWindowsPerSession) {
-				await Promise.race(this.activePromises);
-				continue;
-			}
+			let shouldContinue = false;
+			await this.activePromisesMutex.runExclusive(async () => {
+				if (this.activePromises.length >= this.maxWindowsPerSession) {
+					await Promise.race(this.activePromises);
+					shouldContinue = true;
+				}
+			});
 
-			const urlData = this.urlQueue.shift(); // Take the next url from the queue
+			if (shouldContinue) continue;
+
+			let urlData: BatchOperationUrl | undefined;
+			await this.urlQueueMutex.runExclusive(() => {
+				urlData = this.urlQueue.shift(); // Take the next url from the queue
+			});
 			if (!urlData) break; // No more urls to process
 
 			// If we have less than the max concurrent operations, start a new one
@@ -152,14 +168,18 @@ export class WindowQueue<T> {
 				}
 			})();
 
-			this.activePromises.push(promise);
+			await this.activePromisesMutex.runExclusive(() => {
+				this.activePromises.push(promise);
+			});
 
 			// Remove the promise from the active list when it resolves
-			promise.finally(() => {
-				const index = this.activePromises.indexOf(promise);
-				if (index > -1) {
-					this.activePromises.splice(index, 1);
-				}
+			promise.finally(async () => {
+				await this.activePromisesMutex.runExclusive(() => {
+					const index = this.activePromises.indexOf(promise);
+					if (index > -1) {
+						this.activePromises.splice(index, 1);
+					}
+				});
 			});
 		}
 

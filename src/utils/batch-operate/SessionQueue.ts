@@ -10,9 +10,12 @@ import type { AirtopSessionConfigV1 } from "wrapper/AirtopSessions";
 import { distributeUrlsToBatches } from "./helpers";
 import { WindowQueue } from "./WindowQueue";
 import type { Issue } from "api";
+import { Mutex } from 'async-mutex';
 
 export class SessionQueue<T> {
 	private activePromises: Promise<void>[] = [];
+	private activePromisesMutex = new Mutex();
+
 	private maxConcurrentSessions: number;
 	private runEmitter: EventEmitter;
 	private maxWindowsPerSession: number;
@@ -24,11 +27,13 @@ export class SessionQueue<T> {
 	private onError?: (error: BatchOperationError) => Promise<void>;
 
 	private batchQueue: BatchOperationUrl[][] = [];
+	private batchQueueMutex = new Mutex();
 	private latestProcessingPromise: Promise<void> | null = null;
 	private processingPromisesCount = 0;
 
 	private client: AirtopClient;
 	private sessionPool: string[] = [];
+	private sessionPoolMutex = new Mutex();
 
 	private results: T[];
 
@@ -82,7 +87,11 @@ export class SessionQueue<T> {
 		this.client.log(
 			`Adding new batches to queue: ${JSON.stringify(newBatches)}`,
 		);
-		this.batchQueue.push(...newBatches);
+
+		// Add new batches to the queue
+		await this.batchQueueMutex.runExclusive(() => {
+			this.batchQueue.push(...newBatches);
+		});
 
 		// Update existing processing promise
 		this.processingPromisesCount++;
@@ -90,7 +99,9 @@ export class SessionQueue<T> {
 	}
 
 	public async processInitialBatches(): Promise<void> {
-		this.batchQueue = [...this.initialBatches];
+		await this.batchQueueMutex.runExclusive(() => {
+			this.batchQueue = [...this.initialBatches];
+		});
 		this.processingPromisesCount++;
 		this.latestProcessingPromise = this.processPendingBatches();
 		await this.latestProcessingPromise;
@@ -108,83 +119,106 @@ export class SessionQueue<T> {
 
 	private async terminateAllSessions(): Promise<void> {
 		for (const sessionId of this.sessionPool) {
-			await this.client.sessions.terminate(sessionId);
+			await this.safelyTerminateSession(sessionId);
 		}
 	}
 
 	private async processPendingBatches(): Promise<void> {
-		while (this.batchQueue.length > 0) {
-			// Wait for any session to complete before starting a new one
-			if (this.activePromises.length >= this.maxConcurrentSessions) {
-				await Promise.race(this.activePromises);
-				continue;
+		try {
+			while (this.batchQueue.length > 0) {
+				// Wait for any session to complete before starting a new one
+				let shouldContinue = false;
+				await this.activePromisesMutex.runExclusive(async () => {
+					if (this.activePromises.length >= this.maxConcurrentSessions) {
+						await Promise.race(this.activePromises);
+						shouldContinue = true;
+					}
+				});
+
+				if (shouldContinue) continue;
+
+				let batch: BatchOperationUrl[] | undefined;
+				await this.batchQueueMutex.runExclusive(() => {
+					batch = this.batchQueue.shift();
+				});
+
+				if (!batch || batch.length === 0) break;
+
+				const promise = (async () => {
+					let sessionId: string | undefined;
+					try {
+						// Check if there's an available session in the pool
+						await this.sessionPoolMutex.runExclusive(() => {
+							if (this.sessionPool.length > 0) {
+								sessionId = this.sessionPool.pop();
+							}
+						});
+
+						// Otherwise, create a new session
+						if (!sessionId) {
+							const { data: session, warnings, errors } = await this.client.sessions.create({
+								configuration: this.sessionConfig,
+							});
+							sessionId = session.id;
+
+							this.handleErrorAndWarningResponses({ warnings, errors, sessionId, batch });
+						}
+
+						const queue = new WindowQueue(
+							this.maxWindowsPerSession,
+							this.runEmitter,
+							sessionId,
+							this.client,
+							this.operation,
+							this.onError,
+						);
+						const windowResults = await queue.processInBatches(batch);
+						this.results.push(...windowResults);
+
+						// Return the session to the pool
+						await this.sessionPoolMutex.runExclusive(() => {
+							if (!sessionId) {
+								throw new Error("Missing sessionId, cannot return to pool");
+							}
+
+							this.sessionPool.push(sessionId);
+						});
+					} catch (error) {
+						if (this.onError) {
+							await this.handleErrorWithCallback({ originalError: error, batch, sessionId, callback: this.onError });
+						} else {
+							// By default, log the error and continue
+							const urls = batch.map((url) => url.url);
+							this.logErrorForUrls(urls, error);
+						}
+
+						// Clean up the session in case of error
+						if (sessionId) {
+							await this.safelyTerminateSession(sessionId);
+						}
+					}
+				})();
+
+				await this.activePromisesMutex.runExclusive(() => {
+					this.activePromises.push(promise);
+				});
+
+				// Remove the promise when it completes
+				promise.finally(async () => {
+					await this.activePromisesMutex.runExclusive(() => {
+						const index = this.activePromises.indexOf(promise);
+						if (index > -1) {
+							this.activePromises.splice(index, 1);
+						}
+					});
+				});
 			}
 
-			const batch = this.batchQueue.shift();
-			if (!batch || batch.length === 0) break;
-
-			const promise = (async () => {
-				let sessionId: string | undefined;
-				try {
-					// Check if there's an available session in the pool
-					if (this.sessionPool.length > 0) {
-						sessionId = this.sessionPool.pop();
-					} else {
-						const { data: session, warnings, errors } = await this.client.sessions.create({
-							configuration: this.sessionConfig,
-						});
-						sessionId = session.id;
-
-						this.handleErrorAndWarningResponses({ warnings, errors, sessionId, batch });
-					}
-
-					if (!sessionId) {
-						throw new Error("No session available for batch");
-					}
-
-					const queue = new WindowQueue(
-						this.maxWindowsPerSession,
-						this.runEmitter,
-						sessionId,
-						this.client,
-						this.operation,
-						this.onError,
-					);
-					const windowResults = await queue.processInBatches(batch);
-					this.results.push(...windowResults);
-
-					// Return the session to the pool
-					this.sessionPool.push(sessionId);
-				} catch (error) {
-					if (this.onError) {
-						await this.handleErrorWithCallback({ originalError: error, batch, sessionId, callback: this.onError });
-					} else {
-						// By default, log the error and continue
-						const urls = batch.map((url) => url.url);
-						this.logErrorForUrls(urls, error);
-					}
-
-					// Clean up the session in case of error
-					if (sessionId) {
-						await this.safelyTerminateSession(sessionId);
-					}
-				}
-			})();
-
-			this.activePromises.push(promise);
-
-			// Remove the promise when it completes
-			promise.finally(() => {
-				const index = this.activePromises.indexOf(promise);
-				if (index > -1) {
-					this.activePromises.splice(index, 1);
-				}
-			});
+			// Wait for all remaining sessions to complete
+			await Promise.allSettled(this.activePromises);
+		} finally {
+			this.processingPromisesCount--;
 		}
-
-		// Wait for all remaining sessions to complete
-		await Promise.allSettled(this.activePromises);
-		this.processingPromisesCount--;
 	}
 
 	private async handleErrorWithCallback({
