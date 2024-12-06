@@ -7,7 +7,7 @@ import type {
 } from "./types";
 import type { EventEmitter } from "node:events";
 import type { Issue } from "api";
-import Mutex from "async-mutex/lib/Mutex";
+import { Mutex } from 'async-mutex';
 
 export class WindowQueue<T> {
 	private activePromises: Promise<void>[] = [];
