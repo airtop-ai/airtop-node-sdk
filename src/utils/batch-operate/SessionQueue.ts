@@ -25,6 +25,7 @@ export class SessionQueue<T> {
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse<T>>;
 	private onError?: (error: BatchOperationError) => Promise<void>;
+	private isHalted: boolean;
 
 	private batchQueue: BatchOperationUrl[][] = [];
 	private batchQueueMutex = new Mutex();
@@ -73,6 +74,12 @@ export class SessionQueue<T> {
 		this.latestProcessingPromise = null;
 		this.results = [];
 		this.client = client;
+		this.isHalted = false;
+	}
+
+	public handleHaltEvent(): void {
+		this.client.log("Halt event received");
+		this.isHalted = true;
 	}
 
 	public async addUrlsToBatchQueue(
@@ -103,6 +110,7 @@ export class SessionQueue<T> {
 			this.batchQueue = [...this.initialBatches];
 		});
 		this.processingPromisesCount++;
+		this.runEmitter.on("halt", this.handleHaltEvent);
 		this.latestProcessingPromise = this.processPendingBatches();
 		await this.latestProcessingPromise;
 	}
@@ -113,6 +121,8 @@ export class SessionQueue<T> {
 		}
 
 		await this.terminateAllSessions();
+
+		this.runEmitter.removeListener("halt", this.handleHaltEvent);
 
 		return this.results;
 	}
@@ -145,6 +155,11 @@ export class SessionQueue<T> {
 				if (!batch || batch.length === 0) break;
 
 				const promise = (async () => {
+					if (this.isHalted) {
+						this.client.log("Halt event received, skipping batch");
+						return;
+					}
+
 					let sessionId: string | undefined;
 					try {
 						// Check if there's an available session in the pool
@@ -171,6 +186,7 @@ export class SessionQueue<T> {
 							this.client,
 							this.operation,
 							this.onError,
+							this.isHalted,
 						);
 						const windowResults = await queue.processInBatches(batch);
 						this.results.push(...windowResults);

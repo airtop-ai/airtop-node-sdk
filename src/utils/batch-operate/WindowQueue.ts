@@ -23,7 +23,7 @@ export class WindowQueue<T> {
 		input: BatchOperationInput,
 	) => Promise<BatchOperationResponse<T>>;
 	private onError?: (error: BatchOperationError) => Promise<void>;
-	private isHalted = false;
+	private isHalted;
 
 	constructor(
 		maxWindowsPerSession: number,
@@ -32,6 +32,7 @@ export class WindowQueue<T> {
 		client: AirtopClient,
 		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
 		onError?: (error: BatchOperationError) => Promise<void>,
+		isHalted = false,
 	) {
 		if (!Number.isInteger(maxWindowsPerSession) || maxWindowsPerSession <= 0) {
 			throw new Error("maxWindowsPerSession must be a positive integer");
@@ -43,6 +44,7 @@ export class WindowQueue<T> {
 		this.client = client;
 		this.operation = operation;
 		this.onError = onError;
+		this.isHalted = isHalted;
 	}
 
 	public async addUrlToQueue(url: BatchOperationUrl): Promise<void> {
@@ -58,7 +60,7 @@ export class WindowQueue<T> {
 
 	async processInBatches(urls: BatchOperationUrl[]): Promise<T[]> {
 		const results: T[] = [];
-		this.runEmitter.once("halt", this.handleHaltEvent);
+		this.runEmitter.on("halt", this.handleHaltEvent);
 
 		await this.urlQueueMutex.runExclusive(() => {
 			this.urlQueue = [...urls];
