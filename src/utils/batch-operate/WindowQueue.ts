@@ -60,7 +60,7 @@ export class WindowQueue<T> {
 
 	async processInBatches(urls: BatchOperationUrl[]): Promise<T[]> {
 		const results: T[] = [];
-		this.runEmitter.on("halt", this.handleHaltEvent);
+		this.runEmitter.on("halt", this.handleHaltEvent.bind(this));
 
 		await this.urlQueueMutex.runExclusive(() => {
 			this.urlQueue = [...urls];

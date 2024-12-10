@@ -18,6 +18,17 @@ export const batchOperate = async<T> (
 	client: AirtopClient,
 	config?: BatchOperateConfig,
 ): Promise<T[]> => {
+	// Validate the urls before proceeding
+	if (!Array.isArray(urls)) {
+		throw new Error("Please provide a valid list of urls");
+	}
+
+	for (const url of urls) {
+		if (!url || typeof url !== "object" || !("url" in url)) {
+			throw new Error("Please provide a valid list of urls");
+		}
+	}
+
 	const runEmitter = new EventEmitter();
 
 	const {

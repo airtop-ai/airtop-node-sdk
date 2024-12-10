@@ -110,7 +110,7 @@ export class SessionQueue<T> {
 			this.batchQueue = [...this.initialBatches];
 		});
 		this.processingPromisesCount++;
-		this.runEmitter.on("halt", this.handleHaltEvent);
+		this.runEmitter.on("halt", this.handleHaltEvent.bind(this));
 		this.latestProcessingPromise = this.processPendingBatches();
 		await this.latestProcessingPromise;
 	}
