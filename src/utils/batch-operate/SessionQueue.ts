@@ -78,7 +78,11 @@ export class SessionQueue<T> {
 	}
 
 	public handleHaltEvent(): void {
-		this.client.log("Halt event received");
+		try {
+			this.client.log("Halt event received");
+		} catch (error) {
+			console.error("Error logging halt event:", error);
+		}
 		this.isHalted = true;
 	}
 
@@ -91,9 +95,13 @@ export class SessionQueue<T> {
 			this.maxConcurrentSessions,
 		);
 
-		this.client.log(
-			`Adding new batches to queue: ${JSON.stringify(newBatches)}`,
-		);
+		try {
+			this.client.log(
+				`Adding new batches to queue: ${JSON.stringify(newBatches)}`,
+			);
+		} catch (error) {
+			console.error("Error logging new batches:", error);
+		}
 
 		// Add new batches to the queue
 		await this.batchQueueMutex.runExclusive(() => {
@@ -110,7 +118,7 @@ export class SessionQueue<T> {
 			this.batchQueue = [...this.initialBatches];
 		});
 		this.processingPromisesCount++;
-		this.runEmitter.on("halt", this.handleHaltEvent);
+		this.runEmitter.on("halt", this.handleHaltEvent.bind(this));
 		this.latestProcessingPromise = this.processPendingBatches();
 		await this.latestProcessingPromise;
 	}
@@ -156,7 +164,11 @@ export class SessionQueue<T> {
 
 				const promise = (async () => {
 					if (this.isHalted) {
-						this.client.log("Halt event received, skipping batch");
+						try {
+							this.client.log("Halt event received, skipping batch");
+						} catch (error) {
+							console.error("Error logging halt skip:", error);
+						}
 						return;
 					}
 
@@ -256,19 +268,31 @@ export class SessionQueue<T> {
 				sessionId,
 			});
 		} catch (newError) {
-			this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+			try {
+				this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+			} catch (error) {
+				console.error("Error logging error callback:", error);
+			}
 		}
 	}
 
 	private logErrorForUrls(urls: string[], error: unknown): void {
-		const message = `Error for URLs ${JSON.stringify(urls)}: ${this.formatError(error)}`;
-		this.client.error(message);
+		try {
+			const message = `Error for URLs ${JSON.stringify(urls)}: ${this.formatError(error)}`;
+			this.client.error(message);
+		} catch (loggingError) {
+			console.error("Error logging URL errors:", loggingError);
+		}
 	}
 
 	private safelyTerminateSession(sessionId: string): void {
 		// Do not await since we don't want to block the main thread
 		this.client.sessions.terminate(sessionId).catch((error) => {
-			this.client.error(`Error terminating session ${sessionId}: ${this.formatError(error)}`);
+			try {
+				this.client.error(`Error terminating session ${sessionId}: ${this.formatError(error)}`);
+			} catch (loggingError) {
+				console.error("Error logging session termination:", loggingError);
+			}
 		});
 	}
 
@@ -286,13 +310,21 @@ export class SessionQueue<T> {
 		
 		if (warnings) {
 			details.warnings = warnings;
-			this.client.warn(`Received warnings creating session: ${JSON.stringify(details)}`);
+			try {
+				this.client.warn(`Received warnings creating session: ${JSON.stringify(details)}`);
+			} catch (error) {
+				console.error("Error logging session warnings:", error);
+			}
 		}
 
 		// Log an object with the errors and the URL
 		if (errors) {
 			details.errors = errors;
-			this.client.error(`Received errors creating session: ${JSON.stringify(details)}`);
+			try {
+				this.client.error(`Received errors creating session: ${JSON.stringify(details)}`);
+			} catch (error) {
+				console.error("Error logging session errors:", error);
+			}
 		}
 	}
 }

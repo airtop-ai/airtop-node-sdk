@@ -54,20 +54,28 @@ export class WindowQueue<T> {
 	}
 
 	private handleHaltEvent(): void {
-		this.client.log("Halt event received");
+		try {
+			this.client.log("Halt event received");
+		} catch (error) {
+			console.error("Error logging halt event:", error);
+		}
 		this.isHalted = true;
 	}
 
 	async processInBatches(urls: BatchOperationUrl[]): Promise<T[]> {
 		const results: T[] = [];
-		this.runEmitter.on("halt", this.handleHaltEvent);
+		this.runEmitter.on("halt", this.handleHaltEvent.bind(this));
 
 		await this.urlQueueMutex.runExclusive(() => {
 			this.urlQueue = [...urls];
 		});
-		this.client.log(
-			`Processing batch: ${JSON.stringify(urls)} for session ${this.sessionId}`,
-		);
+		try {
+			this.client.log(
+				`Processing batch: ${JSON.stringify(urls)} for session ${this.sessionId}`,
+			);
+		} catch (error) {
+			console.error("Error logging batch processing:", error);
+		}
 
 		while (this.urlQueue.length > 0) {
 			// Wait for any window to complete before starting a new one
@@ -91,9 +99,13 @@ export class WindowQueue<T> {
 			const promise = (async () => {
 				// Do not process any more urls if the processing has been halted
 				if (this.isHalted) {
-					this.client.log(
-						`Processing halted, skipping window creation for ${urlData.url}`,
-					);
+					try {
+						this.client.log(
+							`Processing halted, skipping window creation for ${urlData.url}`,
+						);
+					} catch (error) {
+						console.error("Error logging halt status:", error);
+					}
 					return;
 				}
 
@@ -101,9 +113,13 @@ export class WindowQueue<T> {
 				let liveViewUrl: string | undefined;
 				try {
 					// Create a new window pointed to the url
-					this.client.log(
-						`Creating window for ${urlData.url} in session ${this.sessionId}`,
-					);
+					try {
+						this.client.log(
+							`Creating window for ${urlData.url} in session ${this.sessionId}`,
+						);
+					} catch (error) {
+						console.error("Error logging window creation:", error);
+					}
 					const { data, errors, warnings } = await this.client.windows.create(this.sessionId, {
 						url: urlData.url,
 					});
@@ -137,14 +153,22 @@ export class WindowQueue<T> {
 						}
 
 						if (shouldHaltBatch) {
-							this.client.log("Emitting halt event");
+							try {
+								this.client.log("Emitting halt event");
+							} catch (error) {
+								console.error("Error logging halt emission:", error);
+							}
 							this.runEmitter.emit("halt");
 						}
 	
 						if (additionalUrls && additionalUrls.length > 0) {
-							this.client.log(
-								`Emitting addUrls event with urls: ${JSON.stringify(additionalUrls)}`,
-							);
+							try {
+								this.client.log(
+									`Emitting addUrls event with urls: ${JSON.stringify(additionalUrls)}`,
+								);
+							} catch (error) {
+								console.error("Error logging additional urls:", error);
+							}
 							this.runEmitter.emit("addUrls", additionalUrls);
 						}
 					}
@@ -217,7 +241,11 @@ export class WindowQueue<T> {
 			liveViewUrl,
 			});
 		} catch (newError) {
-			this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+			try {
+				this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+			} catch (error) {
+				console.error("Error logging error callback:", error);
+			}
 		}
 	}
 
@@ -225,7 +253,11 @@ export class WindowQueue<T> {
 		try {
 			await this.client.windows.close(this.sessionId, windowId);
 		} catch (error) {
-			this.client.error(`Error closing window ${windowId}: ${this.formatError(error)}`);
+			try {
+				this.client.error(`Error closing window ${windowId}: ${this.formatError(error)}`);
+			} catch (loggingError) {
+				console.error("Error logging window closure error:", loggingError);
+			}
 		}
 	}
 
@@ -243,12 +275,20 @@ export class WindowQueue<T> {
 
 		if (warnings) {
 			details.warnings = warnings;
-			this.client.warn(`Received warnings for ${operation}: ${JSON.stringify(details)}`);
+			try {
+				this.client.warn(`Received warnings for ${operation}: ${JSON.stringify(details)}`);
+			} catch (error) {
+				console.error("Error logging warnings:", error);
+			}
 		}
 
 		if (errors) {
 			details.errors = errors;
-			this.client.error(`Received errors for ${operation}: ${JSON.stringify(details)}`);
+			try {
+				this.client.error(`Received errors for ${operation}: ${JSON.stringify(details)}`);
+			} catch (error) {
+				console.error("Error logging errors:", error);
+			}
 		}
 	}
 }
