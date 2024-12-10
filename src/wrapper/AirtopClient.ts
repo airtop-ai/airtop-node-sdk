@@ -1,6 +1,13 @@
 import { AirtopClient as FernClient } from '../Client'; // alias the Fern generated client
 import { AirtopSessions } from './AirtopSessions';
 import { AirtopWindows } from './AirtopWindows';
+import {
+	batchOperate,
+	type BatchOperateConfig,
+	type BatchOperationInput,
+	type BatchOperationResponse,
+	type BatchOperationUrl,
+} from "../utils";
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
@@ -33,7 +40,19 @@ export class AirtopClient {
     }
   }
 
+  warn(message: string) {
+    console.warn(message);
+  }
+
   error(err: any) {
     console.error(err);
   }
+
+	batchOperate = async<T> (
+		urls: BatchOperationUrl[],
+		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
+		config?: BatchOperateConfig,
+	): Promise<T[]> => {
+		return await batchOperate(urls, operation, this, config);
+	};
 }
