@@ -22,6 +22,14 @@ export class AirtopClient {
     this.debug = _options?.debug || false;
   }
 
+  setApiKey(apiKey: string) {
+    this._options.apiKey = apiKey;
+  }
+
+  setEnvironment(environment: string) {
+    this._options.environment = environment;
+  }
+
   public get sessions(): AirtopSessions {
     return (this._sessions ??= new AirtopSessions(this._options, this.debug));
   }
