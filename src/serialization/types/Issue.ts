@@ -10,6 +10,7 @@ export const Issue: core.serialization.ObjectSchema<serializers.Issue.Raw, Airto
     code: core.serialization.string().optional(),
     details: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     message: core.serialization.string(),
+    reason: core.serialization.string().optional(),
 });
 
 export declare namespace Issue {
@@ -17,5 +18,6 @@ export declare namespace Issue {
         code?: string | null;
         details?: Record<string, unknown> | null;
         message: string;
+        reason?: string | null;
     }
 }

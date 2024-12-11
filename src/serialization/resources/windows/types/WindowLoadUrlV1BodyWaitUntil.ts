@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const WindowLoadUrlV1BodyWaitUntil: core.serialization.Schema<
     serializers.WindowLoadUrlV1BodyWaitUntil.Raw,
     Airtop.WindowLoadUrlV1BodyWaitUntil
-> = core.serialization.enum_(["load", "domContentLoaded", "complete"]);
+> = core.serialization.enum_(["load", "domContentLoaded", "complete", "noWait"]);
 
 export declare namespace WindowLoadUrlV1BodyWaitUntil {
-    type Raw = "load" | "domContentLoaded" | "complete";
+    type Raw = "load" | "domContentLoaded" | "complete" | "noWait";
 }

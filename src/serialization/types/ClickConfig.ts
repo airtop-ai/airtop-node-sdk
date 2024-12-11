@@ -5,10 +5,15 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { VisualAnalysisConfig } from "./VisualAnalysisConfig";
 
-export const ClickConfig: core.serialization.Schema<serializers.ClickConfig.Raw, Airtop.ClickConfig> =
-    core.serialization.record(core.serialization.string(), core.serialization.unknown());
+export const ClickConfig: core.serialization.ObjectSchema<serializers.ClickConfig.Raw, Airtop.ClickConfig> =
+    core.serialization.object({
+        visualAnalysis: VisualAnalysisConfig.optional(),
+    });
 
 export declare namespace ClickConfig {
-    type Raw = Record<string, unknown>;
+    interface Raw {
+        visualAnalysis?: VisualAnalysisConfig.Raw | null;
+    }
 }

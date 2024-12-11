@@ -6,14 +6,14 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 
-export const EmptyResponseJson: core.serialization.ObjectSchema<
-    serializers.EmptyResponseJson.Raw,
-    Airtop.EmptyResponseJson
+export const OperationOutcome: core.serialization.ObjectSchema<
+    serializers.OperationOutcome.Raw,
+    Airtop.OperationOutcome
 > = core.serialization.object({
     success: core.serialization.boolean(),
 });
 
-export declare namespace EmptyResponseJson {
+export declare namespace OperationOutcome {
     interface Raw {
         success: boolean;
     }

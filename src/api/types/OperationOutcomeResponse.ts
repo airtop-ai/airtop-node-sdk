@@ -4,9 +4,9 @@
 
 import * as Airtop from "../index";
 
-export interface EmptyResponse {
-    data: Airtop.EmptyResponseJson;
+export interface OperationOutcomeResponse {
+    data: Airtop.OperationOutcome;
     errors?: Airtop.Issue[];
-    meta: Airtop.EnvelopeStatusDefaultMeta;
+    meta: Airtop.EnvelopeDefaultMeta;
     warnings?: Airtop.Issue[];
 }
