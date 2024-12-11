@@ -230,6 +230,76 @@ export class AirtopWindows extends WindowsClass {
 		);
 	}
 
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window.
+	 * @param {Airtop.SessionClickHandlerRequestBody} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.windows.click("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+	 *         elementDescription: "The login button"
+	 *     })
+	 */
+	public async click(
+			sessionId: string,
+			windowId: string,
+			request: Airtop.SessionClickHandlerRequestBody,
+			requestOptions?: WindowsNamespace.RequestOptions
+	): Promise<Airtop.AiPromptResponse> {
+		return super.click(sessionId, windowId, request, 	{
+			timeoutInSeconds: 600,
+			...requestOptions,
+			maxRetries: 0,
+		},);
+	}
+
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window.
+	 * @param {Airtop.SessionHoverHandlerRequestBody} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+	 */
+	public async hover(
+			sessionId: string,
+			windowId: string,
+			request: Airtop.SessionHoverHandlerRequestBody = {},
+			requestOptions?: WindowsNamespace.RequestOptions
+	): Promise<Airtop.AiPromptResponse> {
+		return super.hover(sessionId, windowId, request, {
+			timeoutInSeconds: 600,
+			...requestOptions,
+			maxRetries: 0,
+		});
+	}	
+
+	/**
+	 * @param {string} sessionId - The session id for the window.
+	 * @param {string} windowId - The Airtop window id of the browser window.
+	 * @param {Airtop.SessionTypeHandlerRequestBody} request
+	 * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.windows.type("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+	 *         text: "Example text"
+	 *     })
+	 */
+	public async type(
+			sessionId: string,
+			windowId: string,
+			request: Airtop.SessionTypeHandlerRequestBody,
+			requestOptions?: WindowsNamespace.RequestOptions
+	): Promise<Airtop.AiPromptResponse> {
+		return super.type(sessionId, windowId, request, {
+			timeoutInSeconds: 600,
+			...requestOptions,
+			maxRetries: 0,
+		});
+	}
+
 	private async executeSeleniumCDPCommand(
 		driver: seleniumWebdriver.WebDriver,
 		session: Airtop.ExternalSessionWithConnectionInfo,
