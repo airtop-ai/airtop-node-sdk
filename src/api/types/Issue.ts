@@ -9,4 +9,6 @@ export interface Issue {
     details?: Record<string, unknown>;
     /** Message describing the issue. */
     message: string;
+    /** Underlying reason for the issue. */
+    reason?: string;
 }

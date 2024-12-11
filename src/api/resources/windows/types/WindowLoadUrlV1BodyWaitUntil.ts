@@ -3,12 +3,13 @@
  */
 
 /**
- * Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, and 'complete' will wait until the page and all it's iframes have loaded it's dom and assets.
+ * Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, 'complete' will wait until the page and all it's iframes have loaded it's dom and assets. 'noWait' will not wait for any loading event and will return immediately.
  */
-export type WindowLoadUrlV1BodyWaitUntil = "load" | "domContentLoaded" | "complete";
+export type WindowLoadUrlV1BodyWaitUntil = "load" | "domContentLoaded" | "complete" | "noWait";
 
 export const WindowLoadUrlV1BodyWaitUntil = {
     Load: "load",
     DomContentLoaded: "domContentLoaded",
     Complete: "complete",
+    NoWait: "noWait",
 } as const;

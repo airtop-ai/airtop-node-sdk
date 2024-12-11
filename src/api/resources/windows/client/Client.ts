@@ -52,8 +52,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -137,8 +137,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -197,7 +197,7 @@ export class Windows {
         windowId: string,
         request: Airtop.WindowLoadUrlV1Body,
         requestOptions?: Windows.RequestOptions
-    ): Promise<Airtop.EmptyResponse> {
+    ): Promise<Airtop.OperationOutcomeResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -208,8 +208,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -221,7 +221,7 @@ export class Windows {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.EmptyResponse.parseOrThrow(_response.body, {
+            return serializers.OperationOutcomeResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -275,8 +275,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -345,8 +345,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -414,8 +414,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -460,7 +460,7 @@ export class Windows {
 
     /**
      * @param {string} sessionId - The session id for the window.
-     * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
+     * @param {string} windowId - The Airtop window id of the browser window.
      * @param {Airtop.SessionPageQueryHandlerRequestBody} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -485,8 +485,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -535,7 +535,7 @@ export class Windows {
      * This endpoint is deprecated. Please use the `pageQuery` endpoint instead.
      *
      * @param {string} sessionId - The session id for the window.
-     * @param {string} windowId - The Airtop window id of the browser window to target with an Airtop AI prompt.
+     * @param {string} windowId - The Airtop window id of the browser window.
      * @param {Airtop.SessionPageQueryHandlerRequestBody} request
      * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -560,8 +560,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -631,8 +631,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -702,8 +702,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -775,8 +775,8 @@ export class Windows {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.6",
-                "User-Agent": "@airtop/sdk/0.1.6",
+                "X-Fern-SDK-Version": "0.1.7",
+                "User-Agent": "@airtop/sdk/0.1.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
