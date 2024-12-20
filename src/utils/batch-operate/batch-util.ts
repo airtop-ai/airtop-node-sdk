@@ -5,7 +5,7 @@ import type {
 	BatchOperationResponse,
 	BatchOperationUrl,
 } from "./types";
-import { EventEmitter } from "node:events";
+import { EventEmitter } from "eventemitter3";
 import { distributeUrlsToBatches } from "./helpers";
 import { SessionQueue } from "./SessionQueue";
 
@@ -37,9 +37,6 @@ export const batchOperate = async<T> (
 		sessionConfig,
 		onError,
 	} = config ?? {};
-
-	// Set the maximum number of listeners to accommodate all concurrent sessions and windows
-	runEmitter.setMaxListeners(maxConcurrentSessions + (maxConcurrentSessions * maxWindowsPerSession) + 1);
 
 	// Split the urls into batches
 	const initialBatches = distributeUrlsToBatches(urls, maxConcurrentSessions);
