@@ -5,7 +5,7 @@ import type {
 	BatchOperationResponse,
 	BatchOperationUrl,
 } from "./types";
-import type { EventEmitter } from "node:events";
+import type { EventEmitter } from "eventemitter3";
 import type { Issue } from "api";
 import { Mutex } from 'async-mutex';
 
