@@ -82,8 +82,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.9",
-                "User-Agent": "@airtop/sdk/0.1.9",
+                "X-Fern-SDK-Version": "0.1.10",
+                "User-Agent": "@airtop/sdk/0.1.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -180,8 +180,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.9",
-                "User-Agent": "@airtop/sdk/0.1.9",
+                "X-Fern-SDK-Version": "0.1.10",
+                "User-Agent": "@airtop/sdk/0.1.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -248,8 +248,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.9",
-                "User-Agent": "@airtop/sdk/0.1.9",
+                "X-Fern-SDK-Version": "0.1.10",
+                "User-Agent": "@airtop/sdk/0.1.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -344,8 +344,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.9",
-                "User-Agent": "@airtop/sdk/0.1.9",
+                "X-Fern-SDK-Version": "0.1.10",
+                "User-Agent": "@airtop/sdk/0.1.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -386,8 +386,19 @@ export class Sessions {
      */
     public async events(
         id: string,
+        request: Airtop.SessionsEventsRequest = {},
         requestOptions?: Sessions.RequestOptions
     ): Promise<core.Stream<Airtop.SessionsEventsResponse>> {
+        const { lastEventId, all } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (lastEventId != null) {
+            _queryParams["lastEventId"] = lastEventId.toString();
+        }
+
+        if (all != null) {
+            _queryParams["all"] = all.toString();
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -398,12 +409,13 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.9",
-                "User-Agent": "@airtop/sdk/0.1.9",
+                "X-Fern-SDK-Version": "0.1.10",
+                "User-Agent": "@airtop/sdk/0.1.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             requestType: "json",
             responseType: "sse",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -510,8 +522,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.9",
-                "User-Agent": "@airtop/sdk/0.1.9",
+                "X-Fern-SDK-Version": "0.1.10",
+                "User-Agent": "@airtop/sdk/0.1.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -18,6 +18,7 @@ export const SessionTypeHandlerRequestBody: core.serialization.Schema<
     pressEnterKey: core.serialization.boolean().optional(),
     text: core.serialization.string(),
     timeThresholdSeconds: core.serialization.number().optional(),
+    waitForNavigation: core.serialization.boolean().optional(),
 });
 
 export declare namespace SessionTypeHandlerRequestBody {
@@ -29,5 +30,6 @@ export declare namespace SessionTypeHandlerRequestBody {
         pressEnterKey?: boolean | null;
         text: string;
         timeThresholdSeconds?: number | null;
+        waitForNavigation?: boolean | null;
     }
 }

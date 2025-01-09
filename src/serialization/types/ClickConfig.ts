@@ -6,14 +6,17 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { VisualAnalysisConfig } from "./VisualAnalysisConfig";
+import { BrowserWaitNavigationConfig } from "./BrowserWaitNavigationConfig";
 
 export const ClickConfig: core.serialization.ObjectSchema<serializers.ClickConfig.Raw, Airtop.ClickConfig> =
     core.serialization.object({
         visualAnalysis: VisualAnalysisConfig.optional(),
+        waitForNavigationConfig: BrowserWaitNavigationConfig.optional(),
     });
 
 export declare namespace ClickConfig {
     interface Raw {
         visualAnalysis?: VisualAnalysisConfig.Raw | null;
+        waitForNavigationConfig?: BrowserWaitNavigationConfig.Raw | null;
     }
 }

@@ -4,15 +4,16 @@
 
 import * as Airtop from "../index";
 
-export interface StatusMessage {
+export interface SessionEventMessage {
+    /** Error message */
+    error?: Airtop.ErrorBody;
     /** Event name */
     event: string;
+    eventData?: unknown;
     /** Event ID */
     eventId?: number;
     /** Date and Time of the event */
     eventTime: Date;
     /** ID of the session */
     id: string;
-    /** Status of the session */
-    status: Airtop.StatusMessageStatus;
 }
