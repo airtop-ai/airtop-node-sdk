@@ -8,6 +8,7 @@ import {
 	type BatchOperationResponse,
 	type BatchOperationUrl,
 } from "../utils";
+import * as core from '../core';
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
@@ -18,6 +19,20 @@ export class AirtopClient {
   private _sessions: AirtopSessions | undefined;
 
   constructor(private _options: AugmentedOptions) {
+    const version = require('../package.json').version; //we don't control tsconfig.json so we can't use resolveJsonModule
+    if (!_options.fetcher) {
+      _options.fetcher = (req) => {
+        return core.fetcher({
+          ...req,
+          headers: { 
+            ...req.headers, 
+            "x-airtop-sdk-source": "javascript",
+            "x-airtop-sdk-version": version,
+          },
+        });
+      };
+    }
+     
     this._client = new FernClient(_options);
     this.debug = _options?.debug || false;
   }
