@@ -7,6 +7,8 @@ import * as Airtop from "../index";
 export interface SessionConfigV1 {
     /** Id of a profile to load into the session. */
     baseProfileId?: string;
+    /** - */
+    extensionIds?: string[];
     /** Persist the profile. */
     persistProfile?: boolean;
     /** Proxy configuration. */

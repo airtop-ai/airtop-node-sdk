@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const StatusMessageStatus: core.serialization.Schema<
     serializers.StatusMessageStatus.Raw,
     Airtop.StatusMessageStatus
-> = core.serialization.enum_(["awaitingCapacity", "initializing", "running", "ended"]);
+> = core.serialization.enum_(["awaitingCapacity", "initializing", "running", "ended", "error", "disconnected"]);
 
 export declare namespace StatusMessageStatus {
-    type Raw = "awaitingCapacity" | "initializing" | "running" | "ended";
+    type Raw = "awaitingCapacity" | "initializing" | "running" | "ended" | "error" | "disconnected";
 }
