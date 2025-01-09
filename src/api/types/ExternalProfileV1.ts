@@ -5,6 +5,6 @@
 export interface ExternalProfileV1 {
     /** Id of the profile. */
     profileId: string;
-    /** Status of the profile. */
+    /** DEPRECATED. */
     status?: string;
 }
