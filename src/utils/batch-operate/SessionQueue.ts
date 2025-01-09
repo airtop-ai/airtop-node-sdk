@@ -5,7 +5,7 @@ import type {
 	BatchOperationResponse,
 	BatchOperationUrl,
 } from "./types";
-import type { EventEmitter } from "node:events";
+import type { EventEmitter } from "eventemitter3";
 import type { AirtopSessionConfigV1 } from "wrapper/AirtopSessions";
 import { distributeUrlsToBatches } from "./helpers";
 import { WindowQueue } from "./WindowQueue";
