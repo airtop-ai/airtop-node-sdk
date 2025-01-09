@@ -22,7 +22,7 @@ const client = new AirtopClient({ apiKey: "YOUR_API_KEY" });
 const session = await client.sessions.create();
 
 // use any url and prompt you like below
-const window = await client.windows.create(session.data.id, { url: "https://www.airtop.ai" });
+const window = await client.windows.create(session.data.id, { url: "https://www.wikipedia.org" });
 const contentSummary = await client.windows.pageQuery(session.data.id, window.data.windowId, {
   prompt: 'Summarize the contents of the page in 1 short paragraph up to 170 characters.',
 });
