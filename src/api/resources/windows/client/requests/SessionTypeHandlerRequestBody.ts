@@ -28,6 +28,4 @@ export interface SessionTypeHandlerRequestBody {
      * This setting does not extend the maximum session duration provided at the time of session creation.
      */
     timeThresholdSeconds?: number;
-    /** If true, Airtop AI will wait for the navigation to complete after clicking the element. */
-    waitForNavigation?: boolean;
 }

@@ -10,7 +10,6 @@ import { StatusMessageStatus } from "./StatusMessageStatus";
 export const StatusMessage: core.serialization.ObjectSchema<serializers.StatusMessage.Raw, Airtop.StatusMessage> =
     core.serialization.object({
         event: core.serialization.string(),
-        eventId: core.serialization.number().optional(),
         eventTime: core.serialization.date(),
         id: core.serialization.string(),
         status: StatusMessageStatus,
@@ -19,7 +18,6 @@ export const StatusMessage: core.serialization.ObjectSchema<serializers.StatusMe
 export declare namespace StatusMessage {
     interface Raw {
         event: string;
-        eventId?: number | null;
         eventTime: string;
         id: string;
         status: StatusMessageStatus.Raw;

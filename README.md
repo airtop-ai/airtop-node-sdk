@@ -19,22 +19,8 @@ Instantiate and use the client with the following:
 import { AirtopClient } from "@airtop/sdk";
 
 const client = new AirtopClient({ apiKey: "YOUR_API_KEY" });
-const session = await client.sessions.create();
-
-// use any url and prompt you like below
-const window = await client.windows.create(session.data.id, { url: "https://www.wikipedia.org" });
-const contentSummary = await client.windows.pageQuery(session.data.id, window.data.windowId, {
-  prompt: 'Summarize the contents of the page in 1 short paragraph up to 170 characters.',
-});
-console.log(contentSummary.data.modelResponse);
-
-await client.sessions.terminate(session.data.id);
+await client.windows.create("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
-
-Get an API key from the [Airtop Developer Portal](https://portal.airtop.ai/api-keys).
-
-See more information and examples in our [Quick Start Guide](https://docs.airtop.ai/guides/getting-started/quick-start)
-or [API Reference](https://docs.airtop.ai/api-reference/airtop-api).
 
 ## Request And Response Types
 

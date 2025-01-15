@@ -386,19 +386,8 @@ export class Sessions {
      */
     public async events(
         id: string,
-        request: Airtop.SessionsEventsRequest = {},
         requestOptions?: Sessions.RequestOptions
     ): Promise<core.Stream<Airtop.SessionsEventsResponse>> {
-        const { lastEventId, all } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (lastEventId != null) {
-            _queryParams["lastEventId"] = lastEventId.toString();
-        }
-
-        if (all != null) {
-            _queryParams["all"] = all.toString();
-        }
-
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
@@ -415,7 +404,6 @@ export class Sessions {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
             requestType: "json",
             responseType: "sse",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

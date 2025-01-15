@@ -16,7 +16,6 @@ export const SessionClickHandlerRequestBody: core.serialization.Schema<
     costThresholdCredits: core.serialization.number().optional(),
     elementDescription: core.serialization.string(),
     timeThresholdSeconds: core.serialization.number().optional(),
-    waitForNavigation: core.serialization.boolean().optional(),
 });
 
 export declare namespace SessionClickHandlerRequestBody {
@@ -26,6 +25,5 @@ export declare namespace SessionClickHandlerRequestBody {
         costThresholdCredits?: number | null;
         elementDescription: string;
         timeThresholdSeconds?: number | null;
-        waitForNavigation?: boolean | null;
     }
 }
