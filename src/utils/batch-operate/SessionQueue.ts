@@ -1,4 +1,4 @@
-import type { AirtopClient } from "wrapper/AirtopClient";
+import type { AirtopClient } from "../../wrapper/AirtopClient";
 import type {
 	BatchOperationError,
 	BatchOperationInput,

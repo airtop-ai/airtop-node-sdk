@@ -1,4 +1,4 @@
-import type { AirtopSessionConfigV1 } from "wrapper/AirtopSessions";
+import type { AirtopSessionConfigV1 } from "../../wrapper/AirtopSessions";
 
 export type BatchOperateConfig = {
 	maxConcurrentSessions?: number;
