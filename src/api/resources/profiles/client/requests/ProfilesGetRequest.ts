@@ -8,7 +8,11 @@
  */
 export interface ProfilesGetRequest {
     /**
-     * A comma-separated list of profile ids.
+     * DEPRECATED. Use profileNames.
      */
     profileIds?: string | string[];
+    /**
+     * A comma-separated list of profile names.
+     */
+    profileNames?: string | string[];
 }

@@ -7,4 +7,6 @@ import * as Airtop from "../index";
 export interface ClickConfig {
     /** Optional configuration for visual analysis when locating specified content. */
     visualAnalysis?: Airtop.VisualAnalysisConfig;
+    /** Optional configuration for waiting for navigation to complete after clicking the element. */
+    waitForNavigationConfig?: Airtop.BrowserWaitNavigationConfig;
 }

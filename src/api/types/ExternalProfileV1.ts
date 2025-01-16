@@ -3,8 +3,10 @@
  */
 
 export interface ExternalProfileV1 {
-    /** Id of the profile. */
+    /** DEPRECATED. Use profileName. */
     profileId: string;
+    /** Name of the profile. */
+    profileName: string;
     /** DEPRECATED. */
     status?: string;
 }

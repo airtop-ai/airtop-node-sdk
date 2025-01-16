@@ -5,12 +5,14 @@
 import * as Airtop from "../index";
 
 export interface SessionConfigV1 {
-    /** Id of a profile to load into the session. */
+    /** Deprecated: Use profileName instead. */
     baseProfileId?: string;
     /** - */
     extensionIds?: string[];
-    /** Persist the profile. */
+    /** Deprecated: use Save Profile On Termination API instead. */
     persistProfile?: boolean;
+    /** Name of a profile to load into the session. */
+    profileName?: string;
     /** Proxy configuration. */
     proxy?: Airtop.SessionConfigV1Proxy;
     /** Max length of session in minutes, after which it will terminate if not already deleted. */
