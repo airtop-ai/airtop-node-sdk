@@ -76,7 +76,7 @@ export class AirtopSessions extends SessionsClass {
     id: string,
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<Airtop.SessionsEventsResponse | null> {
-    const sessionEvents = await this.events(id, {}, { timeoutInSeconds: 60, ...(requestOptions || {}) });
+    const sessionEvents = await this.events(id, { timeoutInSeconds: 60, ...(requestOptions || {}) });
     for await (const event of sessionEvents) {
       this.log('status message received:\n' + JSON.stringify(event, null, 2));
       const e = event as any;
