@@ -11,12 +11,14 @@ export const ExternalProfileV1: core.serialization.ObjectSchema<
     Airtop.ExternalProfileV1
 > = core.serialization.object({
     profileId: core.serialization.string(),
+    profileName: core.serialization.string(),
     status: core.serialization.string().optional(),
 });
 
 export declare namespace ExternalProfileV1 {
     interface Raw {
         profileId: string;
+        profileName: string;
         status?: string | null;
     }
 }

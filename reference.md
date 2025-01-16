@@ -1198,7 +1198,7 @@ await client.sessions.saveProfileOnTermination("6aac6f73-bd89-4a76-ab32-5a6c422e
 <dl>
 <dd>
 
-**sessionId:** `string` — ID of the session that owns the window.
+**sessionId:** `string` — ID of the session.
 
 </dd>
 </dl>

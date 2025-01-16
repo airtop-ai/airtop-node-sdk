@@ -12,6 +12,7 @@ export const SessionConfigV1: core.serialization.ObjectSchema<serializers.Sessio
         baseProfileId: core.serialization.string().optional(),
         extensionIds: core.serialization.list(core.serialization.string()).optional(),
         persistProfile: core.serialization.boolean().optional(),
+        profileName: core.serialization.string().optional(),
         proxy: SessionConfigV1Proxy.optional(),
         timeoutMinutes: core.serialization.number().optional(),
     });
@@ -21,6 +22,7 @@ export declare namespace SessionConfigV1 {
         baseProfileId?: string | null;
         extensionIds?: string[] | null;
         persistProfile?: boolean | null;
+        profileName?: string | null;
         proxy?: SessionConfigV1Proxy.Raw | null;
         timeoutMinutes?: number | null;
     }

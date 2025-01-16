@@ -42,13 +42,21 @@ export class Profiles {
         request: Airtop.ProfilesGetRequest = {},
         requestOptions?: Profiles.RequestOptions
     ): Promise<Airtop.ProfilesResponse> {
-        const { profileIds } = request;
+        const { profileIds, profileNames } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (profileIds != null) {
             if (Array.isArray(profileIds)) {
                 _queryParams["profileIds"] = profileIds.map((item) => item);
             } else {
                 _queryParams["profileIds"] = profileIds;
+            }
+        }
+
+        if (profileNames != null) {
+            if (Array.isArray(profileNames)) {
+                _queryParams["profileNames"] = profileNames.map((item) => item);
+            } else {
+                _queryParams["profileNames"] = profileNames;
             }
         }
 
@@ -62,8 +70,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.11",
-                "User-Agent": "@airtop/sdk/0.1.11",
+                "X-Fern-SDK-Version": "0.1.12",
+                "User-Agent": "@airtop/sdk/0.1.12",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -119,13 +127,21 @@ export class Profiles {
         request: Airtop.ProfilesDeleteRequest = {},
         requestOptions?: Profiles.RequestOptions
     ): Promise<void> {
-        const { profileIds } = request;
+        const { profileIds, profileNames } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (profileIds != null) {
             if (Array.isArray(profileIds)) {
                 _queryParams["profileIds"] = profileIds.map((item) => item);
             } else {
                 _queryParams["profileIds"] = profileIds;
+            }
+        }
+
+        if (profileNames != null) {
+            if (Array.isArray(profileNames)) {
+                _queryParams["profileNames"] = profileNames.map((item) => item);
+            } else {
+                _queryParams["profileNames"] = profileNames;
             }
         }
 
@@ -139,8 +155,8 @@ export class Profiles {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.11",
-                "User-Agent": "@airtop/sdk/0.1.11",
+                "X-Fern-SDK-Version": "0.1.12",
+                "User-Agent": "@airtop/sdk/0.1.12",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
