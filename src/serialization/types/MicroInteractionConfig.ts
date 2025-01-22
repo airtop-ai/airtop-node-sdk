@@ -5,20 +5,19 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { ClickConfigClickType } from "./ClickConfigClickType";
 import { VisualAnalysisConfig } from "./VisualAnalysisConfig";
 import { BrowserWaitNavigationConfig } from "./BrowserWaitNavigationConfig";
 
-export const ClickConfig: core.serialization.ObjectSchema<serializers.ClickConfig.Raw, Airtop.ClickConfig> =
-    core.serialization.object({
-        clickType: ClickConfigClickType.optional(),
-        visualAnalysis: VisualAnalysisConfig.optional(),
-        waitForNavigationConfig: BrowserWaitNavigationConfig.optional(),
-    });
+export const MicroInteractionConfig: core.serialization.ObjectSchema<
+    serializers.MicroInteractionConfig.Raw,
+    Airtop.MicroInteractionConfig
+> = core.serialization.object({
+    visualAnalysis: VisualAnalysisConfig.optional(),
+    waitForNavigationConfig: BrowserWaitNavigationConfig.optional(),
+});
 
-export declare namespace ClickConfig {
+export declare namespace MicroInteractionConfig {
     interface Raw {
-        clickType?: ClickConfigClickType.Raw | null;
         visualAnalysis?: VisualAnalysisConfig.Raw | null;
         waitForNavigationConfig?: BrowserWaitNavigationConfig.Raw | null;
     }

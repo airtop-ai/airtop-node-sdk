@@ -4,9 +4,7 @@
 
 import * as Airtop from "../index";
 
-export interface ClickConfig {
-    /** The type of click to perform. Defaults to left click. */
-    clickType?: Airtop.ClickConfigClickType;
+export interface MicroInteractionConfig {
     /** Optional configuration for visual analysis when locating specified content. */
     visualAnalysis?: Airtop.VisualAnalysisConfig;
     /** Optional configuration for waiting for navigation to complete after clicking the element. */

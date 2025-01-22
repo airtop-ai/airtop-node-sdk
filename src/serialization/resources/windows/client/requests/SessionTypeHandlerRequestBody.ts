@@ -5,14 +5,14 @@
 import * as serializers from "../../../../index";
 import * as Airtop from "../../../../../api/index";
 import * as core from "../../../../../core";
-import { ClickConfig } from "../../../../types/ClickConfig";
+import { MicroInteractionConfig } from "../../../../types/MicroInteractionConfig";
 
 export const SessionTypeHandlerRequestBody: core.serialization.Schema<
     serializers.SessionTypeHandlerRequestBody.Raw,
     Airtop.SessionTypeHandlerRequestBody
 > = core.serialization.object({
     clientRequestId: core.serialization.string().optional(),
-    configuration: ClickConfig.optional(),
+    configuration: MicroInteractionConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
     elementDescription: core.serialization.string().optional(),
     pressEnterKey: core.serialization.boolean().optional(),
@@ -24,7 +24,7 @@ export const SessionTypeHandlerRequestBody: core.serialization.Schema<
 export declare namespace SessionTypeHandlerRequestBody {
     interface Raw {
         clientRequestId?: string | null;
-        configuration?: ClickConfig.Raw | null;
+        configuration?: MicroInteractionConfig.Raw | null;
         costThresholdCredits?: number | null;
         elementDescription?: string | null;
         pressEnterKey?: boolean | null;
