@@ -5,3 +5,4 @@ src/wrapper/AirtopWindows.ts
 src/live-view/types.ts
 src/index.ts
 src/utils/
+.github/workflows/notify-failure.yml
