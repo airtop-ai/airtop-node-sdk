@@ -1,0 +1,50 @@
+name: notify-failure
+
+on:
+  workflow_run:
+    workflows: ["ci"]
+    types:
+      - completed
+
+jobs:
+  notify:
+    if: ${{ github.event.workflow_run.conclusion != 'success' && github.event.workflow_run.head_branch == 'master' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: 8398a7/action-slack@v3
+      with:
+        status: custom
+        custom_payload: |
+          {
+            username: 'e2e-api-tests',
+            icon_emoji: ':octocat:',
+            attachments: [{
+              color: 'danger',
+              blocks: [
+                {
+                  "type": "section",
+                  "text": {
+                      "type": "mrkdwn",
+                      "text": `:x: Node SDK CI failed`
+                  },
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                          "type": "plain_text",
+                          "emoji": true,
+                          "text": "Node SDK CI"
+                      },
+                      "style": "primary",
+                      "url": `https://github.com/airtop-ai/airtop-node-sdk/actions/workflows/ci.yml`
+                    }
+                  ]
+                }
+              ]
+            }]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.AIRTOP_SLACK_WEBHOOK_URL }}
