@@ -6,6 +6,7 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Windows } from "./api/resources/windows/client/Client";
 import { Profiles } from "./api/resources/profiles/client/Client";
+import { Requests } from "./api/resources/requests/client/Client";
 import { Sessions } from "./api/resources/sessions/client/Client";
 
 export declare namespace AirtopClient {
@@ -38,6 +39,12 @@ export class AirtopClient {
 
     public get profiles(): Profiles {
         return (this._profiles ??= new Profiles(this._options));
+    }
+
+    protected _requests: Requests | undefined;
+
+    public get requests(): Requests {
+        return (this._requests ??= new Requests(this._options));
     }
 
     protected _sessions: Sessions | undefined;
