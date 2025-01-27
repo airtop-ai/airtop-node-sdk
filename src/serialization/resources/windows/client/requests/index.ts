@@ -1,7 +1,16 @@
+export { AsyncClickRequest } from "./AsyncClickRequest";
+export { AsyncHoverRequest } from "./AsyncHoverRequest";
+export { AsyncMonitorRequest } from "./AsyncMonitorRequest";
+export { AsyncPageQueryRequest } from "./AsyncPageQueryRequest";
+export { AsyncPaginatedExtractionRequest } from "./AsyncPaginatedExtractionRequest";
+export { AsyncPromptContentRequest } from "./AsyncPromptContentRequest";
+export { AsyncSummarizeContentRequest } from "./AsyncSummarizeContentRequest";
+export { AsyncTypeRequest } from "./AsyncTypeRequest";
 export { CreateWindowInputV1Body } from "./CreateWindowInputV1Body";
 export { WindowLoadUrlV1Body } from "./WindowLoadUrlV1Body";
 export { SessionClickHandlerRequestBody } from "./SessionClickHandlerRequestBody";
 export { SessionHoverHandlerRequestBody } from "./SessionHoverHandlerRequestBody";
+export { SessionMonitorHandlerRequestBody } from "./SessionMonitorHandlerRequestBody";
 export { SessionPaginatedExtractionHandlerRequestBody } from "./SessionPaginatedExtractionHandlerRequestBody";
 export { ScrapeContentRequest } from "./ScrapeContentRequest";
 export { SessionScreenshotHandlerRequestBody } from "./SessionScreenshotHandlerRequestBody";

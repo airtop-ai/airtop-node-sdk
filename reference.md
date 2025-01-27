@@ -2,6 +2,566 @@
 
 ## Windows
 
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncClick</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncClick("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    elementDescription: "The login button",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncClickRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncHover</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncHover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncHoverRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncMonitor</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncMonitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncMonitorRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncPageQuery</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncPageQuery("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    prompt: "What is the main idea of this page?",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncPageQueryRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncPaginatedExtraction</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncPaginatedExtraction(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430"
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncPaginatedExtractionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncPromptContent</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint is deprecated. Please use the `pageQuery` endpoint instead.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncPromptContent(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+    {
+        prompt: "What is the main idea of this page?",
+    }
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncPromptContentRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncSummarizeContent</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint is deprecated. Please use the `pageQuery` endpoint and ask for a summary in the prompt instead.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncSummarizeContent(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430"
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window to summarize.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncSummarizeContentRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncType</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncType("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    text: "Example text",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncTypeRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">create</a>(sessionId, { ...params }) -> Airtop.WindowIdResponse</code></summary>
 <dl>
 <dd>
@@ -448,6 +1008,70 @@ await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b
 <dd>
 
 **request:** `Airtop.SessionHoverHandlerRequestBody`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">monitor</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.monitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.SessionMonitorHandlerRequestBody`
 
 </dd>
 </dl>
@@ -1083,6 +1707,56 @@ await client.profiles.delete();
 <dd>
 
 **requestOptions:** `Profiles.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Requests
+
+<details><summary><code>client.requests.<a href="/src/api/resources/requests/client/Client.ts">getRequestStatus</a>(requestId) -> Airtop.RequestStatusResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requests.getRequestStatus("123e4567-e89b-12d3-a456-426614174000");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestId:** `string` — The ID of the request to check.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Requests.RequestOptions`
 
 </dd>
 </dl>
