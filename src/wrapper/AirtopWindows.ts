@@ -300,6 +300,28 @@ export class AirtopWindows extends WindowsClass {
 		});
 	}
 
+	/**
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window.
+     * @param {Airtop.SessionMonitorHandlerRequestBody} request
+     * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.windows.monitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+     */
+    public async monitor(
+        sessionId: string,
+        windowId: string,
+        request: Airtop.SessionMonitorHandlerRequestBody = {},
+        requestOptions?: WindowsNamespace.RequestOptions
+    ): Promise<Airtop.AiPromptResponse> {
+	return super.monitor(sessionId, windowId, request, {
+		timeoutInSeconds: 600,
+		...requestOptions,
+		maxRetries: 0,
+	});
+}
+
 	private async executeSeleniumCDPCommand(
 		driver: seleniumWebdriver.WebDriver,
 		session: Airtop.ExternalSessionWithConnectionInfo,
