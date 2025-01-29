@@ -7,6 +7,8 @@ import * as Airtop from "../index";
 export interface ExternalSessionAiResponseMetadata {
     clientProvided?: Airtop.ClientProvidedResponseMetadata;
     requestId?: string;
+    /** Array containing any requested screenshots from the operation. */
+    screenshots?: Airtop.ScreenshotMetadata[];
     /** Outcome of the operation. */
     status: Airtop.ExternalSessionAiResponseMetadataStatus;
     usage: Airtop.ExternalSessionAiResponseMetadataUsage;

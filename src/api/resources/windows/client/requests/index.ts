@@ -5,5 +5,6 @@ export { type SessionClickHandlerRequestBody } from "./SessionClickHandlerReques
 export { type SessionHoverHandlerRequestBody } from "./SessionHoverHandlerRequestBody";
 export { type SessionPaginatedExtractionHandlerRequestBody } from "./SessionPaginatedExtractionHandlerRequestBody";
 export { type ScrapeContentRequest } from "./ScrapeContentRequest";
+export { type SessionScreenshotHandlerRequestBody } from "./SessionScreenshotHandlerRequestBody";
 export { type SessionSummaryHandlerRequestBody } from "./SessionSummaryHandlerRequestBody";
 export { type SessionTypeHandlerRequestBody } from "./SessionTypeHandlerRequestBody";

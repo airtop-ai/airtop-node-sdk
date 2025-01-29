@@ -11,11 +11,13 @@ export const SessionTypeHandlerRequestBody: core.serialization.Schema<
     serializers.SessionTypeHandlerRequestBody.Raw,
     Airtop.SessionTypeHandlerRequestBody
 > = core.serialization.object({
+    clearInputField: core.serialization.boolean().optional(),
     clientRequestId: core.serialization.string().optional(),
     configuration: MicroInteractionConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
     elementDescription: core.serialization.string().optional(),
     pressEnterKey: core.serialization.boolean().optional(),
+    pressTabKey: core.serialization.boolean().optional(),
     text: core.serialization.string(),
     timeThresholdSeconds: core.serialization.number().optional(),
     waitForNavigation: core.serialization.boolean().optional(),
@@ -23,11 +25,13 @@ export const SessionTypeHandlerRequestBody: core.serialization.Schema<
 
 export declare namespace SessionTypeHandlerRequestBody {
     interface Raw {
+        clearInputField?: boolean | null;
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfig.Raw | null;
         costThresholdCredits?: number | null;
         elementDescription?: string | null;
         pressEnterKey?: boolean | null;
+        pressTabKey?: boolean | null;
         text: string;
         timeThresholdSeconds?: number | null;
         waitForNavigation?: boolean | null;

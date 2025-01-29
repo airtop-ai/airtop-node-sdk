@@ -5,10 +5,14 @@
 import * as Airtop from "../index";
 
 export interface VisualAnalysisConfig {
+    /** Scan mode only: The maximum number of scrolls to perform. Defaults to 50. */
+    maxScanScrolls?: number;
     /** The percentage of overlap between screenshot chunks. Defaults to 30 (percent). */
     overlapPercentage?: number;
     /** The direction to partition the screenshot into chunks: 'vertical', 'horizontal', or 'bidirectional'. Defaults to 'vertical', which is recommended for most web pages. For optimal results when partitioning in a single direction, ensure the perpendicular dimension does not exceed 1920 pixels. */
     partitionDirection?: Airtop.VisualAnalysisConfigPartitionDirection;
-    /** Whether to analyze the current viewport or the whole page. Can be 'viewport' or 'page'. Defaults to 'page', which provides the simplest out-of-the-box experience for most web pages. Use 'viewport' for full control over the analyzed content. */
+    /** Scan mode only: The delay between scrolls in milliseconds. Defaults to 1000 (milliseconds). */
+    scanScrollDelay?: number;
+    /** Whether to analyze the current viewport or the whole page. Can be 'viewport', 'page', 'scan' or 'auto'. Defaults to 'auto', which provides the simplest out-of-the-box experience for most web pages. Use 'viewport' for analysis of the current browser view only. Use 'page' for a full page analysis. Use 'scan' for a full page analysis on sites that have compatibility or accuracy issues with 'page' mode. */
     scope?: Airtop.VisualAnalysisConfigScope;
 }

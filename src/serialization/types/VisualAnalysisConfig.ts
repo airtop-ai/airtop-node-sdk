@@ -12,15 +12,19 @@ export const VisualAnalysisConfig: core.serialization.ObjectSchema<
     serializers.VisualAnalysisConfig.Raw,
     Airtop.VisualAnalysisConfig
 > = core.serialization.object({
+    maxScanScrolls: core.serialization.number().optional(),
     overlapPercentage: core.serialization.number().optional(),
     partitionDirection: VisualAnalysisConfigPartitionDirection.optional(),
+    scanScrollDelay: core.serialization.number().optional(),
     scope: VisualAnalysisConfigScope.optional(),
 });
 
 export declare namespace VisualAnalysisConfig {
     interface Raw {
+        maxScanScrolls?: number | null;
         overlapPercentage?: number | null;
         partitionDirection?: VisualAnalysisConfigPartitionDirection.Raw | null;
+        scanScrollDelay?: number | null;
         scope?: VisualAnalysisConfigScope.Raw | null;
     }
 }

@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const VisualAnalysisConfigScope: core.serialization.Schema<
     serializers.VisualAnalysisConfigScope.Raw,
     Airtop.VisualAnalysisConfigScope
-> = core.serialization.enum_(["viewport", "page"]);
+> = core.serialization.enum_(["viewport", "page", "scan", "auto"]);
 
 export declare namespace VisualAnalysisConfigScope {
-    type Raw = "viewport" | "page";
+    type Raw = "viewport" | "page" | "scan" | "auto";
 }
