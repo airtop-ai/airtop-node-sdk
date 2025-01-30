@@ -1,11 +1,26 @@
 import type { AiPromptResponse } from "api";
 
-type ProcessScreenshotsResponse = {
+export type ProcessScreenshotsResponse = {
 	index: number;
 	success: boolean;
 	binaryData?: Buffer;
+	mimeType?: string;
 	error?: Error;
 };
+
+function extractMimeAndBase64(dataUrl: string): {
+	mimeType: string;
+	base64Data: string;
+} {
+	const match = dataUrl.match(/^data:(image\/\w+);base64,(.+)$/);
+	if (match) {
+		return { mimeType: match[1], base64Data: match[2] };
+	}
+	return {
+		mimeType: "image/jpeg",
+		base64Data: dataUrl.replace(/^data:image\/jpeg;base64,/, ""),
+	};
+}
 
 export async function processScreenshots(
 	response: AiPromptResponse,
@@ -27,14 +42,14 @@ export async function processScreenshots(
 			}
 
 			try {
-				const base64Data = screenshot.dataUrl.replace(
-					/^data:image\/jpeg;base64,/,
-					"",
+				const { mimeType, base64Data } = extractMimeAndBase64(
+					screenshot.dataUrl,
 				);
 				const binaryData = Buffer.from(base64Data, "base64");
 				return {
 					index,
 					binaryData,
+					mimeType,
 					success: true,
 				};
 			} catch (err) {
