@@ -1335,6 +1335,65 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 </dl>
 </details>
 
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveExtentionConfigurationOnTermination</a>(sessionId, extensionConfigurationName) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.saveExtentionConfigurationOnTermination(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "myExtensionConfiguration"
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — ID of the session.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extensionConfigurationName:** `string` — Name under which to save the extension configuration.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Sessions.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveProfileOnTermination</a>(sessionId, profileName) -> void</code></summary>
 <dl>
 <dd>
