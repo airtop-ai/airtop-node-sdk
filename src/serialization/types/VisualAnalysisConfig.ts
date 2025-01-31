@@ -6,6 +6,7 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { VisualAnalysisConfigPartitionDirection } from "./VisualAnalysisConfigPartitionDirection";
+import { VisualAnalysisConfigResultSelectionStrategy } from "./VisualAnalysisConfigResultSelectionStrategy";
 import { VisualAnalysisConfigScope } from "./VisualAnalysisConfigScope";
 
 export const VisualAnalysisConfig: core.serialization.ObjectSchema<
@@ -15,6 +16,7 @@ export const VisualAnalysisConfig: core.serialization.ObjectSchema<
     maxScanScrolls: core.serialization.number().optional(),
     overlapPercentage: core.serialization.number().optional(),
     partitionDirection: VisualAnalysisConfigPartitionDirection.optional(),
+    resultSelectionStrategy: VisualAnalysisConfigResultSelectionStrategy.optional(),
     scanScrollDelay: core.serialization.number().optional(),
     scope: VisualAnalysisConfigScope.optional(),
 });
@@ -24,6 +26,7 @@ export declare namespace VisualAnalysisConfig {
         maxScanScrolls?: number | null;
         overlapPercentage?: number | null;
         partitionDirection?: VisualAnalysisConfigPartitionDirection.Raw | null;
+        resultSelectionStrategy?: VisualAnalysisConfigResultSelectionStrategy.Raw | null;
         scanScrollDelay?: number | null;
         scope?: VisualAnalysisConfigScope.Raw | null;
     }

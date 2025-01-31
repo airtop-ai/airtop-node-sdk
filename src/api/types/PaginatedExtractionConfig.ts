@@ -3,7 +3,7 @@
  */
 
 export interface PaginatedExtractionConfig {
-    /** The mode to use for interaction. If set to 'auto', Airtop AI will automatically choose the most cost-effective interaction mode. If set to 'accurate', Airtop AI will use the most accurate interaction mode. If set to 'cost-efficient', Airtop AI will use the most cost-effective interaction mode. */
+    /** The mode to use for interaction. If set to 'auto', Airtop AI will automatically choose the most cost-effective interaction mode. If set to 'accurate', the request might be slower, but more likely to be accurate. Whereas, 'cost-efficient' will be cheaper and speed things up, but may reduce accuracy. */
     interactionMode?: string;
     /** JSON schema defining the structure of the output. If not provided, the format of the output might vary. */
     outputSchema?: string;
