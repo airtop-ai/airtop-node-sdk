@@ -4,6 +4,7 @@ export { type AsyncMonitorRequest } from "./AsyncMonitorRequest";
 export { type AsyncPageQueryRequest } from "./AsyncPageQueryRequest";
 export { type AsyncPaginatedExtractionRequest } from "./AsyncPaginatedExtractionRequest";
 export { type AsyncPromptContentRequest } from "./AsyncPromptContentRequest";
+export { type AsyncScreenshotRequest } from "./AsyncScreenshotRequest";
 export { type AsyncSummarizeContentRequest } from "./AsyncSummarizeContentRequest";
 export { type AsyncTypeRequest } from "./AsyncTypeRequest";
 export { type CreateWindowInputV1Body } from "./CreateWindowInputV1Body";

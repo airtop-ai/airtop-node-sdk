@@ -6,6 +6,21 @@
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a click interaction in a specific browser window asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -396,6 +411,85 @@ await client.windows.asyncPromptContent(
 <dd>
 
 **request:** `Airtop.AsyncPromptContentRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncScreenshot</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Take a screenshot of the current viewport of a browser window asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncScreenshot("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncScreenshotRequest`
 
 </dd>
 </dl>
@@ -1652,6 +1746,134 @@ await client.windows.type("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0
 </dl>
 </details>
 
+## ExtensionConfigurations
+
+<details><summary><code>client.extensionConfigurations.<a href="/src/api/resources/extensionConfigurations/client/Client.ts">extensionConfigurationDelete</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete extension configurations matching by name
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.extensionConfigurations.extensionConfigurationDelete();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Airtop.ExtensionConfigurationDeleteRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExtensionConfigurations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.extensionConfigurations.<a href="/src/api/resources/extensionConfigurations/client/Client.ts">extensionConfigurationGetInfo</a>(name) -> Airtop.ExtensionConfigurationOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an extension configuration by name
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.extensionConfigurations.extensionConfigurationGetInfo("my-configuration");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — Name of the extension configuration to get
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExtensionConfigurations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Profiles
 
 <details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">delete</a>({ ...params }) -> void</code></summary>
@@ -1991,6 +2213,65 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dd>
 
 **id:** `string` — ID of the session to delete.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Sessions.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveExtentionConfigurationOnTermination</a>(sessionId, extensionConfigurationName) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.saveExtentionConfigurationOnTermination(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "myExtensionConfiguration"
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — ID of the session.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extensionConfigurationName:** `string` — Name under which to save the extension configuration.
 
 </dd>
 </dl>
