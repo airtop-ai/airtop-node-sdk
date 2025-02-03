@@ -6,6 +6,21 @@
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a click interaction in a specific browser window asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -396,6 +411,85 @@ await client.windows.asyncPromptContent(
 <dd>
 
 **request:** `Airtop.AsyncPromptContentRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncScreenshot</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Take a screenshot of the current viewport of a browser window asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncScreenshot("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncScreenshotRequest`
 
 </dd>
 </dl>
