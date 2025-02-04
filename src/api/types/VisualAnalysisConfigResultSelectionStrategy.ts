@@ -3,12 +3,11 @@
  */
 
 /**
- * [Experimental] The strategy to use for selecting the match using visual analysis. Can be 'auto', 'first' or 'bestMatch'. Defaults to 'auto'. Use 'auto' to let the system decide the best strategy. Use 'first' to select the first visual element that matches the element description. This will favor results that appear higher on the page in the event of multiple matches. Use 'bestMatch' to analyze the complete page and apply judgement to select the best candidate from all potential matches.
+ * [Experimental] The strategy to use for selecting the match using visual analysis. Can be 'first' or bestMatch'. Defaults to 'first'. Use 'first' to select the first visual element that matches the element description. This will favor results that appear higher on the page in the event of multiple matches. Use 'bestMatch' to perform a second round of analysis to select the result that best matches the element description.
  */
-export type VisualAnalysisConfigResultSelectionStrategy = "first" | "bestMatch" | "auto";
+export type VisualAnalysisConfigResultSelectionStrategy = "first" | "bestMatch";
 
 export const VisualAnalysisConfigResultSelectionStrategy = {
     First: "first",
     BestMatch: "bestMatch",
-    Auto: "auto",
 } as const;

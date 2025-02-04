@@ -7,9 +7,9 @@ import * as Airtop from "../index";
 export interface SessionConfigV1 {
     /** Deprecated: Use profileName instead. */
     baseProfileId?: string;
-    /** Name of an extension configuration to load into the session. */
+    /** - */
     extensionConfigurationName?: string;
-    /** Google Web Store extension IDs to be loaded into the session. */
+    /** - */
     extensionIds?: string[];
     /** Deprecated: use Save Profile On Termination API instead. */
     persistProfile?: boolean;
@@ -17,6 +17,6 @@ export interface SessionConfigV1 {
     profileName?: string;
     /** Proxy configuration. */
     proxy?: Airtop.SessionConfigV1Proxy;
-    /** Number of minutes of inactivity (idle timeout) after which the session will terminate. The idle timeout is reset when a user makes an incoming HTTP request, AI request, or new WebSocket connection to the session. Thus, when using drivers like Puppeteer, Selenium or Playwright, the timeout reset depends on the nature of the driver request. If not specified, defaults to 10 minutes. */
+    /** Max length of session in minutes, after which it will terminate if not already deleted. */
     timeoutMinutes?: number;
 }
