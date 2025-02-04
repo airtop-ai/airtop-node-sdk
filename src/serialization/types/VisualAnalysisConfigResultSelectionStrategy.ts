@@ -9,8 +9,8 @@ import * as core from "../../core";
 export const VisualAnalysisConfigResultSelectionStrategy: core.serialization.Schema<
     serializers.VisualAnalysisConfigResultSelectionStrategy.Raw,
     Airtop.VisualAnalysisConfigResultSelectionStrategy
-> = core.serialization.enum_(["first", "bestMatch", "auto"]);
+> = core.serialization.enum_(["first", "bestMatch"]);
 
 export declare namespace VisualAnalysisConfigResultSelectionStrategy {
-    type Raw = "first" | "bestMatch" | "auto";
+    type Raw = "first" | "bestMatch";
 }
