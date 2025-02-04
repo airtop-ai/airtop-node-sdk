@@ -53,6 +53,7 @@ export * from "./StatusMessage";
 export * from "./SummaryConfig";
 export * from "./SummaryExperimentalConfig";
 export * from "./VisualAnalysisConfigPartitionDirection";
+export * from "./VisualAnalysisConfigResultSelectionStrategy";
 export * from "./VisualAnalysisConfigScope";
 export * from "./VisualAnalysisConfig";
 export * from "./Window";
