@@ -9,105 +9,110 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Profiles {
-    interface Options {
-        environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        apiKey: core.Supplier<core.BearerToken>;
-        fetcher?: core.FetchFunction;
-    }
+	interface Options {
+		environment?: core.Supplier<environments.AirtopEnvironment | string>;
+		apiKey: core.Supplier<core.BearerToken>;
+		fetcher?: core.FetchFunction;
+	}
 
-    interface RequestOptions {
-        /** The maximum time to wait for a response in seconds. */
-        timeoutInSeconds?: number;
-        /** The number of times to retry the request. Defaults to 2. */
-        maxRetries?: number;
-        /** A hook to abort the request. */
-        abortSignal?: AbortSignal;
-    }
+	interface RequestOptions {
+		/** The maximum time to wait for a response in seconds. */
+		timeoutInSeconds?: number;
+		/** The number of times to retry the request. Defaults to 2. */
+		maxRetries?: number;
+		/** A hook to abort the request. */
+		abortSignal?: AbortSignal;
+	}
 }
 
 export class Profiles {
-    constructor(protected readonly _options: Profiles.Options) {}
+	constructor(protected readonly _options: Profiles.Options) {}
 
-    /**
-     * Delete profiles matching by id
-     *
-     * @param {Airtop.ProfilesDeleteRequest} request
-     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.profiles.delete()
-     */
-    public async delete(
-        request: Airtop.ProfilesDeleteRequest = {},
-        requestOptions?: Profiles.RequestOptions
-    ): Promise<void> {
-        const { profileIds, profileNames } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (profileIds != null) {
-            if (Array.isArray(profileIds)) {
-                _queryParams["profileIds"] = profileIds.map((item) => item);
-            } else {
-                _queryParams["profileIds"] = profileIds;
-            }
-        }
+	/**
+	 * Delete profiles matching by id
+	 *
+	 * @param {Airtop.ProfilesDeleteRequest} request
+	 * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+	 *
+	 * @example
+	 *     await client.profiles.delete()
+	 */
+	public async delete(
+		request: Airtop.ProfilesDeleteRequest = {},
+		requestOptions?: Profiles.RequestOptions,
+	): Promise<void> {
+		const { profileIds, profileNames } = request;
+		const _queryParams: Record<string, string | string[] | object | object[]> =
+			{};
+		if (profileIds != null) {
+			if (Array.isArray(profileIds)) {
+				_queryParams["profileIds"] = profileIds.map((item) => item);
+			} else {
+				_queryParams["profileIds"] = profileIds;
+			}
+		}
 
-        if (profileNames != null) {
-            if (Array.isArray(profileNames)) {
-                _queryParams["profileNames"] = profileNames.map((item) => item);
-            } else {
-                _queryParams["profileNames"] = profileNames;
-            }
-        }
+		if (profileNames != null) {
+			if (Array.isArray(profileNames)) {
+				_queryParams["profileNames"] = profileNames.map((item) => item);
+			} else {
+				_queryParams["profileNames"] = profileNames;
+			}
+		}
 
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "profiles"
-            ),
-            method: "DELETE",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.16-beta0",
-                "User-Agent": "@airtop/sdk/0.1.16-beta0",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
+		const _response = await (this._options.fetcher ?? core.fetcher)({
+			url: urlJoin(
+				(await core.Supplier.get(this._options.environment)) ??
+					environments.AirtopEnvironment.Default,
+				"profiles",
+			),
+			method: "DELETE",
+			headers: {
+				Authorization: await this._getAuthorizationHeader(),
+				"X-Fern-Language": "JavaScript",
+				"X-Fern-SDK-Name": "@airtop/sdk",
+				"X-Fern-SDK-Version": "0.1.20-beta0",
+				"User-Agent": "@airtop/sdk/0.1.20-beta0",
+				"X-Fern-Runtime": core.RUNTIME.type,
+				"X-Fern-Runtime-Version": core.RUNTIME.version,
+			},
+			contentType: "application/json",
+			queryParameters: _queryParams,
+			requestType: "json",
+			timeoutMs:
+				requestOptions?.timeoutInSeconds != null
+					? requestOptions.timeoutInSeconds * 1000
+					: 60000,
+			maxRetries: requestOptions?.maxRetries,
+			abortSignal: requestOptions?.abortSignal,
+		});
+		if (_response.ok) {
+			return;
+		}
 
-        if (_response.error.reason === "status-code") {
-            throw new errors.AirtopError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
+		if (_response.error.reason === "status-code") {
+			throw new errors.AirtopError({
+				statusCode: _response.error.statusCode,
+				body: _response.error.body,
+			});
+		}
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AirtopError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.AirtopTimeoutError();
-            case "unknown":
-                throw new errors.AirtopError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
+		switch (_response.error.reason) {
+			case "non-json":
+				throw new errors.AirtopError({
+					statusCode: _response.error.statusCode,
+					body: _response.error.rawBody,
+				});
+			case "timeout":
+				throw new errors.AirtopTimeoutError();
+			case "unknown":
+				throw new errors.AirtopError({
+					message: _response.error.errorMessage,
+				});
+		}
+	}
 
-    protected async _getAuthorizationHeader(): Promise<string> {
-        return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
-    }
+	protected async _getAuthorizationHeader(): Promise<string> {
+		return `Bearer ${await core.Supplier.get(this._options.apiKey)}`;
+	}
 }
