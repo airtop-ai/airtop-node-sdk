@@ -1746,6 +1746,134 @@ await client.windows.type("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0
 </dl>
 </details>
 
+## ExtensionConfigurations
+
+<details><summary><code>client.extensionConfigurations.<a href="/src/api/resources/extensionConfigurations/client/Client.ts">extensionConfigurationDelete</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete extension configurations matching by name
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.extensionConfigurations.extensionConfigurationDelete();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Airtop.ExtensionConfigurationDeleteRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExtensionConfigurations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.extensionConfigurations.<a href="/src/api/resources/extensionConfigurations/client/Client.ts">extensionConfigurationGetInfo</a>(name) -> Airtop.ExtensionConfigurationOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an extension configuration by name
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.extensionConfigurations.extensionConfigurationGetInfo("my-configuration");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — Name of the extension configuration to get
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExtensionConfigurations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Profiles
 
 <details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">delete</a>({ ...params }) -> void</code></summary>
@@ -2103,7 +2231,7 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveExtentionConfigurationOnTermination</a>(sessionId, extensionConfigurationName) -> void</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveExtensionConfigurationOnTermination</a>(sessionId, extensionConfigurationName) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2116,7 +2244,7 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dd>
 
 ```typescript
-await client.sessions.saveExtentionConfigurationOnTermination(
+await client.sessions.saveExtensionConfigurationOnTermination(
     "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
     "myExtensionConfiguration"
 );

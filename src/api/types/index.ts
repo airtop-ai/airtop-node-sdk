@@ -13,6 +13,7 @@ export * from "./ErrorBody";
 export * from "./ErrorDetail";
 export * from "./ErrorMessage";
 export * from "./ErrorModel";
+export * from "./ExtensionConfigurationOutput";
 export * from "./ExternalSessionAiResponseMetadataStatus";
 export * from "./ExternalSessionAiResponseMetadata";
 export * from "./ExternalSessionAiResponseMetadataUsage";
