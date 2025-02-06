@@ -1,6 +1,6 @@
 {
     "name": "@airtop/sdk",
-    "version": "0.1.17",
+    "version": "0.1.16-beta0",
     "private": false,
     "repository": "https://github.com/airtop-ai/airtop-node-sdk",
     "main": "./index.js",
