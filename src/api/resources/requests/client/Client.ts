@@ -6,9 +6,10 @@ import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Airtop from "../../../index";
 import urlJoin from "url-join";
+import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
-export declare namespace Profiles {
+export declare namespace Requests {
     interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
         apiKey: core.Supplier<core.BearerToken>;
@@ -25,46 +26,26 @@ export declare namespace Profiles {
     }
 }
 
-export class Profiles {
-    constructor(protected readonly _options: Profiles.Options) {}
+export class Requests {
+    constructor(protected readonly _options: Requests.Options) {}
 
     /**
-     * Delete profiles matching by id
-     *
-     * @param {Airtop.ProfilesDeleteRequest} request
-     * @param {Profiles.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {string} requestId - The ID of the request to check.
+     * @param {Requests.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.profiles.delete()
+     *     await client.requests.getRequestStatus("123e4567-e89b-12d3-a456-426614174000")
      */
-    public async delete(
-        request: Airtop.ProfilesDeleteRequest = {},
-        requestOptions?: Profiles.RequestOptions
-    ): Promise<void> {
-        const { profileIds, profileNames } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (profileIds != null) {
-            if (Array.isArray(profileIds)) {
-                _queryParams["profileIds"] = profileIds.map((item) => item);
-            } else {
-                _queryParams["profileIds"] = profileIds;
-            }
-        }
-
-        if (profileNames != null) {
-            if (Array.isArray(profileNames)) {
-                _queryParams["profileNames"] = profileNames.map((item) => item);
-            } else {
-                _queryParams["profileNames"] = profileNames;
-            }
-        }
-
+    public async getRequestStatus(
+        requestId: string,
+        requestOptions?: Requests.RequestOptions
+    ): Promise<Airtop.RequestStatusResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "profiles"
+                `requests/${encodeURIComponent(requestId)}/status`
             ),
-            method: "DELETE",
+            method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -75,14 +56,19 @@ export class Profiles {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return serializers.RequestStatusResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
