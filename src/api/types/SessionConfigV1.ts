@@ -7,7 +7,9 @@ import * as Airtop from "../index";
 export interface SessionConfigV1 {
     /** Deprecated: Use profileName instead. */
     baseProfileId?: string;
-    /** - */
+    /** Name of an extension configuration to load into the session. */
+    extensionConfigurationName?: string;
+    /** Google Web Store extension IDs to be loaded into the session. */
     extensionIds?: string[];
     /** Deprecated: use Save Profile On Termination API instead. */
     persistProfile?: boolean;
