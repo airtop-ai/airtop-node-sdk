@@ -274,7 +274,7 @@ export class AirtopWindows extends WindowsClass {
 			...requestOptions,
 			maxRetries: 0,
 		});
-	}	
+	}
 
 	/**
 	 * @param {string} sessionId - The session id for the window.
@@ -321,6 +321,30 @@ export class AirtopWindows extends WindowsClass {
 		maxRetries: 0,
 	});
 }
+
+	/**
+     * Submit a prompt that queries the content of a specific browser window and paginates through pages to return a list of results.
+     *
+     * @param {string} sessionId - The session id for the window.
+     * @param {string} windowId - The Airtop window id of the browser window.
+     * @param {Airtop.SessionPaginatedExtractionHandlerRequestBody} request
+     * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.windows.paginatedExtraction("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+     */
+    public async paginatedExtraction(
+		sessionId: string,
+		windowId: string,
+		request: Airtop.SessionPaginatedExtractionHandlerRequestBody = {},
+		requestOptions?: WindowsNamespace.RequestOptions,
+	): Promise<Airtop.AiPromptResponse> {
+		return super.paginatedExtraction(sessionId, windowId, request, {
+			timeoutInSeconds: 600,
+			...requestOptions,
+			maxRetries: 0,
+		});
+	}
 
 	private async executeSeleniumCDPCommand(
 		driver: seleniumWebdriver.WebDriver,
