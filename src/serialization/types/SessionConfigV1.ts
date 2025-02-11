@@ -10,8 +10,6 @@ import { SessionConfigV1Proxy } from "./SessionConfigV1Proxy";
 export const SessionConfigV1: core.serialization.ObjectSchema<serializers.SessionConfigV1.Raw, Airtop.SessionConfigV1> =
     core.serialization.object({
         baseProfileId: core.serialization.string().optional(),
-        extensionConfigurationName: core.serialization.string().optional(),
-        extensionIds: core.serialization.list(core.serialization.string()).optional(),
         persistProfile: core.serialization.boolean().optional(),
         profileName: core.serialization.string().optional(),
         proxy: SessionConfigV1Proxy.optional(),
@@ -21,8 +19,6 @@ export const SessionConfigV1: core.serialization.ObjectSchema<serializers.Sessio
 export declare namespace SessionConfigV1 {
     interface Raw {
         baseProfileId?: string | null;
-        extensionConfigurationName?: string | null;
-        extensionIds?: string[] | null;
         persistProfile?: boolean | null;
         profileName?: string | null;
         proxy?: SessionConfigV1Proxy.Raw | null;
