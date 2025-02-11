@@ -7,10 +7,6 @@ import * as Airtop from "../index";
 export interface SessionConfigV1 {
     /** Deprecated: Use profileName instead. */
     baseProfileId?: string;
-    /** - */
-    extensionConfigurationName?: string;
-    /** - */
-    extensionIds?: string[];
     /** Deprecated: use Save Profile On Termination API instead. */
     persistProfile?: boolean;
     /** Name of a profile to load into the session. */

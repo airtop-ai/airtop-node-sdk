@@ -1335,7 +1335,7 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveExtentionConfigurationOnTermination</a>(sessionId, extensionConfigurationName) -> void</code></summary>
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">saveExtensionConfigurationOnTermination</a>(sessionId, extensionConfigurationName) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1348,7 +1348,7 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dd>
 
 ```typescript
-await client.sessions.saveExtentionConfigurationOnTermination(
+await client.sessions.saveExtensionConfigurationOnTermination(
     "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
     "myExtensionConfiguration"
 );
