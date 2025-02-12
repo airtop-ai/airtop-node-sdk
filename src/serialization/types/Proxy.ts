@@ -5,17 +5,12 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { ProxyCredentials } from "./ProxyCredentials";
+import { AirtopProxyConfiguration } from "./AirtopProxyConfiguration";
 
-export const Proxy: core.serialization.ObjectSchema<serializers.Proxy.Raw, Airtop.Proxy> = core.serialization.object({
-    password: core.serialization.string().optional(),
-    url: core.serialization.string(),
-    username: core.serialization.string().optional(),
-});
+export const Proxy: core.serialization.Schema<serializers.Proxy.Raw, Airtop.Proxy> =
+    core.serialization.undiscriminatedUnion([core.serialization.string(), ProxyCredentials, AirtopProxyConfiguration]);
 
 export declare namespace Proxy {
-    interface Raw {
-        password?: string | null;
-        url: string;
-        username?: string | null;
-    }
+    type Raw = string | ProxyCredentials.Raw | AirtopProxyConfiguration.Raw;
 }

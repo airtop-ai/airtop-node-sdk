@@ -5,19 +5,19 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { CustomProxy } from "./CustomProxy";
+import { Proxy } from "./Proxy";
 
-export const SessionConfigV1ProxyItem: core.serialization.ObjectSchema<
-    serializers.SessionConfigV1ProxyItem.Raw,
-    Airtop.SessionConfigV1ProxyItem
+export const ProxyConfigurationKind: core.serialization.ObjectSchema<
+    serializers.ProxyConfigurationKind.Raw,
+    Airtop.ProxyConfigurationKind
 > = core.serialization.object({
     domainPattern: core.serialization.string(),
-    relay: CustomProxy,
+    relay: Proxy,
 });
 
-export declare namespace SessionConfigV1ProxyItem {
+export declare namespace ProxyConfigurationKind {
     interface Raw {
         domainPattern: string;
-        relay: CustomProxy.Raw;
+        relay: Proxy.Raw;
     }
 }
