@@ -5,18 +5,18 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
-import { CustomProxy } from "./CustomProxy";
-import { SessionConfigV1ProxyItem } from "./SessionConfigV1ProxyItem";
+import { Proxy } from "./Proxy";
+import { ProxyConfigurationKind } from "./ProxyConfigurationKind";
 
 export const SessionConfigV1Proxy: core.serialization.Schema<
     serializers.SessionConfigV1Proxy.Raw,
     Airtop.SessionConfigV1Proxy
 > = core.serialization.undiscriminatedUnion([
     core.serialization.boolean(),
-    CustomProxy,
-    core.serialization.list(SessionConfigV1ProxyItem),
+    Proxy,
+    core.serialization.list(ProxyConfigurationKind),
 ]);
 
 export declare namespace SessionConfigV1Proxy {
-    type Raw = boolean | CustomProxy.Raw | SessionConfigV1ProxyItem.Raw[];
+    type Raw = boolean | Proxy.Raw | ProxyConfigurationKind.Raw[];
 }

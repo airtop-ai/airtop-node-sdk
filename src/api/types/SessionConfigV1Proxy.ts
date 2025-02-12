@@ -9,11 +9,11 @@ import * as Airtop from "../index";
  */
 export type SessionConfigV1Proxy =
     /**
-     * True to use airtop provided proxy */
+     * Use Airtop-provided proxy. */
     | boolean
     /**
      * Configuration for a single custom proxy. */
-    | Airtop.CustomProxy
+    | Airtop.Proxy
     /**
-     * Array of proxy configurations. Includes a domain pattern and a proxy configuration to assign proxies to specific domains. */
-    | Airtop.SessionConfigV1ProxyItem[];
+     * You can set multiple proxies. You associate each proxy with a domain pattern. If the domain matches the pattern, the proxy is used. Pattern can contain `?` to match any single character and / or `*` to match any sequence of characters. For example, `*.example.com` will match `www.example.com` and `sub.example.com`. */
+    | Airtop.ProxyConfigurationKind[];
