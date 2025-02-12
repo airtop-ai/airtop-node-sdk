@@ -11,7 +11,7 @@ export interface ExternalSessionWithConnectionInfo {
     cdpWsUrl?: string;
     /** Websocket url to connect to the Airtop browser for webdriver-based automation frameworks (e.g. Selenium). Include the header 'Authorization: Bearer <airtop-api-key>.' */
     chromedriverUrl?: string;
-    /** Session configuration details. */
+    /** Session configuration details. DEPRECATED */
     configuration: Airtop.ExternalSessionConfig;
     /** Current usage in minutes. */
     currentUsage?: number;

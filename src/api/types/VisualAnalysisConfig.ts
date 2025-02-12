@@ -11,7 +11,7 @@ export interface VisualAnalysisConfig {
     overlapPercentage?: number;
     /** The direction to partition the screenshot into chunks: 'vertical', 'horizontal', or 'bidirectional'. Defaults to 'vertical', which is recommended for most web pages. For optimal results when partitioning in a single direction, ensure the perpendicular dimension does not exceed 1920 pixels. */
     partitionDirection?: Airtop.VisualAnalysisConfigPartitionDirection;
-    /** [Experimental] The strategy to use for selecting the match using visual analysis. Can be 'first' or bestMatch'. Defaults to 'first'. Use 'first' to select the first visual element that matches the element description. This will favor results that appear higher on the page in the event of multiple matches. Use 'bestMatch' to perform a second round of analysis to select the result that best matches the element description. */
+    /** [Experimental] The strategy to use for selecting the match using visual analysis. Can be 'auto', 'first' or 'bestMatch'. Defaults to 'auto'. Use 'auto' to let the system decide the best strategy. Use 'first' to select the first visual element that matches the element description. This will favor results that appear higher on the page in the event of multiple matches. Use 'bestMatch' to analyze the complete page and apply judgement to select the best candidate from all potential matches. */
     resultSelectionStrategy?: Airtop.VisualAnalysisConfigResultSelectionStrategy;
     /** Scan mode only: The delay between scrolls in milliseconds. Defaults to 1000 (milliseconds). */
     scanScrollDelay?: number;
