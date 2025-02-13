@@ -9,3 +9,4 @@ src/utils/
 .github/workflows/ci.yml
 biome.json
 tsconfig-nobase.json
+lefthook.yml
