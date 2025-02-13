@@ -1,0 +1,66 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single"
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "ignore": [
+      "node_modules/**",
+      ".idea/**",
+      "dist/**",
+      "src/api/**",
+      "src/core/**",
+      "src/errors/**",
+      "src/serialization/**",
+      "src/Client.ts",
+      "src/environments.ts",
+      "src/index.ts",
+      "tests/**"
+    ],
+    "include": ["src/wrapper/**", "src/utils/**", "src/live-view/**"]
+  },
+  "linter": {
+    "ignore": [
+      "node_modules/**",
+      ".idea/**",
+      "dist/**",
+      "src/api/**",
+      "src/core/**",
+      "src/errors/**",
+      "src/serialization/**",
+      "src/Client.ts",
+      "src/environments.ts",
+      "src/index.ts",
+      "tests/**"
+    ],
+    "include": ["src/wrapper/**", "src/utils/**", "src/live-view/**"],
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error",
+        "useExhaustiveDependencies": "error"
+      },
+      "suspicious": {
+        "noImplicitAnyLet": "off",
+        "noExplicitAny": "off",
+        "noDebugger": {
+          "level": "warn",
+          "fix": "none"
+        },
+        "noAssignInExpressions": "warn"
+      },
+      "nursery": {
+        "useSortedClasses": "warn"
+      }
+    }
+  }
+}
