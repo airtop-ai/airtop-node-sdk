@@ -6,11 +6,11 @@ import type {
 	BatchOperationUrl,
 } from "./types";
 import type { EventEmitter } from "eventemitter3";
-import type { AirtopSessionConfigV1 } from "wrapper/AirtopSessions";
+import type { AirtopSessionConfigV1 } from "../../wrapper/AirtopSessions";
 import { distributeUrlsToBatches } from "./helpers";
 import { WindowQueue } from "./WindowQueue";
-import type { Issue } from "api";
-import { Mutex } from 'async-mutex';
+import type { Issue } from "../../api";
+import { Mutex } from "async-mutex";
 
 export class SessionQueue<T> {
 	private activePromises: Promise<void>[] = [];
@@ -52,7 +52,9 @@ export class SessionQueue<T> {
 		runEmitter: EventEmitter;
 		maxWindowsPerSession: number;
 		initialBatches: BatchOperationUrl[][];
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>;
+		operation: (
+			input: BatchOperationInput,
+		) => Promise<BatchOperationResponse<T>>;
 		client: AirtopClient;
 		sessionConfig?: AirtopSessionConfigV1;
 		onError?: (error: BatchOperationError) => Promise<void>;
@@ -171,12 +173,21 @@ export class SessionQueue<T> {
 
 						// Otherwise, create a new session
 						if (!sessionId) {
-							const { data: session, warnings, errors } = await this.client.sessions.create({
+							const {
+								data: session,
+								warnings,
+								errors,
+							} = await this.client.sessions.create({
 								configuration: this.sessionConfig,
 							});
 							sessionId = session.id;
 
-							this.handleErrorAndWarningResponses({ warnings, errors, sessionId, batch });
+							this.handleErrorAndWarningResponses({
+								warnings,
+								errors,
+								sessionId,
+								batch,
+							});
 						}
 
 						const queue = new WindowQueue(
@@ -201,7 +212,12 @@ export class SessionQueue<T> {
 						});
 					} catch (error) {
 						if (this.onError) {
-							await this.handleErrorWithCallback({ originalError: error, batch, sessionId, callback: this.onError });
+							await this.handleErrorWithCallback({
+								originalError: error,
+								batch,
+								sessionId,
+								callback: this.onError,
+							});
 						} else {
 							// By default, log the error and continue
 							const urls = batch.map((url) => url.url);
@@ -256,7 +272,9 @@ export class SessionQueue<T> {
 				sessionId,
 			});
 		} catch (newError) {
-			this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+			this.client.error(
+				`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`,
+			);
 		}
 	}
 
@@ -268,7 +286,9 @@ export class SessionQueue<T> {
 	private safelyTerminateSession(sessionId: string): void {
 		// Do not await since we don't want to block the main thread
 		this.client.sessions.terminate(sessionId).catch((error) => {
-			this.client.error(`Error terminating session ${sessionId}: ${this.formatError(error)}`);
+			this.client.error(
+				`Error terminating session ${sessionId}: ${this.formatError(error)}`,
+			);
 		});
 	}
 
@@ -276,23 +296,42 @@ export class SessionQueue<T> {
 		return error instanceof Error ? error.message : String(error);
 	}
 
-	private handleErrorAndWarningResponses({ warnings, errors, sessionId, batch }: { warnings?: Issue[]; errors?: Issue[]; sessionId: string; batch: BatchOperationUrl[] }): void {
+	private handleErrorAndWarningResponses({
+		warnings,
+		errors,
+		sessionId,
+		batch,
+	}: {
+		warnings?: Issue[];
+		errors?: Issue[];
+		sessionId: string;
+		batch: BatchOperationUrl[];
+	}): void {
 		if (!warnings && !errors) return;
 
-		const details: { sessionId: string; urls: BatchOperationUrl[]; warnings?: Issue[]; errors?: Issue[] } = {
+		const details: {
+			sessionId: string;
+			urls: BatchOperationUrl[];
+			warnings?: Issue[];
+			errors?: Issue[];
+		} = {
 			sessionId,
 			urls: batch,
 		};
-		
+
 		if (warnings) {
 			details.warnings = warnings;
-			this.client.warn(`Received warnings creating session: ${JSON.stringify(details)}`);
+			this.client.warn(
+				`Received warnings creating session: ${JSON.stringify(details)}`,
+			);
 		}
 
 		// Log an object with the errors and the URL
 		if (errors) {
 			details.errors = errors;
-			this.client.error(`Received errors creating session: ${JSON.stringify(details)}`);
+			this.client.error(
+				`Received errors creating session: ${JSON.stringify(details)}`,
+			);
 		}
 	}
 }

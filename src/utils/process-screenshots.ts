@@ -1,4 +1,4 @@
-import type { AiPromptResponse } from "api";
+import type { AiPromptResponse } from "../api";
 
 export type ProcessScreenshotsResponse = {
 	index: number;

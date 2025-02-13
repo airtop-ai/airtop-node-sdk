@@ -6,8 +6,8 @@ import type {
 	BatchOperationUrl,
 } from "./types";
 import type { EventEmitter } from "eventemitter3";
-import type { Issue } from "api";
-import { Mutex } from 'async-mutex';
+import type { Issue } from "../../api";
+import { Mutex } from "async-mutex";
 
 export class WindowQueue<T> {
 	private activePromises: Promise<void>[] = [];
@@ -30,7 +30,9 @@ export class WindowQueue<T> {
 		runEmitter: EventEmitter,
 		sessionId: string,
 		client: AirtopClient,
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
+		operation: (
+			input: BatchOperationInput,
+		) => Promise<BatchOperationResponse<T>>,
 		onError?: (error: BatchOperationError) => Promise<void>,
 		isHalted = false,
 	) {
@@ -104,22 +106,42 @@ export class WindowQueue<T> {
 					this.client.log(
 						`Creating window for ${urlData.url} in session ${this.sessionId}`,
 					);
-					const { data, errors, warnings } = await this.client.windows.create(this.sessionId, {
-						url: urlData.url,
-					});
+					const { data, errors, warnings } = await this.client.windows.create(
+						this.sessionId,
+						{
+							url: urlData.url,
+						},
+					);
 					windowId = data.windowId;
 
-					this.handleErrorAndWarningResponses({ warnings, errors, sessionId: this.sessionId, url: urlData, operation: "window creation" });
+					this.handleErrorAndWarningResponses({
+						warnings,
+						errors,
+						sessionId: this.sessionId,
+						url: urlData,
+						operation: "window creation",
+					});
 
 					if (!windowId) {
-						throw new Error(`WindowId not found, errors: ${JSON.stringify(errors)}`);
+						throw new Error(
+							`WindowId not found, errors: ${JSON.stringify(errors)}`,
+						);
 					}
 
-					const { data: windowInfo, warnings: windowWarnings, errors: windowErrors } =
-						await this.client.windows.getWindowInfo(this.sessionId, windowId);
+					const {
+						data: windowInfo,
+						warnings: windowWarnings,
+						errors: windowErrors,
+					} = await this.client.windows.getWindowInfo(this.sessionId, windowId);
 					liveViewUrl = windowInfo.liveViewUrl;
-						
-					this.handleErrorAndWarningResponses({ warnings: windowWarnings, errors: windowErrors, sessionId: this.sessionId, url: urlData, operation: "window info retrieval" });
+
+					this.handleErrorAndWarningResponses({
+						warnings: windowWarnings,
+						errors: windowErrors,
+						sessionId: this.sessionId,
+						url: urlData,
+						operation: "window info retrieval",
+					});
 
 					// Run the operation on the window
 					const result = await this.operation({
@@ -132,7 +154,7 @@ export class WindowQueue<T> {
 					if (result) {
 						const { shouldHaltBatch, additionalUrls, data } = result;
 
-						if (data){
+						if (data) {
 							results.push(data);
 						}
 
@@ -140,7 +162,7 @@ export class WindowQueue<T> {
 							this.client.log("Emitting halt event");
 							this.runEmitter.emit("halt");
 						}
-	
+
 						if (additionalUrls && additionalUrls.length > 0) {
 							this.client.log(
 								`Emitting addUrls event with urls: ${JSON.stringify(additionalUrls)}`,
@@ -148,7 +170,6 @@ export class WindowQueue<T> {
 							this.runEmitter.emit("addUrls", additionalUrls);
 						}
 					}
-
 				} catch (error) {
 					if (this.onError) {
 						await this.handleErrorWithCallback({
@@ -210,14 +231,16 @@ export class WindowQueue<T> {
 		// Catch any errors in the onError callback to avoid halting the entire process
 		try {
 			await callback({
-			error: this.formatError(originalError),
-			operationUrls: [url],
-			sessionId: this.sessionId,
-			windowId,
-			liveViewUrl,
+				error: this.formatError(originalError),
+				operationUrls: [url],
+				sessionId: this.sessionId,
+				windowId,
+				liveViewUrl,
 			});
 		} catch (newError) {
-			this.client.error(`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`);
+			this.client.error(
+				`Error in onError callback: ${this.formatError(newError)}. Original error: ${this.formatError(originalError)}`,
+			);
 		}
 	}
 
@@ -225,7 +248,9 @@ export class WindowQueue<T> {
 		try {
 			await this.client.windows.close(this.sessionId, windowId);
 		} catch (error) {
-			this.client.error(`Error closing window ${windowId}: ${this.formatError(error)}`);
+			this.client.error(
+				`Error closing window ${windowId}: ${this.formatError(error)}`,
+			);
 		}
 	}
 
@@ -233,22 +258,43 @@ export class WindowQueue<T> {
 		return error instanceof Error ? error.message : String(error);
 	}
 
-	private handleErrorAndWarningResponses({ warnings, errors, sessionId, url, operation }: { warnings?: Issue[]; errors?: Issue[]; sessionId: string; url: BatchOperationUrl; operation: string }): void {
+	private handleErrorAndWarningResponses({
+		warnings,
+		errors,
+		sessionId,
+		url,
+		operation,
+	}: {
+		warnings?: Issue[];
+		errors?: Issue[];
+		sessionId: string;
+		url: BatchOperationUrl;
+		operation: string;
+	}): void {
 		if (!warnings && !errors) return;
 
-		const details: { sessionId: string; url: BatchOperationUrl; warnings?: Issue[]; errors?: Issue[] } = {
+		const details: {
+			sessionId: string;
+			url: BatchOperationUrl;
+			warnings?: Issue[];
+			errors?: Issue[];
+		} = {
 			sessionId,
 			url,
 		};
 
 		if (warnings) {
 			details.warnings = warnings;
-			this.client.warn(`Received warnings for ${operation}: ${JSON.stringify(details)}`);
+			this.client.warn(
+				`Received warnings for ${operation}: ${JSON.stringify(details)}`,
+			);
 		}
 
 		if (errors) {
 			details.errors = errors;
-			this.client.error(`Received errors for ${operation}: ${JSON.stringify(details)}`);
+			this.client.error(
+				`Received errors for ${operation}: ${JSON.stringify(details)}`,
+			);
 		}
 	}
 }
