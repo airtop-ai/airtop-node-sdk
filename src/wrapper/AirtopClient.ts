@@ -1,14 +1,14 @@
 import { AirtopClient as FernClient } from '../Client'; // alias the Fern generated client
+import * as core from '../core';
+import {
+  type BatchOperateConfig,
+  type BatchOperationInput,
+  type BatchOperationResponse,
+  type BatchOperationUrl,
+  batchOperate,
+} from '../utils';
 import { AirtopSessions } from './AirtopSessions';
 import { AirtopWindows } from './AirtopWindows';
-import {
-	batchOperate,
-	type BatchOperateConfig,
-	type BatchOperationInput,
-	type BatchOperationResponse,
-	type BatchOperationUrl,
-} from "../utils";
-import * as core from '../core';
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
@@ -24,15 +24,15 @@ export class AirtopClient {
       _options.fetcher = (req) => {
         return core.fetcher({
           ...req,
-          headers: { 
-            ...req.headers, 
-            "x-airtop-sdk-source": "javascript",
-            "x-airtop-sdk-version": version,
+          headers: {
+            ...req.headers,
+            'x-airtop-sdk-source': 'javascript',
+            'x-airtop-sdk-version': version,
           },
         });
       };
     }
-     
+
     this._client = new FernClient(_options);
     this.debug = _options?.debug || false;
   }
@@ -71,11 +71,11 @@ export class AirtopClient {
     console.error(err);
   }
 
-	batchOperate = async<T> (
-		urls: BatchOperationUrl[],
-		operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
-		config?: BatchOperateConfig,
-	): Promise<T[]> => {
-		return await batchOperate(urls, operation, this, config);
-	};
+  batchOperate = async <T>(
+    urls: BatchOperationUrl[],
+    operation: (input: BatchOperationInput) => Promise<BatchOperationResponse<T>>,
+    config?: BatchOperateConfig,
+  ): Promise<T[]> => {
+    return await batchOperate(urls, operation, this, config);
+  };
 }

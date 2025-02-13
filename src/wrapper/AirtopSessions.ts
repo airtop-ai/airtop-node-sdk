@@ -1,10 +1,5 @@
-import { AirtopClient as FernClient } from '../Client';
-import * as Airtop from '../api';
-import {
-  Sessions as SessionsClass,
-  Sessions as SessionsNamespace,
-} from '../api/resources/sessions/client/Client';
-import * as core from '../core';
+import type * as Airtop from '../api';
+import { Sessions as SessionsClass, type Sessions as SessionsNamespace } from '../api/resources/sessions/client/Client';
 
 export interface AirtopSessionConfigV1 extends Airtop.SessionConfigV1 {
   skipWaitSessionReady?: boolean;
@@ -16,8 +11,10 @@ export interface AirtopSessionRestInputV1 {
 }
 
 export class AirtopSessions extends SessionsClass {
-
-  constructor(readonly _options: SessionsNamespace.Options, private debug: boolean = false) {
+  constructor(
+    readonly _options: SessionsNamespace.Options,
+    private debug = false,
+  ) {
     super(_options);
   }
 
@@ -27,7 +24,6 @@ export class AirtopSessions extends SessionsClass {
     }
   }
 
-
   /**
    * @param {Airtop.SessionRestInputV1} request
    * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
@@ -35,26 +31,23 @@ export class AirtopSessions extends SessionsClass {
    * @example
    *     await client.sessions.create()
    */
-  async create(
-    request?: AirtopSessionRestInputV1,
-    requestOptions?: SessionsNamespace.RequestOptions,
-  ) {
+  async create(request?: AirtopSessionRestInputV1, requestOptions?: SessionsNamespace.RequestOptions) {
     const createSessionResponse = await super.create(request, requestOptions);
 
     if (!createSessionResponse.data) {
-      throw new Error(`Error creating browser session`);
+      throw new Error('Error creating browser session');
     }
 
     if (request?.configuration?.skipWaitSessionReady) {
       return createSessionResponse;
     }
-    this.log('session created:\n' + JSON.stringify(createSessionResponse, null, 2));
+    this.log(`session created:\n${JSON.stringify(createSessionResponse, null, 2)}`);
 
     try {
       const event = await this.waitForSessionReady(createSessionResponse.data.id, requestOptions);
       if (!event) {
         this.log('No browser created, timed out?');
-        throw new Error(`Waiting for session ready timed out`);
+        throw new Error('Waiting for session ready timed out');
       }
       const getInfoResponse = await this.getInfo(createSessionResponse.data.id, requestOptions);
 
@@ -78,7 +71,7 @@ export class AirtopSessions extends SessionsClass {
   ): Promise<Airtop.SessionsEventsResponse | null> {
     const sessionEvents = await this.events(id, {}, { timeoutInSeconds: 60, ...(requestOptions || {}) });
     for await (const event of sessionEvents) {
-      this.log('status message received:\n' + JSON.stringify(event, null, 2));
+      this.log(`status message received:\n${JSON.stringify(event, null, 2)}`);
       const e = event as any;
       if (e.event === 'status' && e.status === 'running') {
         return event;
@@ -86,5 +79,4 @@ export class AirtopSessions extends SessionsClass {
     }
     return null;
   }
-
 }
