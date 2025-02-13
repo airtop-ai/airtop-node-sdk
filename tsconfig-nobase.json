@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "extendedDiagnostics": true,
         "strict": true,
         "target": "ES6",
         "module": "CommonJS",
