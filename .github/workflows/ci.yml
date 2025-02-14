@@ -1,6 +1,11 @@
 name: ci
 
-on: [push]
+on: 
+  push:
+    branches:
+      - master
+      - beta
+      - alpha
 
 jobs:
   compile:
@@ -34,7 +39,7 @@ jobs:
 
   publish:
     needs: [ compile, test ]
-    if: github.event_name == 'push' && (contains(github.ref, 'refs/tags/') || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/alpha')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
