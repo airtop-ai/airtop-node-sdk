@@ -11,13 +11,13 @@ pre-commit:
         - "*.gen.ts"
         - "**/package-lock.json"
     "[repo] verify types":
-      run: yarn build
+      run: yarn compile-nobase
       tags:
         - verify-types
 pre-push:
   parallel: true
   commands:
     "[repo] verify types":
-      run: yarn build
+      run: yarn compile-nobase
       tags:
         - verify-types
