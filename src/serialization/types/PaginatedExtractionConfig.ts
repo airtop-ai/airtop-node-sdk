@@ -5,6 +5,7 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { ScrapeConfig } from "./ScrapeConfig";
 
 export const PaginatedExtractionConfig: core.serialization.ObjectSchema<
     serializers.PaginatedExtractionConfig.Raw,
@@ -13,6 +14,7 @@ export const PaginatedExtractionConfig: core.serialization.ObjectSchema<
     interactionMode: core.serialization.string().optional(),
     outputSchema: core.serialization.string().optional(),
     paginationMode: core.serialization.string().optional(),
+    scrape: ScrapeConfig.optional(),
 });
 
 export declare namespace PaginatedExtractionConfig {
@@ -20,5 +22,6 @@ export declare namespace PaginatedExtractionConfig {
         interactionMode?: string | null;
         outputSchema?: string | null;
         paginationMode?: string | null;
+        scrape?: ScrapeConfig.Raw | null;
     }
 }

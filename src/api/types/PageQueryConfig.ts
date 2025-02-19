@@ -9,4 +9,6 @@ export interface PageQueryConfig {
     experimental?: Airtop.PageQueryExperimentalConfig;
     /** JSON schema defining the structure of the output. If not provided, the format of the output might vary. */
     outputSchema?: string;
+    /** Optional configuration to customize and tweak how the web page is scraped. */
+    scrape?: Airtop.ScrapeConfig;
 }
