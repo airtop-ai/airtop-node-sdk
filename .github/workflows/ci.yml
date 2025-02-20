@@ -21,6 +21,7 @@ jobs:
 
       - name: Compile
         run: |
+          echo ${{ github.event_name }}
           yarn install
           yarn build
           yarn compile-nobase
