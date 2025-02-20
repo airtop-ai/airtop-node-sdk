@@ -23,6 +23,7 @@ export * from "./PageQueryConfig";
 export * from "./PageQueryExperimentalConfig";
 export * from "./PaginatedExtractionConfig";
 export * from "./Pagination";
+export * from "./ScrapeConfig";
 export * from "./ScrapeResponse";
 export * from "./ScrapeResponseContent";
 export * from "./ScrapeResponseEnvelope";

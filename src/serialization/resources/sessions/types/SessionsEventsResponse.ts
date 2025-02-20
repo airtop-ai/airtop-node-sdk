@@ -5,20 +5,20 @@
 import * as serializers from "../../../index";
 import * as Airtop from "../../../../api/index";
 import * as core from "../../../../core";
+import { SessionsEventsResponseSessionEvent } from "./SessionsEventsResponseSessionEvent";
 import { SessionsEventsResponseStatus } from "./SessionsEventsResponseStatus";
 import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 import { SessionsEventsResponseWindowEvent } from "./SessionsEventsResponseWindowEvent";
-import { SessionsEventsResponseSessionEvent } from "./SessionsEventsResponseSessionEvent";
 
 export const SessionsEventsResponse: core.serialization.Schema<
     serializers.SessionsEventsResponse.Raw,
     Airtop.SessionsEventsResponse
 > = core.serialization
     .union("event", {
+        sessionEvent: SessionsEventsResponseSessionEvent,
         status: SessionsEventsResponseStatus,
         error: SessionsEventsResponseError,
         windowEvent: SessionsEventsResponseWindowEvent,
-        sessionEvent: SessionsEventsResponseSessionEvent,
     })
     .transform<Airtop.SessionsEventsResponse>({
         transform: (value) => value,
@@ -27,10 +27,14 @@ export const SessionsEventsResponse: core.serialization.Schema<
 
 export declare namespace SessionsEventsResponse {
     type Raw =
+        | SessionsEventsResponse.SessionEvent
         | SessionsEventsResponse.Status
         | SessionsEventsResponse.Error
-        | SessionsEventsResponse.WindowEvent
-        | SessionsEventsResponse.SessionEvent;
+        | SessionsEventsResponse.WindowEvent;
+
+    interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
+        event: "sessionEvent";
+    }
 
     interface Status extends SessionsEventsResponseStatus.Raw {
         event: "status";
@@ -42,9 +46,5 @@ export declare namespace SessionsEventsResponse {
 
     interface WindowEvent extends SessionsEventsResponseWindowEvent.Raw {
         event: "windowEvent";
-    }
-
-    interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
-        event: "sessionEvent";
     }
 }
