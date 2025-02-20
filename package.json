@@ -14,7 +14,7 @@
         "biome:lint": "biome lint --diagnostic-level=error --no-errors-on-unmatched src",
         "biome:fix": "biome format --write && biome lint --write",
         "biome:format": "biome format --no-errors-on-unmatched --files-ignore-unknown=true",
-        "compile-nobase": "tsc --project config/tsconfig-nobase.json"
+        "compile-nobase": "tsc --project tsconfig-nobase.json"
     },
     "dependencies": {
         "url-join": "4.0.1",
