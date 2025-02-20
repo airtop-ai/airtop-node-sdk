@@ -1,11 +1,6 @@
 name: ci
 
-on: 
-  push:
-    branches:
-      - master
-      - beta
-      - alpha
+on: [push]
 
 jobs:
   compile:
