@@ -9,6 +9,7 @@ import * as core from "../../core";
 export const Window: core.serialization.ObjectSchema<serializers.Window.Raw, Airtop.Window> = core.serialization.object(
     {
         liveViewUrl: core.serialization.string(),
+        targetId: core.serialization.string(),
         windowId: core.serialization.string(),
     }
 );
@@ -16,6 +17,7 @@ export const Window: core.serialization.ObjectSchema<serializers.Window.Raw, Air
 export declare namespace Window {
     interface Raw {
         liveViewUrl: string;
+        targetId: string;
         windowId: string;
     }
 }

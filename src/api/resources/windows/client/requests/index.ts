@@ -16,5 +16,6 @@ export { type SessionMonitorHandlerRequestBody } from "./SessionMonitorHandlerRe
 export { type SessionPaginatedExtractionHandlerRequestBody } from "./SessionPaginatedExtractionHandlerRequestBody";
 export { type ScrapeContentRequest } from "./ScrapeContentRequest";
 export { type SessionScreenshotHandlerRequestBody } from "./SessionScreenshotHandlerRequestBody";
+export { type SessionScrollHandlerRequestBody } from "./SessionScrollHandlerRequestBody";
 export { type SessionSummaryHandlerRequestBody } from "./SessionSummaryHandlerRequestBody";
 export { type SessionTypeHandlerRequestBody } from "./SessionTypeHandlerRequestBody";

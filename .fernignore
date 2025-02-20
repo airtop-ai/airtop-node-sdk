@@ -7,3 +7,6 @@ src/index.ts
 src/utils/
 .github/workflows/notify-failure.yml
 .github/workflows/ci.yml
+biome.json
+config/tsconfig-nobase.json
+lefthook.yml

@@ -1,0 +1,23 @@
+pre-commit:
+  commands:
+    "lint and format files":
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: yarn run biome:format {staged_files} && yarn run biome:lint {staged_files}
+      stage_fixed: true
+      tags:
+        - lint
+        - staged-lint
+      exclude:
+        - "*.gen.ts"
+        - "**/package-lock.json"
+    "[repo] verify types":
+      run: yarn compile-nobase
+      tags:
+        - verify-types
+pre-push:
+  parallel: true
+  commands:
+    "[repo] verify types":
+      run: yarn compile-nobase
+      tags:
+        - verify-types

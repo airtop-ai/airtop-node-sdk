@@ -6,16 +6,19 @@ import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { PageQueryExperimentalConfig } from "./PageQueryExperimentalConfig";
+import { ScrapeConfig } from "./ScrapeConfig";
 
 export const PageQueryConfig: core.serialization.ObjectSchema<serializers.PageQueryConfig.Raw, Airtop.PageQueryConfig> =
     core.serialization.object({
         experimental: PageQueryExperimentalConfig.optional(),
         outputSchema: core.serialization.string().optional(),
+        scrape: ScrapeConfig.optional(),
     });
 
 export declare namespace PageQueryConfig {
     interface Raw {
         experimental?: PageQueryExperimentalConfig.Raw | null;
         outputSchema?: string | null;
+        scrape?: ScrapeConfig.Raw | null;
     }
 }
