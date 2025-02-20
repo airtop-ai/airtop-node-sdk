@@ -1,0 +1,14 @@
+name: temp
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  temp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Split tag
+        id: split
+        run: |
+          echo "value=${{ github.ref || format('{0}{1}', 'refs/tags/', github.ref) }}"
+          echo "value=${{ github.ref || format('{0}{1}', 'refs/tags/', github.ref) }}" >> $GITHUB_OUTPUT
