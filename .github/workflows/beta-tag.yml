@@ -16,6 +16,6 @@ jobs:
         run: |
           AIRTOP_VERSION=$(jq -r .version package.json)
           echo "AIRTOP_VERSION: $AIRTOP_VERSION"
-          # git tag "$AIRTOP_VERSION" 
-          # git push origin "$AIRTOP_VERSION"
-          # gh release create "$AIRTOP_VERSION" --prerelease --latest=false --target beta --notes "Beta release $AIRTOP_VERSION" -t "$AIRTOP_VERSION"
+          git tag "$AIRTOP_VERSION" 
+          git push origin "$AIRTOP_VERSION"
+          gh release create "$AIRTOP_VERSION" --prerelease --latest=false --target beta --notes "Beta release $AIRTOP_VERSION" -t "$AIRTOP_VERSION"
