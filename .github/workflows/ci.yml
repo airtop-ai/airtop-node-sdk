@@ -1,12 +1,6 @@
 name: ci
 
-on: 
-  push:
-    branches:
-      - master
-      - beta
-      - alpha
-      - 'releases/**'      
+on: [push]      
 
 jobs:
   compile:
@@ -21,10 +15,6 @@ jobs:
 
       - name: Compile
         run: |
-          echo "github.event_name ${{ github.event_name }}"
-          echo "github.ref ${{ github.ref }}"
-          echo "github.ref_type ${{ github.ref_type }}"
-          echo "will run? push? ${{ github.event_name == 'push' }} tags? ${{ contains(github.ref, 'refs/tags/') }} whole? ${{ github.event_name == 'push' && contains(github.ref, 'refs/tags/') }}"
           yarn install
           yarn build
           yarn compile-nobase
