@@ -5,6 +5,8 @@
 export interface Window {
     /** Url for loading a browser window live view that is configured according to the request options like screenResolution, disableResize, etc. */
     liveViewUrl: string;
+    /** CDP target ID of the browser window */
+    targetId: string;
     /** Airtop window ID of the browser window */
     windowId: string;
 }
