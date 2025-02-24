@@ -20,10 +20,10 @@ declare namespace seleniumWebdriver {
 import fetch from 'node-fetch';
 import type * as Airtop from '../api';
 import {
-  Windows,
+  type Windows,
   Windows as WindowsClass,
-  type Windows as WindowsNamespace
-} from "../api/resources/windows/client/Client";
+  type Windows as WindowsNamespace,
+} from '../api/resources/windows/client/Client';
 import * as core from '../core';
 
 export class AirtopWindows extends WindowsClass {
@@ -310,10 +310,10 @@ export class AirtopWindows extends WindowsClass {
    *     await client.windows.paginatedExtraction("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
    */
   public async paginatedExtraction(
-      sessionId: string,
-      windowId: string,
-      request: Airtop.SessionPaginatedExtractionHandlerRequestBody,
-      requestOptions?: Windows.RequestOptions
+    sessionId: string,
+    windowId: string,
+    request: Airtop.SessionPaginatedExtractionHandlerRequestBody,
+    requestOptions?: Windows.RequestOptions,
   ): Promise<Airtop.AiPromptResponse> {
     return super.paginatedExtraction(sessionId, windowId, request, {
       timeoutInSeconds: 600,
@@ -321,7 +321,6 @@ export class AirtopWindows extends WindowsClass {
       maxRetries: 0,
     });
   }
-
 
   /**
    * Execute a scroll interaction in a specific browser window
@@ -335,10 +334,10 @@ export class AirtopWindows extends WindowsClass {
    *     await client.windows.scroll("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
    */
   public async scroll(
-      sessionId: string,
-      windowId: string,
-      request: Airtop.SessionScrollHandlerRequestBody = {},
-      requestOptions?: Windows.RequestOptions
+    sessionId: string,
+    windowId: string,
+    request: Airtop.SessionScrollHandlerRequestBody = {},
+    requestOptions?: Windows.RequestOptions,
   ): Promise<Airtop.AiPromptResponse> {
     return super.scroll(sessionId, windowId, request, {
       timeoutInSeconds: 600,
