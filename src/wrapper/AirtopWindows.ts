@@ -238,7 +238,7 @@ export class AirtopWindows extends WindowsClass {
   public async hover(
     sessionId: string,
     windowId: string,
-    request: Airtop.SessionHoverHandlerRequestBody = {},
+    request: Airtop.SessionHoverHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.AiPromptResponse> {
     return super.hover(sessionId, windowId, request, {
