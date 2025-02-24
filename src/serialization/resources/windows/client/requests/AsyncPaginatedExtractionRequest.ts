@@ -16,7 +16,7 @@ export const AsyncPaginatedExtractionRequest: core.serialization.Schema<
     clientRequestId: core.serialization.string().optional(),
     configuration: PaginatedExtractionConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
-    prompt: core.serialization.string().optional(),
+    prompt: core.serialization.string(),
     timeThresholdSeconds: core.serialization.number().optional(),
 });
 
@@ -26,7 +26,7 @@ export declare namespace AsyncPaginatedExtractionRequest {
         clientRequestId?: string | null;
         configuration?: PaginatedExtractionConfig.Raw | null;
         costThresholdCredits?: number | null;
-        prompt?: string | null;
+        prompt: string;
         timeThresholdSeconds?: number | null;
     }
 }
