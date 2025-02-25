@@ -286,7 +286,7 @@ export class AirtopWindows extends WindowsClass {
   public async paginatedExtraction(
     sessionId: string,
     windowId: string,
-    request: Airtop.SessionPaginatedExtractionHandlerRequestBody = {},
+    request: Airtop.SessionPaginatedExtractionHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.AiPromptResponse> {
     return super.paginatedExtraction(sessionId, windowId, request, {
