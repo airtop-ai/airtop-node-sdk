@@ -1,6 +1,6 @@
 name: ci
 
-on: [push]
+on: [push]      
 
 jobs:
   compile:
@@ -35,7 +35,7 @@ jobs:
 
   publish:
     needs: [ compile, test ]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -59,3 +59,33 @@ jobs:
           fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Split tag
+        env:
+          BRANCH: ${{ github.ref_name }}
+        id: split
+        run: echo "value=${{ github.ref || format('{0}{1}', 'refs/tags/', github.ref) }}" >> $GITHUB_OUTPUT
+
+      - name: 'Slack notify'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              username: 'SDK Deployer',
+              icon_emoji: ':octocat:',
+              attachments: [{
+                color: 'good',
+                blocks: [
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": `Node SDK v${{ steps.split.outputs.fragment }} released 🚀`
+                    }
+                  }
+                ]
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.AIRTOP_SLACK_WEBHOOK_URL }}

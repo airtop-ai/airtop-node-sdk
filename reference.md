@@ -1069,7 +1069,9 @@ Execute a hover interaction in a specific browser window
 <dd>
 
 ```typescript
-await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    elementDescription: "The search box input in the top right corner",
+});
 ```
 
 </dd>
@@ -1295,7 +1297,10 @@ Submit a prompt that queries the content of a specific browser window and pagina
 ```typescript
 await client.windows.paginatedExtraction(
     "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-    "0334da2a-91b0-42c5-6156-76a5eba87430"
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+    {
+        prompt: "This site contains a list of results about <provide details about the list>. Navigate through 3 pages of results and return the title and <provide details about the data you want to extract> about each result in this list.",
+    }
 );
 ```
 
