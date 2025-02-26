@@ -8,6 +8,7 @@ export * from "./BrowserWaitSelectorConfig";
 export * from "./ClickConfigClickType";
 export * from "./ClickConfig";
 export * from "./ClientProvidedResponseMetadata";
+export * from "./CreateAutomationRequestBodyConfiguration";
 export * from "./EnvelopeDefaultMeta";
 export * from "./ErrorBody";
 export * from "./ErrorDetail";

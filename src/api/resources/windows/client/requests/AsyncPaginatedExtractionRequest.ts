@@ -6,7 +6,9 @@ import * as Airtop from "../../../../index";
 
 /**
  * @example
- *     {}
+ *     {
+ *         prompt: "This site contains a list of results about <provide details about the list>. Navigate through 3 pages of results and return the title and <provide details about the data you want to extract> about each result in this list."
+ *     }
  */
 export interface AsyncPaginatedExtractionRequest {
     /** Async configuration options. */
@@ -17,7 +19,7 @@ export interface AsyncPaginatedExtractionRequest {
     /** A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended). */
     costThresholdCredits?: number;
     /** A prompt providing the Airtop AI model with additional direction or constraints about the page and the details you want to extract from the page. */
-    prompt?: string;
+    prompt: string;
     /**
      * A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).
      *

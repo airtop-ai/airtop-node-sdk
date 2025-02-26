@@ -6,27 +6,26 @@ import * as serializers from "../../../../index";
 import * as Airtop from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { AsyncConfig } from "../../../../types/AsyncConfig";
-import { PaginatedExtractionConfig } from "../../../../types/PaginatedExtractionConfig";
 
-export const AsyncPaginatedExtractionRequest: core.serialization.Schema<
-    serializers.AsyncPaginatedExtractionRequest.Raw,
-    Airtop.AsyncPaginatedExtractionRequest
+export const AsyncExecuteAutomationRequest: core.serialization.Schema<
+    serializers.AsyncExecuteAutomationRequest.Raw,
+    Airtop.AsyncExecuteAutomationRequest
 > = core.serialization.object({
     async: AsyncConfig.optional(),
+    automationId: core.serialization.string(),
     clientRequestId: core.serialization.string().optional(),
-    configuration: PaginatedExtractionConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
-    prompt: core.serialization.string(),
+    parameters: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     timeThresholdSeconds: core.serialization.number().optional(),
 });
 
-export declare namespace AsyncPaginatedExtractionRequest {
+export declare namespace AsyncExecuteAutomationRequest {
     interface Raw {
         async?: AsyncConfig.Raw | null;
+        automationId: string;
         clientRequestId?: string | null;
-        configuration?: PaginatedExtractionConfig.Raw | null;
         costThresholdCredits?: number | null;
-        prompt: string;
+        parameters?: Record<string, unknown> | null;
         timeThresholdSeconds?: number | null;
     }
 }

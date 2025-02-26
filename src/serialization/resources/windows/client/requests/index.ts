@@ -1,4 +1,6 @@
 export { AsyncClickRequest } from "./AsyncClickRequest";
+export { AsyncCreateAutomationRequest } from "./AsyncCreateAutomationRequest";
+export { AsyncExecuteAutomationRequest } from "./AsyncExecuteAutomationRequest";
 export { AsyncHoverRequest } from "./AsyncHoverRequest";
 export { AsyncMonitorRequest } from "./AsyncMonitorRequest";
 export { AsyncPageQueryRequest } from "./AsyncPageQueryRequest";
