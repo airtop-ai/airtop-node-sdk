@@ -10,3 +10,4 @@ src/utils/
 biome.json
 config/tsconfig-nobase.json
 lefthook.yml
+.github/workflows/beta-tag.yml
