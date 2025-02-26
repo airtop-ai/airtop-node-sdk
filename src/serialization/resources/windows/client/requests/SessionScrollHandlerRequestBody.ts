@@ -6,24 +6,30 @@ import * as serializers from "../../../../index";
 import * as Airtop from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { MicroInteractionConfig } from "../../../../types/MicroInteractionConfig";
+import { ScrollByConfig } from "../../../../types/ScrollByConfig";
+import { ScrollToEdgeConfig } from "../../../../types/ScrollToEdgeConfig";
 
-export const SessionHoverHandlerRequestBody: core.serialization.Schema<
-    serializers.SessionHoverHandlerRequestBody.Raw,
-    Airtop.SessionHoverHandlerRequestBody
+export const SessionScrollHandlerRequestBody: core.serialization.Schema<
+    serializers.SessionScrollHandlerRequestBody.Raw,
+    Airtop.SessionScrollHandlerRequestBody
 > = core.serialization.object({
     clientRequestId: core.serialization.string().optional(),
     configuration: MicroInteractionConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
-    elementDescription: core.serialization.string(),
+    scrollBy: ScrollByConfig.optional(),
+    scrollToEdge: ScrollToEdgeConfig.optional(),
+    scrollToElement: core.serialization.string().optional(),
     timeThresholdSeconds: core.serialization.number().optional(),
 });
 
-export declare namespace SessionHoverHandlerRequestBody {
+export declare namespace SessionScrollHandlerRequestBody {
     interface Raw {
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfig.Raw | null;
         costThresholdCredits?: number | null;
-        elementDescription: string;
+        scrollBy?: ScrollByConfig.Raw | null;
+        scrollToEdge?: ScrollToEdgeConfig.Raw | null;
+        scrollToElement?: string | null;
         timeThresholdSeconds?: number | null;
     }
 }

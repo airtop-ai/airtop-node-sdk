@@ -31,6 +31,8 @@ export * from "./ScrapeResponseOutput";
 export * from "./ScreenshotConfig";
 export * from "./ScreenshotMetadata";
 export * from "./ScreenshotRequestConfig";
+export * from "./ScrollByConfig";
+export * from "./ScrollToEdgeConfig";
 export * from "./AirtopProxyConfiguration";
 export * from "./ProxyCredentials";
 export * from "./Proxy";

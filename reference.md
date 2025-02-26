@@ -415,7 +415,9 @@ Execute a hover interaction in a specific browser window
 <dd>
 
 ```typescript
-await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    elementDescription: "The search box input in the top right corner",
+});
 ```
 
 </dd>
@@ -577,7 +579,10 @@ Submit a prompt that queries the content of a specific browser window and pagina
 ```typescript
 await client.windows.paginatedExtraction(
     "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-    "0334da2a-91b0-42c5-6156-76a5eba87430"
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+    {
+        prompt: "This site contains a list of results about <provide details about the list>. Navigate through 3 pages of results and return the title and <provide details about the data you want to extract> about each result in this list.",
+    }
 );
 ```
 
@@ -850,6 +855,85 @@ await client.windows.screenshot("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2
 <dd>
 
 **request:** `Airtop.SessionScreenshotHandlerRequestBody`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">scroll</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute a scroll interaction in a specific browser window
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.scroll("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.SessionScrollHandlerRequestBody`
 
 </dd>
 </dl>
