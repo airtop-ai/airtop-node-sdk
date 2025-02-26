@@ -14,7 +14,7 @@ export const SessionHoverHandlerRequestBody: core.serialization.Schema<
     clientRequestId: core.serialization.string().optional(),
     configuration: MicroInteractionConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
-    elementDescription: core.serialization.string().optional(),
+    elementDescription: core.serialization.string(),
     timeThresholdSeconds: core.serialization.number().optional(),
 });
 
@@ -23,7 +23,7 @@ export declare namespace SessionHoverHandlerRequestBody {
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfig.Raw | null;
         costThresholdCredits?: number | null;
-        elementDescription?: string | null;
+        elementDescription: string;
         timeThresholdSeconds?: number | null;
     }
 }

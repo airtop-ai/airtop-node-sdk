@@ -14,11 +14,11 @@ export interface SessionScrollHandlerRequestBody {
     configuration?: Airtop.MicroInteractionConfig;
     /** A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended). */
     costThresholdCredits?: number;
-    /** The amount of pixels/percentage to scroll horizontally or vertically relative to the current scroll position. Positive values scroll right and down, negative values scroll left and up. If an element description is provided, the element description will take precedence over the scrollBy values. */
+    /** The amount of pixels/percentage to scroll horizontally or vertically relative to the current scroll position. Positive values scroll right and down, negative values scroll left and up. If a scrollToElement value is provided, scrollBy/scrollToEdge values will be ignored. */
     scrollBy?: Airtop.ScrollByConfig;
-    /** Scroll to the top or bottom of the page, or to the left or right of the page. If provided these values will take precedence over the scrollBy values. If an element description is provided, the element description will take precedence over the scrollToEdge values. */
+    /** Scroll to the top or bottom of the page, or to the left or right of the page. ScrollToEdge values will take precedence over the scrollBy values, and scrollToEdge will be executed first. If a scrollToElement value is provided, scrollToEdge/scrollBy values will be ignored. */
     scrollToEdge?: Airtop.ScrollToEdgeConfig;
-    /** A natural language description of where to scroll (e.g. 'the search box', 'username field'). The interaction will be aborted if the target element cannot be found. */
+    /** A natural language description of where to scroll (e.g. 'the search box', 'username field'). The interaction will be aborted if the target element cannot be found. If provided, scrollToEdge/scrollBy values will be ignored. */
     scrollToElement?: string;
     /**
      * A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).
