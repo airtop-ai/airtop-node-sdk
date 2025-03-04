@@ -50,7 +50,7 @@ export class AirtopWindows extends WindowsClass {
     sessionId: string,
     windowId: string,
     request: Omit<Airtop.SessionPageQueryHandlerRequestBody, 'configuration'> & {
-      configuration?: Omit<Airtop.SessionPageQueryHandlerRequestBody['configuration'], 'outputSchema'> & {
+      configuration?: Partial<Airtop.SessionPageQueryHandlerRequestBody['configuration']> & {
         outputSchema?: string | object;
       };
     },
@@ -92,7 +92,7 @@ export class AirtopWindows extends WindowsClass {
     sessionId: string,
     windowId: string,
     request: Omit<Airtop.SessionPageQueryHandlerRequestBody, 'configuration'> & {
-      configuration?: Omit<Airtop.SessionPageQueryHandlerRequestBody['configuration'], 'outputSchema'> & {
+      configuration?: Partial<Airtop.SessionPageQueryHandlerRequestBody['configuration']> & {
         outputSchema?: string | object;
       };
     },
