@@ -19,6 +19,7 @@ export const SessionScrollHandlerRequestBody: core.serialization.Schema<
     scrollBy: ScrollByConfig.optional(),
     scrollToEdge: ScrollToEdgeConfig.optional(),
     scrollToElement: core.serialization.string().optional(),
+    scrollWithin: core.serialization.string().optional(),
     timeThresholdSeconds: core.serialization.number().optional(),
 });
 
@@ -30,6 +31,7 @@ export declare namespace SessionScrollHandlerRequestBody {
         scrollBy?: ScrollByConfig.Raw | null;
         scrollToEdge?: ScrollToEdgeConfig.Raw | null;
         scrollToElement?: string | null;
+        scrollWithin?: string | null;
         timeThresholdSeconds?: number | null;
     }
 }
