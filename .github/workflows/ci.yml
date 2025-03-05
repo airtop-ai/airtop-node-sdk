@@ -81,7 +81,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": `Node SDK v${{ steps.split.outputs.fragment }} released 🚀`
+                      "text": `Node SDK v${{ steps.split.outputs.value }} released 🚀`
                     }
                   }
                 ]
