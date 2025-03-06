@@ -1,3 +1,4 @@
+import type { AirtopClient } from '../../wrapper/AirtopClient';
 import type { AirtopSessionConfigV1 } from '../../wrapper/AirtopSessions';
 
 export type BatchOperateConfig = {
@@ -17,6 +18,7 @@ export type BatchOperationInput = {
   sessionId: string;
   liveViewUrl: string;
   operationUrl: BatchOperationUrl;
+  client: AirtopClient;
 };
 
 export type BatchOperationResponse<T> = {
