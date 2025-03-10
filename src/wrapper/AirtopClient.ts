@@ -57,6 +57,10 @@ export class AirtopClient {
     return this._client.profiles;
   }
 
+  get extensionConfigurations() {
+    return this._client.extensionConfigurations;
+  }
+
   log(message: string) {
     if (this.debug) {
       console.log(message);
