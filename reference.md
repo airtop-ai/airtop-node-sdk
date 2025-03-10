@@ -2002,9 +2002,9 @@ await client.windows.type("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0
 </dl>
 </details>
 
-## ExtensionConfigurations
+## Automations
 
-<details><summary><code>client.extensionConfigurations.<a href="/src/api/resources/extensionConfigurations/client/Client.ts">extensionConfigurationDelete</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">listAutomations</a>() -> Airtop.ListAutomationsOutput</code></summary>
 <dl>
 <dd>
 
@@ -2016,7 +2016,7 @@ await client.windows.type("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0
 <dl>
 <dd>
 
-Delete extension configurations matching by name
+List all automations for a given organization
 
 </dd>
 </dl>
@@ -2032,7 +2032,7 @@ Delete extension configurations matching by name
 <dd>
 
 ```typescript
-await client.extensionConfigurations.extensionConfigurationDelete();
+await client.automations.listAutomations();
 ```
 
 </dd>
@@ -2048,15 +2048,7 @@ await client.extensionConfigurations.extensionConfigurationDelete();
 <dl>
 <dd>
 
-**request:** `Airtop.ExtensionConfigurationDeleteRequest`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ExtensionConfigurations.RequestOptions`
+**requestOptions:** `Automations.RequestOptions`
 
 </dd>
 </dl>
@@ -2066,6 +2058,201 @@ await client.extensionConfigurations.extensionConfigurationDelete();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">updateAutomationDescription</a>({ ...params }) -> Airtop.AutomationOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the description of a specific automation
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.updateAutomationDescription({
+    description: "description",
+    id: "id",
+    orgId: "orgId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Airtop.UpdateAutomationDescriptionInputBody`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">getAutomation</a>(automationId) -> Airtop.AutomationOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific automation by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.getAutomation("automationId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**automationId:** `string` — ID of the automation to retrieve
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">deleteAutomation</a>(automationId) -> Airtop.DeleteAutomationOutputWrapperBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific automation
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.deleteAutomation("automationId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**automationId:** `string` — ID of the automation to delete
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## ExtensionConfigurations
 
 <details><summary><code>client.extensionConfigurations.<a href="/src/api/resources/extensionConfigurations/client/Client.ts">extensionConfigurationGetInfo</a>(name) -> Airtop.ExtensionConfigurationOutput</code></summary>
 <dl>

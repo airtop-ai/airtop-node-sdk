@@ -6,8 +6,8 @@ import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Airtop from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors/index";
 import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace ExtensionConfigurations {
     interface Options {
@@ -28,77 +28,6 @@ export declare namespace ExtensionConfigurations {
 
 export class ExtensionConfigurations {
     constructor(protected readonly _options: ExtensionConfigurations.Options) {}
-
-    /**
-     * Delete extension configurations matching by name
-     *
-     * @param {Airtop.ExtensionConfigurationDeleteRequest} request
-     * @param {ExtensionConfigurations.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.extensionConfigurations.extensionConfigurationDelete()
-     */
-    public async extensionConfigurationDelete(
-        request: Airtop.ExtensionConfigurationDeleteRequest = {},
-        requestOptions?: ExtensionConfigurations.RequestOptions
-    ): Promise<void> {
-        const { extensionConfigurationNames } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (extensionConfigurationNames != null) {
-            if (Array.isArray(extensionConfigurationNames)) {
-                _queryParams["extensionConfigurationNames"] = extensionConfigurationNames.map((item) => item);
-            } else {
-                _queryParams["extensionConfigurationNames"] = extensionConfigurationNames;
-            }
-        }
-
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "extension-configuration"
-            ),
-            method: "DELETE",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.27-beta0",
-                "User-Agent": "@airtop/sdk/0.1.27-beta0",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.AirtopError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AirtopError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.AirtopTimeoutError();
-            case "unknown":
-                throw new errors.AirtopError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
 
     /**
      * Get an extension configuration by name
@@ -127,8 +56,8 @@ export class ExtensionConfigurations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.27-beta0",
-                "User-Agent": "@airtop/sdk/0.1.27-beta0",
+                "X-Fern-SDK-Version": "0.1.31-beta0",
+                "User-Agent": "@airtop/sdk/0.1.31-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
