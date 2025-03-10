@@ -13,6 +13,7 @@ export const AutomationOutput: core.serialization.ObjectSchema<
     description: core.serialization.string().optional(),
     domainName: core.serialization.string(),
     id: core.serialization.string(),
+    schema: core.serialization.string().optional(),
     template: core.serialization.string().optional(),
 });
 
@@ -21,6 +22,7 @@ export declare namespace AutomationOutput {
         description?: string | null;
         domainName: string;
         id: string;
+        schema?: string | null;
         template?: string | null;
     }
 }

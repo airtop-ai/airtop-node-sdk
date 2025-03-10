@@ -6,5 +6,6 @@ export interface AutomationOutput {
     description?: string;
     domainName: string;
     id: string;
+    schema?: string;
     template?: string;
 }
