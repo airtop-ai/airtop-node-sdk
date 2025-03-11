@@ -23,6 +23,10 @@ export class AirtopRequests extends RequestsClass {
     intervalSeconds = 2,
     requestOptions?: RequestsNamespace.RequestOptions,
   ): Promise<Airtop.RequestStatusResponse> {
+    if (timeoutSeconds <= 0 || intervalSeconds <= 0) {
+      throw new Error('Timeout and interval must be positive values in seconds');
+    }
+
     const startTime = Date.now();
     const timeoutMs = timeoutSeconds * 1000;
 
