@@ -5,11 +5,21 @@
 /**
  * Status of the session to get.
  */
-export type SessionsListRequestStatus = "awaitingCapacity" | "initializing" | "running" | "ended";
+export type SessionsListRequestStatus =
+    | "awaitingCapacity"
+    | "initializing"
+    | "running"
+    | "ended"
+    | "completed"
+    | "cancelled"
+    | "all";
 
 export const SessionsListRequestStatus = {
     AwaitingCapacity: "awaitingCapacity",
     Initializing: "initializing",
     Running: "running",
     Ended: "ended",
+    Completed: "completed",
+    Cancelled: "cancelled",
+    All: "all",
 } as const;

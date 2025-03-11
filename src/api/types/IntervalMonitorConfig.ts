@@ -3,7 +3,7 @@
  */
 
 export interface IntervalMonitorConfig {
-    /** The interval in seconds between condition checks. Only used when monitorType is 'interval'. */
+    /** The interval in seconds between condition checks. */
     intervalSeconds?: number;
     /** The timeout in seconds after which the monitor will stop checking the condition. */
     timeoutSeconds?: number;
