@@ -56,7 +56,7 @@ export class AirtopClient {
   }
 
   public get requests(): AirtopRequests {
-    return (this._requests ??= new AirtopRequests(this._options, this.debug));
+    return (this._requests ??= new AirtopRequests(this._options));
   }
 
   get profiles() {
