@@ -9,13 +9,13 @@ export class AirtopRequests extends RequestsClass {
   /**
    * Waits until a request is complete or times out
    *
-   * @param requestId - The ID of the request to poll.
+   * @param requestId - The ID of the request to wait for.
    * @param timeoutSeconds - Maximum time to wait in seconds.
    * @param intervalSeconds - Polling interval in seconds.
    * @param requestOptions - Request-specific configuration.
    *
    * @example
-   *     const result = await client.requests.pollRequestUntilComplete("123e4567-e89b-12d3-a456-426614174000", 300, 2)
+   *     const result = await client.requests.waitForRequestCompletion("123e4567-e89b-12d3-a456-426614174000", 300)
    */
   async waitForRequestCompletion(
     requestId: string,
@@ -40,6 +40,6 @@ export class AirtopRequests extends RequestsClass {
       await new Promise((resolve) => setTimeout(resolve, intervalSeconds * 1000));
     }
 
-    throw new Error(`Request ${requestId} polling timed out after ${timeoutSeconds} seconds`);
+    throw new Error(`Waiting for request timed out: ${requestId}`);
   }
 }
