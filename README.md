@@ -19,9 +19,7 @@ Instantiate and use the client with the following:
 import { AirtopClient } from "@airtop/sdk";
 
 const client = new AirtopClient({ apiKey: "YOUR_API_KEY" });
-await client.windows.asyncClick("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
-    elementDescription: "The login button",
-});
+await client.windows.create("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
 
 ## Request And Response Types
@@ -32,7 +30,7 @@ following namespace:
 ```typescript
 import { Airtop } from "@airtop/sdk";
 
-const request: Airtop.AsyncClickRequest = {
+const request: Airtop.CreateWindowInputV1Body = {
     ...
 };
 ```
@@ -46,7 +44,7 @@ will be thrown.
 import { AirtopError } from "@airtop/sdk";
 
 try {
-    await client.windows.asyncClick(...);
+    await client.windows.create(...);
 } catch (err) {
     if (err instanceof AirtopError) {
         console.log(err.statusCode);
@@ -73,7 +71,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.create(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -83,7 +81,7 @@ const response = await client.windows.asyncClick(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.create(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -94,7 +92,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.create(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

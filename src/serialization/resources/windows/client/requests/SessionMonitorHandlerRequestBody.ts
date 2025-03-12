@@ -12,20 +12,18 @@ export const SessionMonitorHandlerRequestBody: core.serialization.Schema<
     Airtop.SessionMonitorHandlerRequestBody
 > = core.serialization.object({
     clientRequestId: core.serialization.string().optional(),
-    condition: core.serialization.string().optional(),
+    condition: core.serialization.string(),
     configuration: MonitorConfig.optional(),
     costThresholdCredits: core.serialization.number().optional(),
-    selector: core.serialization.string().optional(),
     timeThresholdSeconds: core.serialization.number().optional(),
 });
 
 export declare namespace SessionMonitorHandlerRequestBody {
     interface Raw {
         clientRequestId?: string | null;
-        condition?: string | null;
+        condition: string;
         configuration?: MonitorConfig.Raw | null;
         costThresholdCredits?: number | null;
-        selector?: string | null;
         timeThresholdSeconds?: number | null;
     }
 }

@@ -7,22 +7,16 @@ import * as Airtop from "../../api/index";
 import * as core from "../../core";
 import { MonitorConfigIncludeVisualAnalysis } from "./MonitorConfigIncludeVisualAnalysis";
 import { IntervalMonitorConfig } from "./IntervalMonitorConfig";
-import { BrowserWaitSelectorConfig } from "./BrowserWaitSelectorConfig";
-import { MonitorConfigMonitorType } from "./MonitorConfigMonitorType";
 
 export const MonitorConfig: core.serialization.ObjectSchema<serializers.MonitorConfig.Raw, Airtop.MonitorConfig> =
     core.serialization.object({
         includeVisualAnalysis: MonitorConfigIncludeVisualAnalysis.optional(),
         interval: IntervalMonitorConfig.optional(),
-        monitorSelectorOptions: BrowserWaitSelectorConfig.optional(),
-        monitorType: MonitorConfigMonitorType,
     });
 
 export declare namespace MonitorConfig {
     interface Raw {
         includeVisualAnalysis?: MonitorConfigIncludeVisualAnalysis.Raw | null;
         interval?: IntervalMonitorConfig.Raw | null;
-        monitorSelectorOptions?: BrowserWaitSelectorConfig.Raw | null;
-        monitorType: MonitorConfigMonitorType.Raw;
     }
 }

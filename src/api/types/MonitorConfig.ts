@@ -7,10 +7,6 @@ import * as Airtop from "../index";
 export interface MonitorConfig {
     /** If set to 'enabled', Airtop AI will also analyze the web page visually when executing the condition check. If set to 'disabled', no visual analysis will be conducted. */
     includeVisualAnalysis?: Airtop.MonitorConfigIncludeVisualAnalysis;
-    /** Configuration for the interval monitor. Only used when monitorType is 'interval'. */
+    /** Configuration for the interval monitor. */
     interval?: Airtop.IntervalMonitorConfig;
-    /** Configuration for the browser wait selector. */
-    monitorSelectorOptions?: Airtop.BrowserWaitSelectorConfig;
-    /** The type of monitoring to perform. Interval executes the condition check at a regular, specified interval. Selector waits for a selector to be present before completing. */
-    monitorType: Airtop.MonitorConfigMonitorType;
 }
