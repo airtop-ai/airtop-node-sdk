@@ -288,7 +288,7 @@ export class AirtopWindows extends WindowsClass {
   public async monitor(
     sessionId: string,
     windowId: string,
-    request: Airtop.SessionMonitorHandlerRequestBody = {},
+    request: Airtop.SessionMonitorHandlerRequestBody,
     requestOptions?: WindowsNamespace.RequestOptions,
   ): Promise<Airtop.AiPromptResponse> {
     return super.monitor(sessionId, windowId, request, {
