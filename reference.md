@@ -329,7 +329,9 @@ await client.windows.asyncHover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2
 <dd>
 
 ```typescript
-await client.windows.asyncMonitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+await client.windows.asyncMonitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    condition: "Determine if the user appears to be signed in to the website",
+});
 ```
 
 </dd>
@@ -1307,7 +1309,9 @@ await client.windows.hover("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b
 <dd>
 
 ```typescript
-await client.windows.monitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+await client.windows.monitor("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    condition: "Determine if the user appears to be signed in to the website",
+});
 ```
 
 </dd>
