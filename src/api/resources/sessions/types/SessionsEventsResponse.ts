@@ -8,16 +8,12 @@ import * as Airtop from "../../../index";
  * Each oneOf object in the array represents one possible Server Sent Events (SSE) message, serialized as UTF-8 text according to the SSE specification.
  */
 export type SessionsEventsResponse =
-    | Airtop.SessionsEventsResponse.WindowEvent
     | Airtop.SessionsEventsResponse.SessionEvent
     | Airtop.SessionsEventsResponse.Status
-    | Airtop.SessionsEventsResponse.Error_;
+    | Airtop.SessionsEventsResponse.Error_
+    | Airtop.SessionsEventsResponse.WindowEvent;
 
 export declare namespace SessionsEventsResponse {
-    interface WindowEvent extends Airtop.SessionsEventsResponseWindowEvent {
-        event: "windowEvent";
-    }
-
     interface SessionEvent extends Airtop.SessionsEventsResponseSessionEvent {
         event: "sessionEvent";
     }
@@ -28,5 +24,9 @@ export declare namespace SessionsEventsResponse {
 
     interface Error_ extends Airtop.SessionsEventsResponseError {
         event: "error";
+    }
+
+    interface WindowEvent extends Airtop.SessionsEventsResponseWindowEvent {
+        event: "windowEvent";
     }
 }
