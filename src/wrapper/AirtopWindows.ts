@@ -291,7 +291,7 @@ export class AirtopWindows extends WindowsClass {
     sessionId: string,
     windowId: string,
     request: Airtop.SessionPaginatedExtractionHandlerRequestBody,
-    requestOptions?: WindowsNamespace.RequestOptions,
+    requestOptions?: Windows.RequestOptions,
   ): Promise<Airtop.AiPromptResponse> {
     return super.paginatedExtraction(sessionId, windowId, request, {
       timeoutInSeconds: 600,
