@@ -3,8 +3,8 @@
  */
 
 export interface IntervalMonitorConfig {
-    /** The interval in seconds between condition checks. */
+    /** The interval in seconds between condition checks. Defaults to 5 seconds. */
     intervalSeconds?: number;
-    /** The timeout in seconds after which the monitor will stop checking the condition. */
+    /** The timeout in seconds after which the monitor will stop checking the condition. Defaults to 30 seconds. */
     timeoutSeconds?: number;
 }
