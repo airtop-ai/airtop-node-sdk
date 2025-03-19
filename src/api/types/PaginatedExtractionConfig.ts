@@ -5,6 +5,8 @@
 import * as Airtop from "../index";
 
 export interface PaginatedExtractionConfig {
+    /** Experimental configuration options. These may be subject to change and are not guaranteed to be stable across versions. */
+    experimental?: Airtop.PaginatedExtractionExperimentalConfig;
     /** The mode to use for interaction. If set to 'auto', Airtop AI will automatically choose the most cost-effective interaction mode. If set to 'accurate', the request might be slower, but more likely to be accurate. Whereas, 'cost-efficient' will be cheaper and speed things up, but may reduce accuracy. */
     interactionMode?: string;
     /** JSON schema defining the structure of the output. If not provided, the format of the output might vary. */

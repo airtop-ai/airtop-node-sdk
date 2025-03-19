@@ -5,12 +5,14 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { PaginatedExtractionExperimentalConfig } from "./PaginatedExtractionExperimentalConfig";
 import { ScrapeConfig } from "./ScrapeConfig";
 
 export const PaginatedExtractionConfig: core.serialization.ObjectSchema<
     serializers.PaginatedExtractionConfig.Raw,
     Airtop.PaginatedExtractionConfig
 > = core.serialization.object({
+    experimental: PaginatedExtractionExperimentalConfig.optional(),
     interactionMode: core.serialization.string().optional(),
     outputSchema: core.serialization.string().optional(),
     paginationMode: core.serialization.string().optional(),
@@ -19,6 +21,7 @@ export const PaginatedExtractionConfig: core.serialization.ObjectSchema<
 
 export declare namespace PaginatedExtractionConfig {
     interface Raw {
+        experimental?: PaginatedExtractionExperimentalConfig.Raw | null;
         interactionMode?: string | null;
         outputSchema?: string | null;
         paginationMode?: string | null;
