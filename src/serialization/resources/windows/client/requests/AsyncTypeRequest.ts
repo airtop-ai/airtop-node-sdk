@@ -6,14 +6,14 @@ import * as serializers from "../../../../index";
 import * as Airtop from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { AsyncConfig } from "../../../../types/AsyncConfig";
-import { MicroInteractionConfig } from "../../../../types/MicroInteractionConfig";
+import { MicroInteractionConfigWithExperimental } from "../../../../types/MicroInteractionConfigWithExperimental";
 
 export const AsyncTypeRequest: core.serialization.Schema<serializers.AsyncTypeRequest.Raw, Airtop.AsyncTypeRequest> =
     core.serialization.object({
         async: AsyncConfig.optional(),
         clearInputField: core.serialization.boolean().optional(),
         clientRequestId: core.serialization.string().optional(),
-        configuration: MicroInteractionConfig.optional(),
+        configuration: MicroInteractionConfigWithExperimental.optional(),
         costThresholdCredits: core.serialization.number().optional(),
         elementDescription: core.serialization.string().optional(),
         pressEnterKey: core.serialization.boolean().optional(),
@@ -28,7 +28,7 @@ export declare namespace AsyncTypeRequest {
         async?: AsyncConfig.Raw | null;
         clearInputField?: boolean | null;
         clientRequestId?: string | null;
-        configuration?: MicroInteractionConfig.Raw | null;
+        configuration?: MicroInteractionConfigWithExperimental.Raw | null;
         costThresholdCredits?: number | null;
         elementDescription?: string | null;
         pressEnterKey?: boolean | null;
