@@ -59,6 +59,10 @@ export class AirtopClient {
     return (this._requests ??= new AirtopRequests(this._options));
   }
 
+  get files() {
+    return this._client.files;
+  }
+
   get profiles() {
     return this._client.profiles;
   }
