@@ -31,7 +31,7 @@ export class Sessions {
     constructor(protected readonly _options: Sessions.Options) {}
 
     /**
-     * Get a list of sessions by ID
+     * Get a paginated list of sessions filtered by ID or status
      *
      * @param {Airtop.SessionsListRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
@@ -82,8 +82,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -180,8 +180,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -248,8 +248,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -344,8 +344,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -409,8 +409,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -522,8 +522,8 @@ export class Sessions {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

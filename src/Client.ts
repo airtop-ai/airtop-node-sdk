@@ -5,6 +5,8 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Windows } from "./api/resources/windows/client/Client";
+import { Automations } from "./api/resources/automations/client/Client";
+import { Assets } from "./api/resources/assets/client/Client";
 import { Profiles } from "./api/resources/profiles/client/Client";
 import { Requests } from "./api/resources/requests/client/Client";
 import { Sessions } from "./api/resources/sessions/client/Client";
@@ -33,6 +35,18 @@ export class AirtopClient {
 
     public get windows(): Windows {
         return (this._windows ??= new Windows(this._options));
+    }
+
+    protected _automations: Automations | undefined;
+
+    public get automations(): Automations {
+        return (this._automations ??= new Automations(this._options));
+    }
+
+    protected _assets: Assets | undefined;
+
+    public get assets(): Assets {
+        return (this._assets ??= new Assets(this._options));
     }
 
     protected _profiles: Profiles | undefined;

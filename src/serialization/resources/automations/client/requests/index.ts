@@ -1,0 +1,1 @@
+export { UpdateAutomationDescriptionInputBody } from "./UpdateAutomationDescriptionInputBody";
