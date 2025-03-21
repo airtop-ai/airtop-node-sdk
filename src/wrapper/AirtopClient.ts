@@ -10,6 +10,7 @@ import {
 import { AirtopSessions } from './AirtopSessions';
 import { AirtopWindows } from './AirtopWindows';
 import { AirtopRequests } from './AirtopRequests';
+import { AirtopFiles } from './AirtopFiles';
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
@@ -19,6 +20,7 @@ export class AirtopClient {
   private _windows: AirtopWindows | undefined;
   private _sessions: AirtopSessions | undefined;
   private _requests: AirtopRequests | undefined;
+  private _files: AirtopFiles | undefined;
 
   constructor(private _options: AugmentedOptions) {
     const version = require('../package.json').version; //we don't control tsconfig.json so we can't use resolveJsonModule
@@ -57,6 +59,10 @@ export class AirtopClient {
 
   public get requests(): AirtopRequests {
     return (this._requests ??= new AirtopRequests(this._options));
+  }
+
+  get files() {
+    return (this._files ??= new AirtopFiles(this._options));
   }
 
   get profiles() {

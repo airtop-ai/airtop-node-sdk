@@ -6,13 +6,13 @@ import * as serializers from "../../../../index";
 import * as Airtop from "../../../../../api/index";
 import * as core from "../../../../../core";
 import { AsyncConfig } from "../../../../types/AsyncConfig";
-import { MicroInteractionConfig } from "../../../../types/MicroInteractionConfig";
+import { MicroInteractionConfigWithExperimental } from "../../../../types/MicroInteractionConfigWithExperimental";
 
 export const AsyncHoverRequest: core.serialization.Schema<serializers.AsyncHoverRequest.Raw, Airtop.AsyncHoverRequest> =
     core.serialization.object({
         async: AsyncConfig.optional(),
         clientRequestId: core.serialization.string().optional(),
-        configuration: MicroInteractionConfig.optional(),
+        configuration: MicroInteractionConfigWithExperimental.optional(),
         costThresholdCredits: core.serialization.number().optional(),
         elementDescription: core.serialization.string(),
         timeThresholdSeconds: core.serialization.number().optional(),
@@ -22,7 +22,7 @@ export declare namespace AsyncHoverRequest {
     interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
-        configuration?: MicroInteractionConfig.Raw | null;
+        configuration?: MicroInteractionConfigWithExperimental.Raw | null;
         costThresholdCredits?: number | null;
         elementDescription: string;
         timeThresholdSeconds?: number | null;

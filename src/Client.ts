@@ -6,7 +6,7 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Windows } from "./api/resources/windows/client/Client";
 import { Automations } from "./api/resources/automations/client/Client";
-import { ExtensionConfigurations } from "./api/resources/extensionConfigurations/client/Client";
+import { Files } from "./api/resources/files/client/Client";
 import { Profiles } from "./api/resources/profiles/client/Client";
 import { Requests } from "./api/resources/requests/client/Client";
 import { Sessions } from "./api/resources/sessions/client/Client";
@@ -43,10 +43,10 @@ export class AirtopClient {
         return (this._automations ??= new Automations(this._options));
     }
 
-    protected _extensionConfigurations: ExtensionConfigurations | undefined;
+    protected _files: Files | undefined;
 
-    public get extensionConfigurations(): ExtensionConfigurations {
-        return (this._extensionConfigurations ??= new ExtensionConfigurations(this._options));
+    public get files(): Files {
+        return (this._files ??= new Files(this._options));
     }
 
     protected _profiles: Profiles | undefined;
