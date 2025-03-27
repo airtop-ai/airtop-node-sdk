@@ -1,9 +1,9 @@
 import type * as Airtop from '../api';
 import { Files as FilesClass, type Files as FilesNamespace } from '../api/resources/files/client/Client';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+import * as fs from 'fs';
+import * as path from 'path';
 import fetch from 'node-fetch';
-import { Transform } from 'node:stream';
+import { Transform } from 'stream';
 
 export class AirtopFiles extends FilesClass {
   constructor(readonly _options: FilesNamespace.Options) {
