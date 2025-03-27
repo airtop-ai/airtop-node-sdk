@@ -3,7 +3,7 @@ import { Files as FilesClass, type Files as FilesNamespace } from '../api/resour
 import * as fs from 'fs';
 import * as path from 'path';
 import fetch from 'node-fetch';
-import { Transform } from 'stream';
+import { Transform } from 'readable-stream';
 
 export class AirtopFiles extends FilesClass {
   constructor(readonly _options: FilesNamespace.Options) {
