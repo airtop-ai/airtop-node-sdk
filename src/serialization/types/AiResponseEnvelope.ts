@@ -14,7 +14,7 @@ export const AiResponseEnvelope: core.serialization.ObjectSchema<
 });
 
 export declare namespace AiResponseEnvelope {
-    interface Raw {
+    export interface Raw {
         modelResponse: string;
     }
 }

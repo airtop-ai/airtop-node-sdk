@@ -18,7 +18,7 @@ export const ErrorModel: core.serialization.ObjectSchema<serializers.ErrorModel.
     });
 
 export declare namespace ErrorModel {
-    interface Raw {
+    export interface Raw {
         detail?: string | null;
         errors?: ErrorDetail.Raw[] | null;
         instance?: string | null;

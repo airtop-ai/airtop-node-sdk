@@ -20,7 +20,7 @@ export const WindowIdResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace WindowIdResponse {
-    interface Raw {
+    export interface Raw {
         data: WindowId.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

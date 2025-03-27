@@ -19,7 +19,7 @@ export const SessionPaginatedExtractionHandlerRequestBody: core.serialization.Sc
 });
 
 export declare namespace SessionPaginatedExtractionHandlerRequestBody {
-    interface Raw {
+    export interface Raw {
         clientRequestId?: string | null;
         configuration?: PaginatedExtractionConfig.Raw | null;
         costThresholdCredits?: number | null;
