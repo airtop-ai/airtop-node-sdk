@@ -22,7 +22,7 @@ export const VisualAnalysisConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace VisualAnalysisConfig {
-    interface Raw {
+    export interface Raw {
         maxScanScrolls?: number | null;
         overlapPercentage?: number | null;
         partitionDirection?: VisualAnalysisConfigPartitionDirection.Raw | null;

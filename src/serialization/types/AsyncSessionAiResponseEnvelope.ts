@@ -17,7 +17,7 @@ export const AsyncSessionAiResponseEnvelope: core.serialization.ObjectSchema<
 });
 
 export declare namespace AsyncSessionAiResponseEnvelope {
-    interface Raw {
+    export interface Raw {
         errors?: Issue.Raw[] | null;
         requestId: string;
         warnings?: Issue.Raw[] | null;

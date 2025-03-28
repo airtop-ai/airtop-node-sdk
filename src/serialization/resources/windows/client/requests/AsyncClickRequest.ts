@@ -20,7 +20,7 @@ export const AsyncClickRequest: core.serialization.Schema<serializers.AsyncClick
     });
 
 export declare namespace AsyncClickRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: ClickConfig.Raw | null;

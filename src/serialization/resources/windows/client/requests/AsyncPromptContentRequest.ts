@@ -22,7 +22,7 @@ export const AsyncPromptContentRequest: core.serialization.Schema<
 });
 
 export declare namespace AsyncPromptContentRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: PageQueryConfig.Raw | null;

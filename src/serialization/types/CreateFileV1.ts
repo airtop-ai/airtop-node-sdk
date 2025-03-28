@@ -15,19 +15,21 @@ export const CreateFileV1: core.serialization.ObjectSchema<serializers.CreateFil
         id: core.serialization.string(),
         orgId: core.serialization.string(),
         sessionId: core.serialization.string().optional(),
+        sessionIds: core.serialization.list(core.serialization.string()).optional(),
+        uploadStartTime: core.serialization.date(),
         uploadUrl: core.serialization.string(),
-        uploadedAt: core.serialization.date(),
     });
 
 export declare namespace CreateFileV1 {
-    interface Raw {
+    export interface Raw {
         fileBytes: number;
         fileName: string;
         fileType: CreateFileV1FileType.Raw;
         id: string;
         orgId: string;
         sessionId?: string | null;
+        sessionIds?: string[] | null;
+        uploadStartTime: string;
         uploadUrl: string;
-        uploadedAt: string;
     }
 }

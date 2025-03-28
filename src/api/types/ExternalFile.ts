@@ -19,14 +19,14 @@ export interface ExternalFile {
     lastHeartbeatTime?: Date;
     /** ID of the organization */
     orgId: string;
-    /** ID of the session */
-    sessionId?: string;
+    /** IDs of the associated sessions */
+    sessionIds?: string[];
     /** Status of the file */
     status: string;
     /** Time when the file was uploaded */
-    uploadedCompleteTime?: Date;
+    uploadCompleteTime?: Date;
     /** Time when the file was uploaded */
-    uploadedStartTime: Date;
+    uploadStartTime: Date;
     /** Whether the file is visible in the API */
     visibleInApi: boolean;
     /** Whether the file is visible in the portal */

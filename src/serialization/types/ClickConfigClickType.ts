@@ -12,5 +12,5 @@ export const ClickConfigClickType: core.serialization.Schema<
 > = core.serialization.enum_(["click", "doubleClick", "rightClick"]);
 
 export declare namespace ClickConfigClickType {
-    type Raw = "click" | "doubleClick" | "rightClick";
+    export type Raw = "click" | "doubleClick" | "rightClick";
 }

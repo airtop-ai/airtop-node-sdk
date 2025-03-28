@@ -19,7 +19,7 @@ export const AsyncHoverRequest: core.serialization.Schema<serializers.AsyncHover
     });
 
 export declare namespace AsyncHoverRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfigWithExperimental.Raw | null;

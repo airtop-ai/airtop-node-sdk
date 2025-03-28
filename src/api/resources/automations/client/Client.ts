@@ -10,19 +10,23 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Automations {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -40,18 +44,21 @@ export class Automations {
     public async listAutomations(requestOptions?: Automations.RequestOptions): Promise<Airtop.ListAutomationsOutput> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "automations"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                "automations",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -83,7 +90,7 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /automations.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -112,22 +119,25 @@ export class Automations {
      */
     public async updateAutomationDescription(
         request: Airtop.UpdateAutomationDescriptionInputBody,
-        requestOptions?: Automations.RequestOptions
+        requestOptions?: Automations.RequestOptions,
     ): Promise<Airtop.AutomationOutput> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "automations/description"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                "automations/description",
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -158,7 +168,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Airtop.ForbiddenError(
@@ -168,7 +178,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Airtop.NotFoundError(
@@ -178,7 +188,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
@@ -188,7 +198,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
@@ -198,7 +208,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.AirtopError({
@@ -215,7 +225,7 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling PUT /automations/description.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -240,22 +250,25 @@ export class Automations {
      */
     public async getAutomation(
         automationId: string,
-        requestOptions?: Automations.RequestOptions
+        requestOptions?: Automations.RequestOptions,
     ): Promise<Airtop.AutomationOutput> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `automations/${encodeURIComponent(automationId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `automations/${encodeURIComponent(automationId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -283,7 +296,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Airtop.ForbiddenError(
@@ -293,7 +306,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Airtop.NotFoundError(
@@ -303,7 +316,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
@@ -313,7 +326,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
@@ -323,7 +336,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.AirtopError({
@@ -340,7 +353,7 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /automations/{automationId}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -365,22 +378,25 @@ export class Automations {
      */
     public async deleteAutomation(
         automationId: string,
-        requestOptions?: Automations.RequestOptions
+        requestOptions?: Automations.RequestOptions,
     ): Promise<Airtop.DeleteAutomationOutputWrapperBody> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `automations/${encodeURIComponent(automationId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `automations/${encodeURIComponent(automationId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -408,7 +424,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Airtop.ForbiddenError(
@@ -418,7 +434,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Airtop.NotFoundError(
@@ -428,7 +444,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
@@ -438,7 +454,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
@@ -448,7 +464,7 @@ export class Automations {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.AirtopError({
@@ -465,7 +481,9 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling DELETE /automations/{automationId}.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,

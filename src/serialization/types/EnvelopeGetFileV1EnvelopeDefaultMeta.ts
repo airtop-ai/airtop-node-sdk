@@ -20,7 +20,7 @@ export const EnvelopeGetFileV1EnvelopeDefaultMeta: core.serialization.ObjectSche
 });
 
 export declare namespace EnvelopeGetFileV1EnvelopeDefaultMeta {
-    interface Raw {
+    export interface Raw {
         data: GetFileV1.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

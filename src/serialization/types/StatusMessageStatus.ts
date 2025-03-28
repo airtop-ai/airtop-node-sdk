@@ -12,5 +12,5 @@ export const StatusMessageStatus: core.serialization.Schema<
 > = core.serialization.enum_(["awaitingCapacity", "initializing", "running", "ended", "error", "disconnected"]);
 
 export declare namespace StatusMessageStatus {
-    type Raw = "awaitingCapacity" | "initializing" | "running" | "ended" | "error" | "disconnected";
+    export type Raw = "awaitingCapacity" | "initializing" | "running" | "ended" | "error" | "disconnected";
 }

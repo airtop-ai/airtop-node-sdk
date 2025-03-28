@@ -20,7 +20,7 @@ export const AsyncCreateAutomationRequest: core.serialization.Schema<
 });
 
 export declare namespace AsyncCreateAutomationRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: CreateAutomationRequestBodyConfiguration.Raw | null;

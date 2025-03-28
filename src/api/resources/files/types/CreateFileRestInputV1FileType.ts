@@ -6,7 +6,6 @@
  * Type of the file
  */
 export type CreateFileRestInputV1FileType = "browser_download" | "screenshot" | "video" | "customer_upload";
-
 export const CreateFileRestInputV1FileType = {
     BrowserDownload: "browser_download",
     Screenshot: "screenshot",

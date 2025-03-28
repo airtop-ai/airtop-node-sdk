@@ -20,7 +20,7 @@ export const EnvelopeCreateFileV1EnvelopeDefaultMeta: core.serialization.ObjectS
 });
 
 export declare namespace EnvelopeCreateFileV1EnvelopeDefaultMeta {
-    interface Raw {
+    export interface Raw {
         data: CreateFileV1.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

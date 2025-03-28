@@ -21,7 +21,7 @@ export const AsyncSummarizeContentRequest: core.serialization.Schema<
 });
 
 export declare namespace AsyncSummarizeContentRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: SummaryConfig.Raw | null;

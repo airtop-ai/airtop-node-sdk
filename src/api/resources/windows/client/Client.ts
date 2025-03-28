@@ -10,19 +10,23 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Windows {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -46,22 +50,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncClickRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/click`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/click`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -94,7 +101,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/click.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -117,24 +126,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncCreateAutomationRequest = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(
-                    windowId
-                )}/create-automation`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/create-automation`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -167,7 +177,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/create-automation.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -192,24 +204,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncExecuteAutomationRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(
-                    windowId
-                )}/execute-automation`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/execute-automation`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -242,7 +255,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/execute-automation.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -265,22 +280,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncHoverRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/hover`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/hover`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -313,7 +331,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/hover.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -336,22 +356,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncMonitorRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/monitor`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/monitor`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -384,7 +407,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/monitor.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -407,22 +432,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncPageQueryRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/page-query`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/page-query`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -455,7 +483,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/page-query.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -478,24 +508,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncPaginatedExtractionRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(
-                    windowId
-                )}/paginated-extraction`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/paginated-extraction`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -528,7 +559,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/paginated-extraction.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -553,22 +586,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncPromptContentRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/prompt-content`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/prompt-content`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -601,7 +637,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/prompt-content.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -624,22 +662,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncScreenshotRequest = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/screenshot`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/screenshot`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -672,7 +713,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/screenshot.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -695,24 +738,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncSummarizeContentRequest = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(
-                    windowId
-                )}/summarize-content`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/summarize-content`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -745,7 +789,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/summarize-content.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -768,22 +814,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.AsyncTypeRequest,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AsyncSessionAiResponseEnvelope> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/type`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `async/sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/type`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -816,7 +865,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /async/sessions/{sessionId}/windows/{windowId}/type.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -837,22 +888,25 @@ export class Windows {
     public async create(
         sessionId: string,
         request: Airtop.CreateWindowInputV1Body = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.WindowIdResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -885,7 +939,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -910,10 +966,10 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.GetWindowInfoRequest = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.WindowResponse> {
         const { includeNavigationBar, disableResize, screenResolution } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (includeNavigationBar != null) {
             _queryParams["includeNavigationBar"] = includeNavigationBar.toString();
         }
@@ -928,18 +984,21 @@ export class Windows {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -972,7 +1031,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling GET /sessions/{sessionId}/windows/{windowId}.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -997,22 +1058,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.WindowLoadUrlV1Body,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.OperationOutcomeResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1045,7 +1109,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1066,22 +1132,25 @@ export class Windows {
     public async close(
         sessionId: string,
         windowId: string,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.WindowIdResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1113,7 +1182,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling DELETE /sessions/{sessionId}/windows/{windowId}.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1138,22 +1209,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionClickHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/click`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/click`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1186,7 +1260,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/click.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1211,22 +1287,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionHoverHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/hover`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/hover`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1259,7 +1338,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/hover.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1282,22 +1363,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionMonitorHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/monitor`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/monitor`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1332,7 +1416,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/monitor.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1357,22 +1443,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionPageQueryHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/page-query`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/page-query`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1407,7 +1496,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/page-query.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1432,22 +1523,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionPaginatedExtractionHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/paginated-extraction`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/paginated-extraction`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1482,7 +1576,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/paginated-extraction.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1507,22 +1603,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionPageQueryHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/prompt-content`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/prompt-content`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1557,7 +1656,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/prompt-content.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1580,22 +1681,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.ScrapeContentRequest = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.ScrapeResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/scrape-content`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/scrape-content`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1628,7 +1732,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/scrape-content.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1651,22 +1757,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionScreenshotHandlerRequestBody = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/screenshot`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/screenshot`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1701,7 +1810,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/screenshot.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1724,22 +1835,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionScrollHandlerRequestBody = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/scroll`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/scroll`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1772,7 +1886,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/scroll.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1795,22 +1911,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionSummaryHandlerRequestBody = {},
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/summarize-content`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/summarize-content`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1845,7 +1964,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/summarize-content.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -1870,22 +1991,25 @@ export class Windows {
         sessionId: string,
         windowId: string,
         request: Airtop.SessionTypeHandlerRequestBody,
-        requestOptions?: Windows.RequestOptions
+        requestOptions?: Windows.RequestOptions,
     ): Promise<Airtop.AiPromptResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/type`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/windows/${encodeURIComponent(windowId)}/type`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -1918,7 +2042,9 @@ export class Windows {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling POST /sessions/{sessionId}/windows/{windowId}/type.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,

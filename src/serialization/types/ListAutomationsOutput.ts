@@ -15,7 +15,7 @@ export const ListAutomationsOutput: core.serialization.ObjectSchema<
 });
 
 export declare namespace ListAutomationsOutput {
-    interface Raw {
+    export interface Raw {
         automations?: AutomationOutput.Raw[] | null;
     }
 }

@@ -21,7 +21,7 @@ export const AsyncPaginatedExtractionRequest: core.serialization.Schema<
 });
 
 export declare namespace AsyncPaginatedExtractionRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: PaginatedExtractionConfig.Raw | null;

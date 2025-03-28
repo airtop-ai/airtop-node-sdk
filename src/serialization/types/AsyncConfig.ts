@@ -12,7 +12,7 @@ export const AsyncConfig: core.serialization.ObjectSchema<serializers.AsyncConfi
     });
 
 export declare namespace AsyncConfig {
-    interface Raw {
+    export interface Raw {
         webhookUrl?: string | null;
     }
 }

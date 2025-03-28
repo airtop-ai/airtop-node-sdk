@@ -17,8 +17,10 @@ export interface GetFileV1 {
     id: string;
     /** ID of the organization */
     orgId: string;
-    /** ID of the session */
+    /** DEPRECATED: Use sessionIds instead */
     sessionId?: string;
-    /** Time when the file was uploaded */
-    uploadedAt: Date;
+    /** IDs of the associated sessions */
+    sessionIds?: string[];
+    /** Time when the file upload was started */
+    uploadStartTime: Date;
 }

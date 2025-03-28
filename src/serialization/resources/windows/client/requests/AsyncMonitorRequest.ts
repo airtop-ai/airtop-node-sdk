@@ -21,7 +21,7 @@ export const AsyncMonitorRequest: core.serialization.Schema<
 });
 
 export declare namespace AsyncMonitorRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         condition: string;

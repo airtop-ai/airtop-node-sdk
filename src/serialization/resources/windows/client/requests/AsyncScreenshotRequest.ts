@@ -20,7 +20,7 @@ export const AsyncScreenshotRequest: core.serialization.Schema<
 });
 
 export declare namespace AsyncScreenshotRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clientRequestId?: string | null;
         configuration?: ScreenshotRequestConfig.Raw | null;

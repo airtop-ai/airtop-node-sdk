@@ -24,7 +24,7 @@ export const ExternalSessionWithConnectionInfo: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExternalSessionWithConnectionInfo {
-    interface Raw {
+    export interface Raw {
         cdpUrl?: string | null;
         cdpWsUrl?: string | null;
         chromedriverUrl?: string | null;

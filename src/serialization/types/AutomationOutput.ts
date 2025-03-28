@@ -18,7 +18,7 @@ export const AutomationOutput: core.serialization.ObjectSchema<
 });
 
 export declare namespace AutomationOutput {
-    interface Raw {
+    export interface Raw {
         description?: string | null;
         domainName: string;
         id: string;

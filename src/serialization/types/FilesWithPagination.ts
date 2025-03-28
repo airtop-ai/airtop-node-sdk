@@ -17,7 +17,7 @@ export const FilesWithPagination: core.serialization.ObjectSchema<
 });
 
 export declare namespace FilesWithPagination {
-    interface Raw {
+    export interface Raw {
         files?: ExternalFile.Raw[] | null;
         pagination: Pagination.Raw;
     }

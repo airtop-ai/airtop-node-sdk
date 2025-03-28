@@ -15,10 +15,12 @@ export interface CreateFileV1 {
     id: string;
     /** ID of the organization */
     orgId: string;
-    /** ID of the session */
+    /** DEPRECATED: Use sessionIds instead */
     sessionId?: string;
+    /** IDs of the associated sessions */
+    sessionIds?: string[];
+    /** Time when the file upload was started */
+    uploadStartTime: Date;
     /** URL to upload the file */
     uploadUrl: string;
-    /** Time when the file was uploaded */
-    uploadedAt: Date;
 }

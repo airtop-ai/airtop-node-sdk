@@ -10,19 +10,23 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Files {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -43,10 +47,10 @@ export class Files {
      */
     public async list(
         request: Airtop.FilesListRequest = {},
-        requestOptions?: Files.RequestOptions
+        requestOptions?: Files.RequestOptions,
     ): Promise<Airtop.FilesResponse> {
         const { sessionIds, offset, limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (sessionIds != null) {
             if (Array.isArray(sessionIds)) {
                 _queryParams["sessionIds"] = sessionIds.map((item) => item);
@@ -65,18 +69,21 @@ export class Files {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "files"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                "files",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -109,7 +116,7 @@ export class Files {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /files.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -128,22 +135,25 @@ export class Files {
      */
     public async create(
         request: Airtop.CreateFileRestInputV1,
-        requestOptions?: Files.RequestOptions
+        requestOptions?: Files.RequestOptions,
     ): Promise<Airtop.EnvelopeCreateFileV1EnvelopeDefaultMeta> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "files"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                "files",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -176,7 +186,7 @@ export class Files {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling POST /files.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -193,22 +203,25 @@ export class Files {
      */
     public async get(
         id: string,
-        requestOptions?: Files.RequestOptions
+        requestOptions?: Files.RequestOptions,
     ): Promise<Airtop.EnvelopeGetFileV1EnvelopeDefaultMeta> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `files/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `files/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -240,7 +253,7 @@ export class Files {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /files/{id}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -258,18 +271,21 @@ export class Files {
     public async delete(id: string, requestOptions?: Files.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `files/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `files/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35-beta0",
-                "User-Agent": "@airtop/sdk/0.1.35-beta0",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -295,7 +311,7 @@ export class Files {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /files/{id}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,

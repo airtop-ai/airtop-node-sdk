@@ -14,12 +14,14 @@ export const CreateFileRestInputV1: core.serialization.Schema<
     fileName: core.serialization.string(),
     fileType: CreateFileRestInputV1FileType.optional(),
     sessionId: core.serialization.string().optional(),
+    sessionIds: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace CreateFileRestInputV1 {
-    interface Raw {
+    export interface Raw {
         fileName: string;
         fileType?: CreateFileRestInputV1FileType.Raw | null;
         sessionId?: string | null;
+        sessionIds?: string[] | null;
     }
 }

@@ -18,7 +18,7 @@ export const FilesResponse: core.serialization.ObjectSchema<serializers.FilesRes
     });
 
 export declare namespace FilesResponse {
-    interface Raw {
+    export interface Raw {
         data: FilesWithPagination.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

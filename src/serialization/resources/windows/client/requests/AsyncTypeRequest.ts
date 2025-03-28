@@ -24,7 +24,7 @@ export const AsyncTypeRequest: core.serialization.Schema<serializers.AsyncTypeRe
     });
 
 export declare namespace AsyncTypeRequest {
-    interface Raw {
+    export interface Raw {
         async?: AsyncConfig.Raw | null;
         clearInputField?: boolean | null;
         clientRequestId?: string | null;

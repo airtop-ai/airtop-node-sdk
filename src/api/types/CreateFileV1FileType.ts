@@ -6,7 +6,6 @@
  * Type of the file
  */
 export type CreateFileV1FileType = "browser_download" | "screenshot" | "video" | "customer_upload";
-
 export const CreateFileV1FileType = {
     BrowserDownload: "browser_download",
     Screenshot: "screenshot",

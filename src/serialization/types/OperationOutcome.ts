@@ -14,7 +14,7 @@ export const OperationOutcome: core.serialization.ObjectSchema<
 });
 
 export declare namespace OperationOutcome {
-    interface Raw {
+    export interface Raw {
         success: boolean;
     }
 }

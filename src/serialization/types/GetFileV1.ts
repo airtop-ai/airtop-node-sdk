@@ -16,11 +16,12 @@ export const GetFileV1: core.serialization.ObjectSchema<serializers.GetFileV1.Ra
         id: core.serialization.string(),
         orgId: core.serialization.string(),
         sessionId: core.serialization.string().optional(),
-        uploadedAt: core.serialization.date(),
+        sessionIds: core.serialization.list(core.serialization.string()).optional(),
+        uploadStartTime: core.serialization.date(),
     });
 
 export declare namespace GetFileV1 {
-    interface Raw {
+    export interface Raw {
         downloadUrl: string;
         fileBytes: number;
         fileName: string;
@@ -28,6 +29,7 @@ export declare namespace GetFileV1 {
         id: string;
         orgId: string;
         sessionId?: string | null;
-        uploadedAt: string;
+        sessionIds?: string[] | null;
+        uploadStartTime: string;
     }
 }

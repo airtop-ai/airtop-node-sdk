@@ -10,5 +10,5 @@ export const GetFileV1FileType: core.serialization.Schema<serializers.GetFileV1F
     core.serialization.enum_(["browser_download", "screenshot", "video", "customer_upload"]);
 
 export declare namespace GetFileV1FileType {
-    type Raw = "browser_download" | "screenshot" | "video" | "customer_upload";
+    export type Raw = "browser_download" | "screenshot" | "video" | "customer_upload";
 }

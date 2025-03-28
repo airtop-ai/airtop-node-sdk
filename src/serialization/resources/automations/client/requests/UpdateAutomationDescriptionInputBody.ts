@@ -16,7 +16,7 @@ export const UpdateAutomationDescriptionInputBody: core.serialization.Schema<
 });
 
 export declare namespace UpdateAutomationDescriptionInputBody {
-    interface Raw {
+    export interface Raw {
         description: string;
         id: string;
         orgId: string;

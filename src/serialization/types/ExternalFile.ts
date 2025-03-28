@@ -16,16 +16,16 @@ export const ExternalFile: core.serialization.ObjectSchema<serializers.ExternalF
         id: core.serialization.string(),
         lastHeartbeatTime: core.serialization.date().optional(),
         orgId: core.serialization.string(),
-        sessionId: core.serialization.string().optional(),
+        sessionIds: core.serialization.list(core.serialization.string()).optional(),
         status: core.serialization.string(),
-        uploadedCompleteTime: core.serialization.date().optional(),
-        uploadedStartTime: core.serialization.date(),
+        uploadCompleteTime: core.serialization.date().optional(),
+        uploadStartTime: core.serialization.date(),
         visibleInApi: core.serialization.boolean(),
         visibleInPortal: core.serialization.boolean(),
     });
 
 export declare namespace ExternalFile {
-    interface Raw {
+    export interface Raw {
         deleted: boolean;
         deletionTime?: string | null;
         fileBytes: number;
@@ -34,10 +34,10 @@ export declare namespace ExternalFile {
         id: string;
         lastHeartbeatTime?: string | null;
         orgId: string;
-        sessionId?: string | null;
+        sessionIds?: string[] | null;
         status: string;
-        uploadedCompleteTime?: string | null;
-        uploadedStartTime: string;
+        uploadCompleteTime?: string | null;
+        uploadStartTime: string;
         visibleInApi: boolean;
         visibleInPortal: boolean;
     }
