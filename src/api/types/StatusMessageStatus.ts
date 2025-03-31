@@ -6,7 +6,6 @@
  * Status of the session
  */
 export type StatusMessageStatus = "awaitingCapacity" | "initializing" | "running" | "ended" | "error" | "disconnected";
-
 export const StatusMessageStatus = {
     AwaitingCapacity: "awaitingCapacity",
     Initializing: "initializing",

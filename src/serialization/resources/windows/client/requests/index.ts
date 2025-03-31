@@ -1,3 +1,5 @@
+export { AsyncCreateAutomationRequest } from "./AsyncCreateAutomationRequest";
+export { AsyncExecuteAutomationRequest } from "./AsyncExecuteAutomationRequest";
 export { CreateWindowInputV1Body } from "./CreateWindowInputV1Body";
 export { WindowLoadUrlV1Body } from "./WindowLoadUrlV1Body";
 export { SessionClickHandlerRequestBody } from "./SessionClickHandlerRequestBody";

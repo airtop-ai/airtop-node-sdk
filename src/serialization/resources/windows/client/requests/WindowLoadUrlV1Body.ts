@@ -17,7 +17,7 @@ export const WindowLoadUrlV1Body: core.serialization.Schema<
 });
 
 export declare namespace WindowLoadUrlV1Body {
-    interface Raw {
+    export interface Raw {
         url: string;
         waitUntil?: WindowLoadUrlV1BodyWaitUntil.Raw | null;
         waitUntilTimeoutSeconds?: number | null;

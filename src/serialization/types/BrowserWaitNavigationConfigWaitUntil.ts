@@ -12,5 +12,5 @@ export const BrowserWaitNavigationConfigWaitUntil: core.serialization.Schema<
 > = core.serialization.enum_(["load", "domcontentloaded", "networkidle0", "networkidle2"]);
 
 export declare namespace BrowserWaitNavigationConfigWaitUntil {
-    type Raw = "load" | "domcontentloaded" | "networkidle0" | "networkidle2";
+    export type Raw = "load" | "domcontentloaded" | "networkidle0" | "networkidle2";
 }
