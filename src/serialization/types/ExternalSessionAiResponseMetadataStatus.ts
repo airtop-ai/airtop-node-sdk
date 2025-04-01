@@ -12,5 +12,5 @@ export const ExternalSessionAiResponseMetadataStatus: core.serialization.Schema<
 > = core.serialization.enum_(["success", "partial", "failure"]);
 
 export declare namespace ExternalSessionAiResponseMetadataStatus {
-    type Raw = "success" | "partial" | "failure";
+    export type Raw = "success" | "partial" | "failure";
 }

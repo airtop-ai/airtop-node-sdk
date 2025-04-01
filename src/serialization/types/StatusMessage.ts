@@ -17,7 +17,7 @@ export const StatusMessage: core.serialization.ObjectSchema<serializers.StatusMe
     });
 
 export declare namespace StatusMessage {
-    interface Raw {
+    export interface Raw {
         event: string;
         eventId?: number | null;
         eventTime: string;

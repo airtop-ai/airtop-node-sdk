@@ -20,7 +20,7 @@ export const PaginatedExtractionConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace PaginatedExtractionConfig {
-    interface Raw {
+    export interface Raw {
         experimental?: PaginatedExtractionExperimentalConfig.Raw | null;
         interactionMode?: string | null;
         outputSchema?: string | null;

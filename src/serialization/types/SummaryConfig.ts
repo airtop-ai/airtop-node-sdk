@@ -14,7 +14,7 @@ export const SummaryConfig: core.serialization.ObjectSchema<serializers.SummaryC
     });
 
 export declare namespace SummaryConfig {
-    interface Raw {
+    export interface Raw {
         experimental?: SummaryExperimentalConfig.Raw | null;
         outputSchema?: string | null;
     }

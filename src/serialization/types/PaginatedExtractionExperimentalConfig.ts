@@ -14,7 +14,7 @@ export const PaginatedExtractionExperimentalConfig: core.serialization.ObjectSch
 });
 
 export declare namespace PaginatedExtractionExperimentalConfig {
-    interface Raw {
+    export interface Raw {
         scrollWithin?: string | null;
     }
 }
