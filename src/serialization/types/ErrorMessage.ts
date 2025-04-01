@@ -14,7 +14,7 @@ export const ErrorMessage: core.serialization.ObjectSchema<serializers.ErrorMess
     });
 
 export declare namespace ErrorMessage {
-    interface Raw {
+    export interface Raw {
         code: string;
         event: string;
         message: string;

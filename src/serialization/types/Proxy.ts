@@ -12,5 +12,5 @@ export const Proxy: core.serialization.Schema<serializers.Proxy.Raw, Airtop.Prox
     core.serialization.undiscriminatedUnion([core.serialization.string(), AirtopProxyConfiguration, ProxyCredentials]);
 
 export declare namespace Proxy {
-    type Raw = string | AirtopProxyConfiguration.Raw | ProxyCredentials.Raw;
+    export type Raw = string | AirtopProxyConfiguration.Raw | ProxyCredentials.Raw;
 }

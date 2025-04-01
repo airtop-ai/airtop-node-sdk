@@ -17,7 +17,7 @@ export const MicroInteractionConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace MicroInteractionConfig {
-    interface Raw {
+    export interface Raw {
         visualAnalysis?: VisualAnalysisConfig.Raw | null;
         waitForNavigationConfig?: BrowserWaitNavigationConfig.Raw | null;
     }

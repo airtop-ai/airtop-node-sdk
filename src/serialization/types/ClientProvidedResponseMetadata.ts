@@ -14,7 +14,7 @@ export const ClientProvidedResponseMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace ClientProvidedResponseMetadata {
-    interface Raw {
+    export interface Raw {
         clientRequestId?: string | null;
     }
 }

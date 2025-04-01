@@ -19,7 +19,7 @@ export const ClickConfig: core.serialization.ObjectSchema<serializers.ClickConfi
     });
 
 export declare namespace ClickConfig {
-    interface Raw {
+    export interface Raw {
         clickType?: ClickConfigClickType.Raw | null;
         experimental?: MicroInteractionExperimentalConfig.Raw | null;
         visualAnalysis?: VisualAnalysisConfig.Raw | null;
