@@ -19,7 +19,7 @@ export const SessionSummaryHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionSummaryHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         configuration?: SummaryConfig.Raw | null;
         costThresholdCredits?: number | null;

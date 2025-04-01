@@ -6,6 +6,7 @@
  * Outcome of the operation.
  */
 export type ExternalSessionAiResponseMetadataStatus = "success" | "partial" | "failure";
+
 export const ExternalSessionAiResponseMetadataStatus = {
     Success: "success",
     Partial: "partial",

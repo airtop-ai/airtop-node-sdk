@@ -16,7 +16,7 @@ export const ProxyConfigurationKind: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProxyConfigurationKind {
-    export interface Raw {
+    interface Raw {
         domainPattern: string;
         relay: Proxy.Raw;
     }

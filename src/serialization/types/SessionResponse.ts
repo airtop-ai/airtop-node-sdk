@@ -18,7 +18,7 @@ export const SessionResponse: core.serialization.ObjectSchema<serializers.Sessio
     });
 
 export declare namespace SessionResponse {
-    export interface Raw {
+    interface Raw {
         data: ExternalSessionWithConnectionInfo.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

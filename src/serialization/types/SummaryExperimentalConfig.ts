@@ -14,7 +14,7 @@ export const SummaryExperimentalConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace SummaryExperimentalConfig {
-    export interface Raw {
+    interface Raw {
         includeVisualAnalysis?: string | null;
     }
 }

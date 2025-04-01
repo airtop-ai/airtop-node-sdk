@@ -17,7 +17,7 @@ export const ScrapeResponseOutput: core.serialization.ObjectSchema<
 });
 
 export declare namespace ScrapeResponseOutput {
-    export interface Raw {
+    interface Raw {
         scrapedContent: ScrapeResponseContent.Raw;
         selectedText?: string | null;
         title: string;

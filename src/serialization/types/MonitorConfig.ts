@@ -15,7 +15,7 @@ export const MonitorConfig: core.serialization.ObjectSchema<serializers.MonitorC
     });
 
 export declare namespace MonitorConfig {
-    export interface Raw {
+    interface Raw {
         includeVisualAnalysis?: MonitorConfigIncludeVisualAnalysis.Raw | null;
         interval?: IntervalMonitorConfig.Raw | null;
     }

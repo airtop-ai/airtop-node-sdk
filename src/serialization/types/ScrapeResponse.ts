@@ -18,7 +18,7 @@ export const ScrapeResponse: core.serialization.ObjectSchema<serializers.ScrapeR
     });
 
 export declare namespace ScrapeResponse {
-    export interface Raw {
+    interface Raw {
         data: ScrapeResponseEnvelope.Raw;
         errors?: Issue.Raw[] | null;
         meta: ExternalSessionAiResponseMetadata.Raw;

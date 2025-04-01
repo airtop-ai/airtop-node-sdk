@@ -16,7 +16,7 @@ export const ExternalSessionConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExternalSessionConfig {
-    export interface Raw {
+    interface Raw {
         baseProfileId?: string | null;
         persistProfile?: boolean | null;
         timeoutMinutes?: number | null;

@@ -18,7 +18,7 @@ export const CreateWindowInputV1Body: core.serialization.Schema<
 });
 
 export declare namespace CreateWindowInputV1Body {
-    export interface Raw {
+    interface Raw {
         screenResolution?: string | null;
         url?: string | null;
         waitUntil?: CreateWindowInputV1BodyWaitUntil.Raw | null;

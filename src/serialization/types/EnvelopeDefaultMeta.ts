@@ -14,7 +14,7 @@ export const EnvelopeDefaultMeta: core.serialization.ObjectSchema<
 });
 
 export declare namespace EnvelopeDefaultMeta {
-    export interface Raw {
+    interface Raw {
         requestId?: string | null;
     }
 }

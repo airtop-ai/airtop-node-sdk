@@ -11,11 +11,11 @@ export const Window: core.serialization.ObjectSchema<serializers.Window.Raw, Air
         liveViewUrl: core.serialization.string(),
         targetId: core.serialization.string(),
         windowId: core.serialization.string(),
-    },
+    }
 );
 
 export declare namespace Window {
-    export interface Raw {
+    interface Raw {
         liveViewUrl: string;
         targetId: string;
         windowId: string;

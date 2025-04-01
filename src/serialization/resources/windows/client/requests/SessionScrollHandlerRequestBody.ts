@@ -24,7 +24,7 @@ export const SessionScrollHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionScrollHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfig.Raw | null;
         costThresholdCredits?: number | null;

@@ -11,10 +11,6 @@ The Airtop TypeScript library provides convenient access to the Airtop API from 
 npm i -s @airtop/sdk
 ```
 
-## Reference
-
-A full reference for this library is available [here](./reference.md).
-
 ## Usage
 
 Instantiate and use the client with the following:
@@ -23,9 +19,7 @@ Instantiate and use the client with the following:
 import { AirtopClient } from "@airtop/sdk";
 
 const client = new AirtopClient({ apiKey: "YOUR_API_KEY" });
-await client.windows.asyncClick("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
-    elementDescription: "The login button",
-});
+await client.windows.create("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 ```
 
 ## Request And Response Types
@@ -36,7 +30,7 @@ following namespace:
 ```typescript
 import { Airtop } from "@airtop/sdk";
 
-const request: Airtop.AsyncClickRequest = {
+const request: Airtop.CreateWindowInputV1Body = {
     ...
 };
 ```
@@ -50,7 +44,7 @@ will be thrown.
 import { AirtopError } from "@airtop/sdk";
 
 try {
-    await client.windows.asyncClick(...);
+    await client.windows.create(...);
 } catch (err) {
     if (err instanceof AirtopError) {
         console.log(err.statusCode);
@@ -62,34 +56,22 @@ try {
 
 ## Advanced
 
-### Additional Headers
-
-If you would like to send additional headers as part of the request, use the `headers` request option.
-
-```typescript
-const response = await client.windows.asyncClick(..., {
-    headers: {
-        'X-Custom-Header': 'custom value'
-    }
-});
-```
-
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+A request is deemed retriable when any of the following HTTP status codes is returned:
 
-- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
-- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+-   [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+-   [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+-   [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.create(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -99,7 +81,7 @@ const response = await client.windows.asyncClick(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.create(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -110,7 +92,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.create(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -121,12 +103,12 @@ controller.abort(); // aborts the request
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
 runtimes:
 
-- Node.js 18+
-- Vercel
-- Cloudflare Workers
-- Deno v1.25+
-- Bun 1.0+
-- React Native
+-   Node.js 18+
+-   Vercel
+-   Cloudflare Workers
+-   Deno v1.25+
+-   Bun 1.0+
+-   React Native
 
 ### Customizing Fetch Client
 

@@ -24,7 +24,7 @@ export const SessionTypeHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionTypeHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clearInputField?: boolean | null;
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfigWithExperimental.Raw | null;

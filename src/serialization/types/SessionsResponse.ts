@@ -20,7 +20,7 @@ export const SessionsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace SessionsResponse {
-    export interface Raw {
+    interface Raw {
         data: SessionsWithPagination.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

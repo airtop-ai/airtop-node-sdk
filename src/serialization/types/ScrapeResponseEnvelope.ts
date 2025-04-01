@@ -15,7 +15,7 @@ export const ScrapeResponseEnvelope: core.serialization.ObjectSchema<
 });
 
 export declare namespace ScrapeResponseEnvelope {
-    export interface Raw {
+    interface Raw {
         modelResponse: ScrapeResponseOutput.Raw;
     }
 }

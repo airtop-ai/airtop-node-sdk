@@ -21,7 +21,7 @@ export const WindowEventMessage: core.serialization.ObjectSchema<
 });
 
 export declare namespace WindowEventMessage {
-    export interface Raw {
+    interface Raw {
         error?: ErrorBody.Raw | null;
         event: string;
         eventData?: unknown | null;

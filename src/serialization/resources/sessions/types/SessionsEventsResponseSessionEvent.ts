@@ -17,7 +17,7 @@ export const SessionsEventsResponseSessionEvent: core.serialization.ObjectSchema
 });
 
 export declare namespace SessionsEventsResponseSessionEvent {
-    export interface Raw {
+    interface Raw {
         data: SessionEventMessage.Raw;
         id?: number | null;
         retry?: number | null;

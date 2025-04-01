@@ -20,7 +20,7 @@ export const AiPromptResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace AiPromptResponse {
-    export interface Raw {
+    interface Raw {
         data: AiResponseEnvelope.Raw;
         errors?: Issue.Raw[] | null;
         meta: ExternalSessionAiResponseMetadata.Raw;

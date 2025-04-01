@@ -12,5 +12,5 @@ export const CreateWindowInputV1BodyWaitUntil: core.serialization.Schema<
 > = core.serialization.enum_(["load", "domContentLoaded", "complete", "noWait"]);
 
 export declare namespace CreateWindowInputV1BodyWaitUntil {
-    export type Raw = "load" | "domContentLoaded" | "complete" | "noWait";
+    type Raw = "load" | "domContentLoaded" | "complete" | "noWait";
 }

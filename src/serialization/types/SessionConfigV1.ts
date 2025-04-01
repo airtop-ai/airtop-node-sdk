@@ -18,7 +18,7 @@ export const SessionConfigV1: core.serialization.ObjectSchema<serializers.Sessio
     });
 
 export declare namespace SessionConfigV1 {
-    export interface Raw {
+    interface Raw {
         baseProfileId?: string | null;
         extensionIds?: string[] | null;
         persistProfile?: boolean | null;

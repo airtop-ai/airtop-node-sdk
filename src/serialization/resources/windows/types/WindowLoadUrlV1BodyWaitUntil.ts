@@ -12,5 +12,5 @@ export const WindowLoadUrlV1BodyWaitUntil: core.serialization.Schema<
 > = core.serialization.enum_(["load", "domContentLoaded", "complete", "noWait"]);
 
 export declare namespace WindowLoadUrlV1BodyWaitUntil {
-    export type Raw = "load" | "domContentLoaded" | "complete" | "noWait";
+    type Raw = "load" | "domContentLoaded" | "complete" | "noWait";
 }
