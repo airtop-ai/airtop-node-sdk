@@ -1,6 +1,8 @@
 export { AsyncClickRequest } from "./AsyncClickRequest";
 export { AsyncCreateAutomationRequest } from "./AsyncCreateAutomationRequest";
+export { AsyncCreateFormFillerRequest } from "./AsyncCreateFormFillerRequest";
 export { AsyncExecuteAutomationRequest } from "./AsyncExecuteAutomationRequest";
+export { AsyncFillFormRequest } from "./AsyncFillFormRequest";
 export { AsyncHoverRequest } from "./AsyncHoverRequest";
 export { AsyncMonitorRequest } from "./AsyncMonitorRequest";
 export { AsyncPageQueryRequest } from "./AsyncPageQueryRequest";
@@ -12,6 +14,8 @@ export { AsyncTypeRequest } from "./AsyncTypeRequest";
 export { CreateWindowInputV1Body } from "./CreateWindowInputV1Body";
 export { WindowLoadUrlV1Body } from "./WindowLoadUrlV1Body";
 export { SessionClickHandlerRequestBody } from "./SessionClickHandlerRequestBody";
+export { CreateFormFillerRequest } from "./CreateFormFillerRequest";
+export { FillFormRequest } from "./FillFormRequest";
 export { SessionHoverHandlerRequestBody } from "./SessionHoverHandlerRequestBody";
 export { SessionMonitorHandlerRequestBody } from "./SessionMonitorHandlerRequestBody";
 export { SessionPaginatedExtractionHandlerRequestBody } from "./SessionPaginatedExtractionHandlerRequestBody";

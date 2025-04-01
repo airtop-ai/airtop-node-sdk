@@ -39,9 +39,9 @@ export class Automations {
      * @param {Automations.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.automations.listAutomations()
+     *     await client.automations.list()
      */
-    public async listAutomations(requestOptions?: Automations.RequestOptions): Promise<Airtop.ListAutomationsOutput> {
+    public async list(requestOptions?: Automations.RequestOptions): Promise<Airtop.ListAutomationsOutput> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -54,8 +54,8 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35",
-                "User-Agent": "@airtop/sdk/0.1.35",
+                "X-Fern-SDK-Version": "0.1.36-beta0",
+                "User-Agent": "@airtop/sdk/0.1.36-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -111,13 +111,13 @@ export class Automations {
      * @throws {@link Airtop.InternalServerError}
      *
      * @example
-     *     await client.automations.updateAutomationDescription({
+     *     await client.automations.update({
      *         description: "description",
      *         id: "id",
      *         orgId: "orgId"
      *     })
      */
-    public async updateAutomationDescription(
+    public async update(
         request: Airtop.UpdateAutomationDescriptionInputBody,
         requestOptions?: Automations.RequestOptions,
     ): Promise<Airtop.AutomationOutput> {
@@ -133,8 +133,8 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35",
-                "User-Agent": "@airtop/sdk/0.1.35",
+                "X-Fern-SDK-Version": "0.1.36-beta0",
+                "User-Agent": "@airtop/sdk/0.1.36-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -246,9 +246,9 @@ export class Automations {
      * @throws {@link Airtop.InternalServerError}
      *
      * @example
-     *     await client.automations.getAutomation("automationId")
+     *     await client.automations.get("automationId")
      */
-    public async getAutomation(
+    public async get(
         automationId: string,
         requestOptions?: Automations.RequestOptions,
     ): Promise<Airtop.AutomationOutput> {
@@ -264,8 +264,8 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35",
-                "User-Agent": "@airtop/sdk/0.1.35",
+                "X-Fern-SDK-Version": "0.1.36-beta0",
+                "User-Agent": "@airtop/sdk/0.1.36-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -374,9 +374,9 @@ export class Automations {
      * @throws {@link Airtop.InternalServerError}
      *
      * @example
-     *     await client.automations.deleteAutomation("automationId")
+     *     await client.automations.delete("automationId")
      */
-    public async deleteAutomation(
+    public async delete(
         automationId: string,
         requestOptions?: Automations.RequestOptions,
     ): Promise<Airtop.DeleteAutomationOutputWrapperBody> {
@@ -392,8 +392,8 @@ export class Automations {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.35",
-                "User-Agent": "@airtop/sdk/0.1.35",
+                "X-Fern-SDK-Version": "0.1.36-beta0",
+                "User-Agent": "@airtop/sdk/0.1.36-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

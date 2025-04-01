@@ -13,6 +13,7 @@ export const CreateFileRestInputV1: core.serialization.Schema<
 > = core.serialization.object({
     fileName: core.serialization.string(),
     fileType: CreateFileRestInputV1FileType.optional(),
+    id: core.serialization.string().optional(),
     sessionId: core.serialization.string().optional(),
     sessionIds: core.serialization.list(core.serialization.string()).optional(),
 });
@@ -21,6 +22,7 @@ export declare namespace CreateFileRestInputV1 {
     export interface Raw {
         fileName: string;
         fileType?: CreateFileRestInputV1FileType.Raw | null;
+        id?: string | null;
         sessionId?: string | null;
         sessionIds?: string[] | null;
     }

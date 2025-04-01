@@ -15,6 +15,8 @@ export interface CreateFileRestInputV1 {
     fileName: string;
     /** Type of the file */
     fileType?: Airtop.CreateFileRestInputV1FileType;
+    /** File ID. Must be unique. Leave blank to get one generated for you */
+    id?: string;
     /** DEPRECATED: Use sessionIds instead */
     sessionId?: string;
     /** IDs of the associated sessions */

@@ -12,7 +12,6 @@ import { AirtopWindows } from './AirtopWindows';
 import { AirtopRequests } from './AirtopRequests';
 import { AirtopFiles } from './AirtopFiles';
 import { SDK_VERSION } from '../version';
-
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
 export class AirtopClient {
@@ -62,12 +61,16 @@ export class AirtopClient {
     return (this._requests ??= new AirtopRequests(this._options));
   }
 
-  get files() {
-    return (this._files ??= new AirtopFiles(this._options));
-  }
-
   get profiles() {
     return this._client.profiles;
+  }
+
+  public get automations() {
+    return this._client.automations;
+  }
+
+  get files() {
+    return (this._files ??= new AirtopFiles(this._options));
   }
 
   log(message: string) {
