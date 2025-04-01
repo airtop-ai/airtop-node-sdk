@@ -16,7 +16,7 @@ export const PageQueryConfig: core.serialization.ObjectSchema<serializers.PageQu
     });
 
 export declare namespace PageQueryConfig {
-    interface Raw {
+    export interface Raw {
         experimental?: PageQueryExperimentalConfig.Raw | null;
         outputSchema?: string | null;
         scrape?: ScrapeConfig.Raw | null;

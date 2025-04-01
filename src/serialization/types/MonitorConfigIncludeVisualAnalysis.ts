@@ -12,5 +12,5 @@ export const MonitorConfigIncludeVisualAnalysis: core.serialization.Schema<
 > = core.serialization.enum_(["auto", "disabled", "enabled"]);
 
 export declare namespace MonitorConfigIncludeVisualAnalysis {
-    type Raw = "auto" | "disabled" | "enabled";
+    export type Raw = "auto" | "disabled" | "enabled";
 }

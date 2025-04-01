@@ -12,5 +12,5 @@ export const VisualAnalysisConfigResultSelectionStrategy: core.serialization.Sch
 > = core.serialization.enum_(["first", "bestMatch", "auto"]);
 
 export declare namespace VisualAnalysisConfigResultSelectionStrategy {
-    type Raw = "first" | "bestMatch" | "auto";
+    export type Raw = "first" | "bestMatch" | "auto";
 }
