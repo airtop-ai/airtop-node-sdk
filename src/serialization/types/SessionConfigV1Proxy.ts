@@ -18,5 +18,5 @@ export const SessionConfigV1Proxy: core.serialization.Schema<
 ]);
 
 export declare namespace SessionConfigV1Proxy {
-    type Raw = boolean | Proxy.Raw | ProxyConfigurationKind.Raw[];
+    export type Raw = boolean | Proxy.Raw | ProxyConfigurationKind.Raw[];
 }

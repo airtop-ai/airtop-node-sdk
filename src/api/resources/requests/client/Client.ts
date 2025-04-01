@@ -10,19 +10,23 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Requests {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -38,22 +42,25 @@ export class Requests {
      */
     public async getRequestStatus(
         requestId: string,
-        requestOptions?: Requests.RequestOptions
+        requestOptions?: Requests.RequestOptions,
     ): Promise<Airtop.RequestStatusResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `requests/${encodeURIComponent(requestId)}/status`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `requests/${encodeURIComponent(requestId)}/status`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.36-beta0",
+                "User-Agent": "@airtop/sdk/0.1.36-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -85,7 +92,7 @@ export class Requests {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /requests/{requestId}/status.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,

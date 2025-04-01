@@ -5,20 +5,20 @@
 import * as serializers from "../../../index";
 import * as Airtop from "../../../../api/index";
 import * as core from "../../../../core";
+import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 import { SessionsEventsResponseWindowEvent } from "./SessionsEventsResponseWindowEvent";
 import { SessionsEventsResponseSessionEvent } from "./SessionsEventsResponseSessionEvent";
 import { SessionsEventsResponseStatus } from "./SessionsEventsResponseStatus";
-import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 
 export const SessionsEventsResponse: core.serialization.Schema<
     serializers.SessionsEventsResponse.Raw,
     Airtop.SessionsEventsResponse
 > = core.serialization
     .union("event", {
+        error: SessionsEventsResponseError,
         windowEvent: SessionsEventsResponseWindowEvent,
         sessionEvent: SessionsEventsResponseSessionEvent,
         status: SessionsEventsResponseStatus,
-        error: SessionsEventsResponseError,
     })
     .transform<Airtop.SessionsEventsResponse>({
         transform: (value) => value,
@@ -26,25 +26,25 @@ export const SessionsEventsResponse: core.serialization.Schema<
     });
 
 export declare namespace SessionsEventsResponse {
-    type Raw =
+    export type Raw =
+        | SessionsEventsResponse.Error
         | SessionsEventsResponse.WindowEvent
         | SessionsEventsResponse.SessionEvent
-        | SessionsEventsResponse.Status
-        | SessionsEventsResponse.Error;
+        | SessionsEventsResponse.Status;
 
-    interface WindowEvent extends SessionsEventsResponseWindowEvent.Raw {
+    export interface Error extends SessionsEventsResponseError.Raw {
+        event: "error";
+    }
+
+    export interface WindowEvent extends SessionsEventsResponseWindowEvent.Raw {
         event: "windowEvent";
     }
 
-    interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
+    export interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
         event: "sessionEvent";
     }
 
-    interface Status extends SessionsEventsResponseStatus.Raw {
+    export interface Status extends SessionsEventsResponseStatus.Raw {
         event: "status";
-    }
-
-    interface Error extends SessionsEventsResponseError.Raw {
-        event: "error";
     }
 }

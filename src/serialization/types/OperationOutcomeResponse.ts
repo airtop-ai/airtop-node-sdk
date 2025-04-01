@@ -20,7 +20,7 @@ export const OperationOutcomeResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace OperationOutcomeResponse {
-    interface Raw {
+    export interface Raw {
         data: OperationOutcome.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;
