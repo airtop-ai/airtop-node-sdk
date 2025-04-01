@@ -13,6 +13,7 @@ export type SessionsListRequestStatus =
     | "completed"
     | "cancelled"
     | "all";
+
 export const SessionsListRequestStatus = {
     AwaitingCapacity: "awaitingCapacity",
     Initializing: "initializing",

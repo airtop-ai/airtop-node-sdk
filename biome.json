@@ -60,9 +60,6 @@
       },
       "nursery": {
         "useSortedClasses": "warn"
-      },
-      "style": {
-        "useNodejsImportProtocol": "off"
       }
     }
   }

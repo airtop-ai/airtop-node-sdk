@@ -15,7 +15,7 @@ export const IntervalMonitorConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace IntervalMonitorConfig {
-    export interface Raw {
+    interface Raw {
         intervalSeconds?: number | null;
         timeoutSeconds?: number | null;
     }

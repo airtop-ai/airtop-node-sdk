@@ -20,7 +20,7 @@ export const SessionClickHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionClickHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         configuration?: ClickConfig.Raw | null;
         costThresholdCredits?: number | null;

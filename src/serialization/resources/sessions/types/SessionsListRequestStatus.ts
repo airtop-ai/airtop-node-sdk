@@ -12,5 +12,5 @@ export const SessionsListRequestStatus: core.serialization.Schema<
 > = core.serialization.enum_(["awaitingCapacity", "initializing", "running", "ended", "completed", "cancelled", "all"]);
 
 export declare namespace SessionsListRequestStatus {
-    export type Raw = "awaitingCapacity" | "initializing" | "running" | "ended" | "completed" | "cancelled" | "all";
+    type Raw = "awaitingCapacity" | "initializing" | "running" | "ended" | "completed" | "cancelled" | "all";
 }

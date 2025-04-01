@@ -17,7 +17,7 @@ export const SessionsWithPagination: core.serialization.ObjectSchema<
 });
 
 export declare namespace SessionsWithPagination {
-    export interface Raw {
+    interface Raw {
         pagination: Pagination.Raw;
         sessions?: ExternalSessionWithConnectionInfo.Raw[] | null;
     }

@@ -16,7 +16,7 @@ export const BrowserWaitNavigationConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace BrowserWaitNavigationConfig {
-    export interface Raw {
+    interface Raw {
         timeoutSeconds?: number | null;
         waitUntil?: BrowserWaitNavigationConfigWaitUntil.Raw | null;
     }

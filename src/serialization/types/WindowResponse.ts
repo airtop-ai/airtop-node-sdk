@@ -18,7 +18,7 @@ export const WindowResponse: core.serialization.ObjectSchema<serializers.WindowR
     });
 
 export declare namespace WindowResponse {
-    export interface Raw {
+    interface Raw {
         data: Window.Raw;
         errors?: Issue.Raw[] | null;
         meta: EnvelopeDefaultMeta.Raw;

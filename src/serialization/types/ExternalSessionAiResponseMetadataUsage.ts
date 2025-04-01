@@ -15,7 +15,7 @@ export const ExternalSessionAiResponseMetadataUsage: core.serialization.ObjectSc
 });
 
 export declare namespace ExternalSessionAiResponseMetadataUsage {
-    export interface Raw {
+    interface Raw {
         credits: number;
         id: string;
     }

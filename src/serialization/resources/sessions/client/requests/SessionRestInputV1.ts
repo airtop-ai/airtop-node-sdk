@@ -15,7 +15,7 @@ export const SessionRestInputV1: core.serialization.Schema<
 });
 
 export declare namespace SessionRestInputV1 {
-    export interface Raw {
+    interface Raw {
         configuration?: SessionConfigV1.Raw | null;
     }
 }

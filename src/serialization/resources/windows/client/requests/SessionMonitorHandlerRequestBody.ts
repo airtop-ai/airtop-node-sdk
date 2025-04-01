@@ -19,7 +19,7 @@ export const SessionMonitorHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionMonitorHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         condition: string;
         configuration?: MonitorConfig.Raw | null;

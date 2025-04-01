@@ -16,7 +16,7 @@ export const ScrapeContentRequest: core.serialization.Schema<
 });
 
 export declare namespace ScrapeContentRequest {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         costThresholdCredits?: number | null;
         timeThresholdSeconds?: number | null;

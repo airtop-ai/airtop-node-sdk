@@ -19,7 +19,7 @@ export const MicroInteractionConfigWithExperimental: core.serialization.ObjectSc
 });
 
 export declare namespace MicroInteractionConfigWithExperimental {
-    export interface Raw {
+    interface Raw {
         experimental?: MicroInteractionExperimentalConfig.Raw | null;
         visualAnalysis?: VisualAnalysisConfig.Raw | null;
         waitForNavigationConfig?: BrowserWaitNavigationConfig.Raw | null;

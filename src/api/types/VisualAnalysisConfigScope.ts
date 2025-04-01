@@ -6,6 +6,7 @@
  * Whether to analyze the current viewport or the whole page. Can be 'viewport', 'page', 'scan' or 'auto'. Defaults to 'auto', which provides the simplest out-of-the-box experience for most web pages. Use 'viewport' for analysis of the current browser view only. Use 'page' for a full page analysis. Use 'scan' for a full page analysis on sites that have compatibility or accuracy issues with 'page' mode.
  */
 export type VisualAnalysisConfigScope = "viewport" | "page" | "scan" | "auto";
+
 export const VisualAnalysisConfigScope = {
     Viewport: "viewport",
     Page: "page",

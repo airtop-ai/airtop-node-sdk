@@ -12,5 +12,5 @@ export const VisualAnalysisConfigScope: core.serialization.Schema<
 > = core.serialization.enum_(["viewport", "page", "scan", "auto"]);
 
 export declare namespace VisualAnalysisConfigScope {
-    export type Raw = "viewport" | "page" | "scan" | "auto";
+    type Raw = "viewport" | "page" | "scan" | "auto";
 }

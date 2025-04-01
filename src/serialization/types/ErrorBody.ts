@@ -13,7 +13,7 @@ export const ErrorBody: core.serialization.ObjectSchema<serializers.ErrorBody.Ra
     });
 
 export declare namespace ErrorBody {
-    export interface Raw {
+    interface Raw {
         code: string;
         message: string;
     }

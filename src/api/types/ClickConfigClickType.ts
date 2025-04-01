@@ -6,6 +6,7 @@
  * The type of click to perform. Defaults to left click.
  */
 export type ClickConfigClickType = "click" | "doubleClick" | "rightClick";
+
 export const ClickConfigClickType = {
     Click: "click",
     DoubleClick: "doubleClick",

@@ -19,7 +19,7 @@ export const SessionHoverHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionHoverHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfigWithExperimental.Raw | null;
         costThresholdCredits?: number | null;

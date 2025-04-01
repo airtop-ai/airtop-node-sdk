@@ -17,7 +17,7 @@ export const ScreenshotConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace ScreenshotConfig {
-    export interface Raw {
+    interface Raw {
         maxHeight?: number | null;
         maxWidth?: number | null;
         quality?: number | null;

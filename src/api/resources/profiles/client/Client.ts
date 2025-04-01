@@ -9,23 +9,19 @@ import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Profiles {
-    export interface Options {
+    interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
-        /** Specify a custom URL to connect the client to. */
-        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    export interface RequestOptions {
+    interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
-        /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
     }
 }
 
@@ -43,10 +39,10 @@ export class Profiles {
      */
     public async delete(
         request: Airtop.ProfilesDeleteRequest = {},
-        requestOptions?: Profiles.RequestOptions,
+        requestOptions?: Profiles.RequestOptions
     ): Promise<void> {
         const { profileIds, profileNames } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (profileIds != null) {
             if (Array.isArray(profileIds)) {
                 _queryParams["profileIds"] = profileIds.map((item) => item);
@@ -65,21 +61,18 @@ export class Profiles {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AirtopEnvironment.Default,
-                "profiles",
+                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
+                "profiles"
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.36-beta0",
-                "User-Agent": "@airtop/sdk/0.1.36-beta0",
+                "X-Fern-SDK-Version": "0.1.34",
+                "User-Agent": "@airtop/sdk/0.1.34",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -106,7 +99,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /profiles.");
+                throw new errors.AirtopTimeoutError();
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,

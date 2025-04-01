@@ -14,7 +14,7 @@ export const MicroInteractionExperimentalConfig: core.serialization.ObjectSchema
 });
 
 export declare namespace MicroInteractionExperimentalConfig {
-    export interface Raw {
+    interface Raw {
         scrollWithin?: string | null;
     }
 }

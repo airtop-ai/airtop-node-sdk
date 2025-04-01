@@ -13,7 +13,7 @@ export const WindowId: core.serialization.ObjectSchema<serializers.WindowId.Raw,
     });
 
 export declare namespace WindowId {
-    export interface Raw {
+    interface Raw {
         targetId: string;
         windowId: string;
     }

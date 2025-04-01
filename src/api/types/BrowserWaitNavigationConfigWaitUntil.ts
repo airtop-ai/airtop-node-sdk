@@ -6,6 +6,7 @@
  * The condition to wait for the navigation to complete. Defaults to 'load'.
  */
 export type BrowserWaitNavigationConfigWaitUntil = "load" | "domcontentloaded" | "networkidle0" | "networkidle2";
+
 export const BrowserWaitNavigationConfigWaitUntil = {
     Load: "load",
     Domcontentloaded: "domcontentloaded",

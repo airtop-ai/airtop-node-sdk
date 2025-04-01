@@ -10,7 +10,6 @@ import {
 import { AirtopSessions } from './AirtopSessions';
 import { AirtopWindows } from './AirtopWindows';
 import { AirtopRequests } from './AirtopRequests';
-import { SDK_VERSION } from '../version';
 
 type AugmentedOptions = FernClient.Options & { debug?: boolean };
 
@@ -22,7 +21,7 @@ export class AirtopClient {
   private _requests: AirtopRequests | undefined;
 
   constructor(private _options: AugmentedOptions) {
-    const version = SDK_VERSION;
+    const version = require('../package.json').version; //we don't control tsconfig.json so we can't use resolveJsonModule
     if (!_options.fetcher) {
       _options.fetcher = (req) => {
         return core.fetcher({
@@ -62,10 +61,6 @@ export class AirtopClient {
 
   get profiles() {
     return this._client.profiles;
-  }
-
-  public get automations() {
-    return this._client.automations;
   }
 
   log(message: string) {

@@ -19,7 +19,7 @@ export const Pagination: core.serialization.ObjectSchema<serializers.Pagination.
     });
 
 export declare namespace Pagination {
-    export interface Raw {
+    interface Raw {
         currentLimit: number;
         currentPage: number;
         finalCount: number;

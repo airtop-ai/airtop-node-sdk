@@ -14,7 +14,7 @@ export const Issue: core.serialization.ObjectSchema<serializers.Issue.Raw, Airto
 });
 
 export declare namespace Issue {
-    export interface Raw {
+    interface Raw {
         code?: string | null;
         details?: Record<string, unknown> | null;
         message: string;

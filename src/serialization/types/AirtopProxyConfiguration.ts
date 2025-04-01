@@ -15,7 +15,7 @@ export const AirtopProxyConfiguration: core.serialization.ObjectSchema<
 });
 
 export declare namespace AirtopProxyConfiguration {
-    export interface Raw {
+    interface Raw {
         country?: string | null;
         sticky?: boolean | null;
     }

@@ -1,4 +1,3 @@
-export * from "./bigint";
 export * from "./date";
 export * from "./enum";
 export * from "./lazy";

@@ -20,7 +20,7 @@ export const SessionPageQueryHandlerRequestBody: core.serialization.ObjectSchema
 });
 
 export declare namespace SessionPageQueryHandlerRequestBody {
-    export interface Raw {
+    interface Raw {
         clientRequestId?: string | null;
         configuration?: PageQueryConfig.Raw | null;
         costThresholdCredits?: number | null;
