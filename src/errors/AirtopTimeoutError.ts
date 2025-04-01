@@ -3,8 +3,8 @@
  */
 
 export class AirtopTimeoutError extends Error {
-    constructor() {
-        super("Timeout");
+    constructor(message: string) {
+        super(message);
         Object.setPrototypeOf(this, AirtopTimeoutError.prototype);
     }
 }

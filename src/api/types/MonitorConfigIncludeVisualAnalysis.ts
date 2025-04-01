@@ -6,7 +6,6 @@
  * If set to 'enabled', Airtop AI will also analyze the web page visually when executing the condition check. If set to 'disabled', no visual analysis will be conducted.
  */
 export type MonitorConfigIncludeVisualAnalysis = "auto" | "disabled" | "enabled";
-
 export const MonitorConfigIncludeVisualAnalysis = {
     Auto: "auto",
     Disabled: "disabled",

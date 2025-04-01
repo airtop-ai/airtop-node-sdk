@@ -13,7 +13,7 @@ export const ScrollByConfig: core.serialization.ObjectSchema<serializers.ScrollB
     });
 
 export declare namespace ScrollByConfig {
-    interface Raw {
+    export interface Raw {
         xAxis?: string | null;
         yAxis?: string | null;
     }

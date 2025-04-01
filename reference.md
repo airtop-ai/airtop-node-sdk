@@ -2,6 +2,336 @@
 
 ## Windows
 
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncCreateAutomation</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an automation of a browser window asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncCreateAutomation(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncCreateAutomationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncCreateFormFiller</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a form filler automation asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncCreateFormFiller(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncCreateFormFillerRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncExecuteAutomation</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute an automation of a browser window asynchronously
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncExecuteAutomation(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+    {
+        automationId: "automationId",
+    },
+);
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncExecuteAutomationRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">asyncFillForm</a>(sessionId, windowId, { ...params }) -> Airtop.AsyncSessionAiResponseEnvelope</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fill a form of a browser window asynchronously using a form-filler automation
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.asyncFillForm("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    automationId: "automationId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.AsyncFillFormRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">create</a>(sessionId, { ...params }) -> Airtop.WindowIdResponse</code></summary>
 <dl>
 <dd>
@@ -387,6 +717,166 @@ await client.windows.click("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b
 </dl>
 </details>
 
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">createFormFiller</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a form-filler automation synchronously for the form loaded in the browser window
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.createFormFiller("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.CreateFormFillerRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">fillForm</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fill a form of a browser window synchronously using a form-filler automation
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.fillForm("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+    automationId: "automationId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — The session id for the window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**windowId:** `string` — The Airtop window id of the browser window.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.FillFormRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">hover</a>(sessionId, windowId, { ...params }) -> Airtop.AiPromptResponse</code></summary>
 <dl>
 <dd>
@@ -648,7 +1138,7 @@ await client.windows.paginatedExtraction(
     "0334da2a-91b0-42c5-6156-76a5eba87430",
     {
         prompt: "This site contains a list of results about <provide details about the list>. Navigate through 3 pages of results and return the title and <provide details about the data you want to extract> about each result in this list.",
-    }
+    },
 );
 ```
 
@@ -1178,6 +1668,256 @@ await client.windows.type("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0
 </dl>
 </details>
 
+## Automations
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">list</a>() -> Airtop.ListAutomationsOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all automations for a given organization
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.list();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">update</a>({ ...params }) -> Airtop.AutomationOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the description of a specific automation
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.update({
+    description: "description",
+    id: "id",
+    orgId: "orgId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Airtop.UpdateAutomationDescriptionInputBody`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">get</a>(automationId) -> Airtop.AutomationOutput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific automation by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.get("automationId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**automationId:** `string` — ID of the automation to retrieve
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.automations.<a href="/src/api/resources/automations/client/Client.ts">delete</a>(automationId) -> Airtop.DeleteAutomationOutputWrapperBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific automation
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.automations.delete("automationId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**automationId:** `string` — ID of the automation to delete
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Automations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Profiles
 
 <details><summary><code>client.profiles.<a href="/src/api/resources/profiles/client/Client.ts">delete</a>({ ...params }) -> void</code></summary>
@@ -1307,7 +2047,7 @@ await client.requests.getRequestStatus("123e4567-e89b-12d3-a456-426614174000");
 <dl>
 <dd>
 
-Get a list of sessions by ID
+Get a paginated list of sessions filtered by ID or status
 
 </dd>
 </dl>
@@ -1517,6 +2257,83 @@ await client.sessions.terminate("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
 <dd>
 
 **id:** `string` — ID of the session to delete.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Sessions.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">events</a>(id, { ...params }) -> core.Stream<Airtop.SessionsEventsResponse></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a session event stream for a given session ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const response = await client.sessions.events("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", {
+    lastEventId: 0,
+    all: true,
+});
+for await (const item of response) {
+    console.log(item);
+}
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the session to get status info for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Airtop.SessionsEventsRequest`
 
 </dd>
 </dl>

@@ -15,7 +15,7 @@ export const ScreenshotRequestConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace ScreenshotRequestConfig {
-    interface Raw {
+    export interface Raw {
         screenshot?: ScreenshotConfig.Raw | null;
     }
 }

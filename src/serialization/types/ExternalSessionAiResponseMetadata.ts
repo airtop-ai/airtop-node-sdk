@@ -22,7 +22,7 @@ export const ExternalSessionAiResponseMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace ExternalSessionAiResponseMetadata {
-    interface Raw {
+    export interface Raw {
         clientProvided?: ClientProvidedResponseMetadata.Raw | null;
         requestId?: string | null;
         screenshots?: ScreenshotMetadata.Raw[] | null;

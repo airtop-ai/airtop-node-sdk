@@ -14,7 +14,7 @@ export const ErrorDetail: core.serialization.ObjectSchema<serializers.ErrorDetai
     });
 
 export declare namespace ErrorDetail {
-    interface Raw {
+    export interface Raw {
         location?: string | null;
         message?: string | null;
         value?: unknown | null;

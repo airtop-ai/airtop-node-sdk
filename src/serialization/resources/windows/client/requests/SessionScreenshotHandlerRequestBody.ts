@@ -18,7 +18,7 @@ export const SessionScreenshotHandlerRequestBody: core.serialization.Schema<
 });
 
 export declare namespace SessionScreenshotHandlerRequestBody {
-    interface Raw {
+    export interface Raw {
         clientRequestId?: string | null;
         configuration?: ScreenshotRequestConfig.Raw | null;
         costThresholdCredits?: number | null;

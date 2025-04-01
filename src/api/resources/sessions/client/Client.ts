@@ -5,25 +5,29 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Airtop from "../../../index";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 import * as stream from "stream";
 
 export declare namespace Sessions {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -31,7 +35,7 @@ export class Sessions {
     constructor(protected readonly _options: Sessions.Options) {}
 
     /**
-     * Get a list of sessions by ID
+     * Get a paginated list of sessions filtered by ID or status
      *
      * @param {Airtop.SessionsListRequest} request
      * @param {Sessions.RequestOptions} requestOptions - Request-specific configuration.
@@ -48,10 +52,10 @@ export class Sessions {
      */
     public async list(
         request: Airtop.SessionsListRequest = {},
-        requestOptions?: Sessions.RequestOptions
+        requestOptions?: Sessions.RequestOptions,
     ): Promise<Airtop.SessionsResponse> {
         const { sessionIds, status, offset, limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (sessionIds != null) {
             if (Array.isArray(sessionIds)) {
                 _queryParams["sessionIds"] = sessionIds.map((item) => item);
@@ -61,7 +65,9 @@ export class Sessions {
         }
 
         if (status != null) {
-            _queryParams["status"] = status;
+            _queryParams["status"] = serializers.SessionsListRequestStatus.jsonOrThrow(status, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
         if (offset != null) {
@@ -74,18 +80,21 @@ export class Sessions {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "sessions"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                "sessions",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -114,7 +123,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
@@ -124,7 +133,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
@@ -134,7 +143,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.AirtopError({
@@ -151,7 +160,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /sessions.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -168,22 +177,25 @@ export class Sessions {
      */
     public async create(
         request: Airtop.SessionRestInputV1 = {},
-        requestOptions?: Sessions.RequestOptions
+        requestOptions?: Sessions.RequestOptions,
     ): Promise<Airtop.SessionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                "sessions"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                "sessions",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -216,7 +228,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling POST /sessions.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -240,18 +252,21 @@ export class Sessions {
     public async getInfo(id: string, requestOptions?: Sessions.RequestOptions): Promise<Airtop.SessionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -279,7 +294,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
@@ -289,7 +304,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
@@ -299,7 +314,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.AirtopError({
@@ -316,7 +331,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /sessions/{id}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -336,18 +351,21 @@ export class Sessions {
     public async terminate(id: string, requestOptions?: Sessions.RequestOptions): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -373,7 +391,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /sessions/{id}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -387,10 +405,10 @@ export class Sessions {
     public async events(
         id: string,
         request: Airtop.SessionsEventsRequest = {},
-        requestOptions?: Sessions.RequestOptions
+        requestOptions?: Sessions.RequestOptions,
     ): Promise<core.Stream<Airtop.SessionsEventsResponse>> {
         const { lastEventId, all } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (lastEventId != null) {
             _queryParams["lastEventId"] = lastEventId.toString();
         }
@@ -401,18 +419,21 @@ export class Sessions {
 
         const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}/events`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(id)}/events`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -452,7 +473,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 422:
                     throw new Airtop.UnprocessableEntityError(
@@ -462,7 +483,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 500:
                     throw new Airtop.InternalServerError(
@@ -472,7 +493,7 @@ export class Sessions {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.AirtopError({
@@ -489,7 +510,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /sessions/{id}/events.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -508,24 +529,25 @@ export class Sessions {
     public async saveProfileOnTermination(
         sessionId: string,
         profileName: string,
-        requestOptions?: Sessions.RequestOptions
+        requestOptions?: Sessions.RequestOptions,
     ): Promise<void> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/save-profile-on-termination/${encodeURIComponent(
-                    profileName
-                )}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AirtopEnvironment.Default,
+                `sessions/${encodeURIComponent(sessionId)}/save-profile-on-termination/${encodeURIComponent(profileName)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.34",
-                "User-Agent": "@airtop/sdk/0.1.34",
+                "X-Fern-SDK-Version": "0.1.35",
+                "User-Agent": "@airtop/sdk/0.1.35",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -551,7 +573,9 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError();
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling PUT /sessions/{sessionId}/save-profile-on-termination/{profileName}.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
