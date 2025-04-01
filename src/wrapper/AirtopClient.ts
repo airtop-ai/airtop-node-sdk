@@ -64,6 +64,10 @@ export class AirtopClient {
     return this._client.profiles;
   }
 
+  public get automations() {
+    return this._client.automations;
+  }
+
   log(message: string) {
     if (this.debug) {
       console.log(message);
