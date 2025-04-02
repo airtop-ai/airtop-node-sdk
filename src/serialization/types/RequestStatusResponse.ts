@@ -15,7 +15,7 @@ export const RequestStatusResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace RequestStatusResponse {
-    interface Raw {
+    export interface Raw {
         response?: unknown;
         status: string;
     }

@@ -15,7 +15,7 @@ export const ScrollToEdgeConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace ScrollToEdgeConfig {
-    interface Raw {
+    export interface Raw {
         xAxis?: string | null;
         yAxis?: string | null;
     }

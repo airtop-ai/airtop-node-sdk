@@ -14,7 +14,7 @@ export const ScreenshotMetadata: core.serialization.ObjectSchema<
 });
 
 export declare namespace ScreenshotMetadata {
-    interface Raw {
+    export interface Raw {
         dataUrl?: string | null;
     }
 }
