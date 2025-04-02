@@ -1,7 +1,16 @@
+export { AsyncClickRequest } from "./AsyncClickRequest";
 export { AsyncCreateAutomationRequest } from "./AsyncCreateAutomationRequest";
 export { AsyncCreateFormFillerRequest } from "./AsyncCreateFormFillerRequest";
 export { AsyncExecuteAutomationRequest } from "./AsyncExecuteAutomationRequest";
 export { AsyncFillFormRequest } from "./AsyncFillFormRequest";
+export { AsyncHoverRequest } from "./AsyncHoverRequest";
+export { AsyncMonitorRequest } from "./AsyncMonitorRequest";
+export { AsyncPageQueryRequest } from "./AsyncPageQueryRequest";
+export { AsyncPaginatedExtractionRequest } from "./AsyncPaginatedExtractionRequest";
+export { AsyncPromptContentRequest } from "./AsyncPromptContentRequest";
+export { AsyncScreenshotRequest } from "./AsyncScreenshotRequest";
+export { AsyncSummarizeContentRequest } from "./AsyncSummarizeContentRequest";
+export { AsyncTypeRequest } from "./AsyncTypeRequest";
 export { CreateWindowInputV1Body } from "./CreateWindowInputV1Body";
 export { WindowLoadUrlV1Body } from "./WindowLoadUrlV1Body";
 export { SessionClickHandlerRequestBody } from "./SessionClickHandlerRequestBody";
