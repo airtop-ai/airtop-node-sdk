@@ -33,7 +33,7 @@ export class AirtopRequests extends RequestsClass {
     while (Date.now() - startTime < timeoutMs) {
       const response = await this.getRequestStatus(requestId, requestOptions);
 
-      if (response.status === 'completed' || response.status === 'failed') {
+      if (response.status === 'completed' || response.status === 'error') {
         return response;
       }
 
