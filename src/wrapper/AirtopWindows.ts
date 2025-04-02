@@ -325,6 +325,56 @@ export class AirtopWindows extends WindowsClass {
   }
 
   /**
+   * Fill a form of a browser window synchronously using a form-filler automation
+   *
+   * @param {string} sessionId - The session id for the window.
+   * @param {string} windowId - The Airtop window id of the browser window.
+   * @param {Airtop.FillFormRequest} request
+   * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+   *
+   * @example
+   *     await client.windows.fillForm("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
+   *         automationId: "automationId"
+   *     })
+   */
+  public async fillForm(
+    sessionId: string,
+    windowId: string,
+    request: Airtop.FillFormRequest,
+    requestOptions?: Windows.RequestOptions,
+  ): Promise<Airtop.AiPromptResponse> {
+    return super.fillForm(sessionId, windowId, request, {
+      timeoutInSeconds: 600,
+      ...requestOptions,
+      maxRetries: 0,
+    });
+  }
+
+  /**
+   * Create a form-filler automation synchronously for the form loaded in the browser window
+   *
+   * @param {string} sessionId - The session id for the window.
+   * @param {string} windowId - The Airtop window id of the browser window.
+   * @param {Airtop.CreateFormFillerRequest} request
+   * @param {Windows.RequestOptions} requestOptions - Request-specific configuration.
+   *
+   * @example
+   *     await client.windows.createFormFiller("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430")
+   */
+  public async createFormFiller(
+    sessionId: string,
+    windowId: string,
+    request: Airtop.CreateFormFillerRequest = {},
+    requestOptions?: Windows.RequestOptions,
+  ): Promise<Airtop.AiPromptResponse> {
+    return super.createFormFiller(sessionId, windowId, request, {
+      timeoutInSeconds: 600,
+      ...requestOptions,
+      maxRetries: 0,
+    });
+  }
+
+  /**
    * @param {string} sessionId - The session id for the window.
    * @param {string} windowId - The Airtop window id of the browser window.
    * @param {Airtop.SessionMonitorHandlerRequestBody} request
