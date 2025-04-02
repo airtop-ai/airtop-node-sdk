@@ -14,7 +14,7 @@ export const PageQueryExperimentalConfig: core.serialization.ObjectSchema<
 });
 
 export declare namespace PageQueryExperimentalConfig {
-    interface Raw {
+    export interface Raw {
         includeVisualAnalysis?: string | null;
     }
 }

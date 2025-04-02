@@ -20,7 +20,7 @@ export const SessionEventMessage: core.serialization.ObjectSchema<
 });
 
 export declare namespace SessionEventMessage {
-    interface Raw {
+    export interface Raw {
         error?: ErrorBody.Raw | null;
         event: string;
         eventData?: unknown | null;

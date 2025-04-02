@@ -5,49 +5,56 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Windows } from "./api/resources/windows/client/Client";
+import { Automations } from "./api/resources/automations/client/Client";
 import { Profiles } from "./api/resources/profiles/client/Client";
 import { Requests } from "./api/resources/requests/client/Client";
 import { Sessions } from "./api/resources/sessions/client/Client";
 
 export declare namespace AirtopClient {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.AirtopEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         apiKey: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class AirtopClient {
-    constructor(protected readonly _options: AirtopClient.Options) {}
-
     protected _windows: Windows | undefined;
+    protected _automations: Automations | undefined;
+    protected _profiles: Profiles | undefined;
+    protected _requests: Requests | undefined;
+    protected _sessions: Sessions | undefined;
+
+    constructor(protected readonly _options: AirtopClient.Options) {}
 
     public get windows(): Windows {
         return (this._windows ??= new Windows(this._options));
     }
 
-    protected _profiles: Profiles | undefined;
+    public get automations(): Automations {
+        return (this._automations ??= new Automations(this._options));
+    }
 
     public get profiles(): Profiles {
         return (this._profiles ??= new Profiles(this._options));
     }
 
-    protected _requests: Requests | undefined;
-
     public get requests(): Requests {
         return (this._requests ??= new Requests(this._options));
     }
-
-    protected _sessions: Sessions | undefined;
 
     public get sessions(): Sessions {
         return (this._sessions ??= new Sessions(this._options));

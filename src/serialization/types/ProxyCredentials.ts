@@ -16,7 +16,7 @@ export const ProxyCredentials: core.serialization.ObjectSchema<
 });
 
 export declare namespace ProxyCredentials {
-    interface Raw {
+    export interface Raw {
         password?: string | null;
         url: string;
         username?: string | null;

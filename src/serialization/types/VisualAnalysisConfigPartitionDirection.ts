@@ -12,5 +12,5 @@ export const VisualAnalysisConfigPartitionDirection: core.serialization.Schema<
 > = core.serialization.enum_(["vertical", "horizontal", "bidirectional"]);
 
 export declare namespace VisualAnalysisConfigPartitionDirection {
-    type Raw = "vertical" | "horizontal" | "bidirectional";
+    export type Raw = "vertical" | "horizontal" | "bidirectional";
 }

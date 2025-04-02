@@ -12,7 +12,7 @@ export const ScrapeConfig: core.serialization.ObjectSchema<serializers.ScrapeCon
     });
 
 export declare namespace ScrapeConfig {
-    interface Raw {
+    export interface Raw {
         optimizeUrls?: string | null;
     }
 }
