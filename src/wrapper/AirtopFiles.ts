@@ -101,7 +101,7 @@ export class AirtopFiles extends FilesClass {
       if (onProgress && downloadResponse.body) {
         // Create a transform stream to track progress
         const progressStream = new Transform({
-          transform(chunk, encoding, callback) {
+          transform(chunk: Buffer, encoding: string, callback: (error: Error | null, data?: any) => void) {
             downloadedBytes += chunk.length;
             onProgress(downloadedBytes, totalBytes);
             callback(null, chunk);
@@ -113,11 +113,45 @@ export class AirtopFiles extends FilesClass {
         progressStream.on('error', reject);
       } else {
         // If no progress callback, pipe directly
-        downloadResponse.body.pipe(fileStream);
+        downloadResponse.body?.pipe(fileStream);
       }
 
-      downloadResponse.body.on('error', reject);
+      downloadResponse.body?.on('error', reject);
       fileStream.on('finish', resolve);
     });
   }
+
+  /**
+   * Waits for a file to become available for download
+   * 
+   * @param fileId - The ID of the file to wait for
+   * @param options - Optional request configuration including timeout
+   * @returns The file entry once it becomes available
+   * @throws Error if the file doesn't become available within the timeout period
+   * 
+   * @example
+   *     const fileEntry = await client.files.waitForDownloadAvailable("123e4567-e89b-12d3-a456-426614174000")
+   */
+    async waitForDownloadAvailable(
+      fileId: string,
+      options?: FilesNamespace.RequestOptions,
+    ): Promise<Airtop.EnvelopeGetFileV1EnvelopeDefaultMeta> {
+      const timeoutSeconds = options?.timeoutInSeconds || 120;
+      const intervalMs = 5000; // 5 seconds
+      const startTime = Date.now();
+      
+      while (Date.now() - startTime < timeoutSeconds * 1000) {
+        const fileEntry = await this.get(fileId, options);
+        
+        // Check if the file has a valid download URL and size, which indicates it's available
+        if (fileEntry.data.downloadUrl && fileEntry.data.fileBytes > 0) {
+          return fileEntry;
+        }
+        
+        // Wait before checking again
+        await new Promise(resolve => setTimeout(resolve, intervalMs));
+      }
+      
+      throw new Error(`Timeout waiting for file ${fileId} to become available`);
+    }
 }
