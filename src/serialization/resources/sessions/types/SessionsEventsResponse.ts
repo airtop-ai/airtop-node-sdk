@@ -9,6 +9,7 @@ import { SessionsEventsResponseStatus } from "./SessionsEventsResponseStatus";
 import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 import { SessionsEventsResponseWindowEvent } from "./SessionsEventsResponseWindowEvent";
 import { SessionsEventsResponseSessionEvent } from "./SessionsEventsResponseSessionEvent";
+import { SessionsEventsResponseFileEvent } from "./SessionsEventsResponseFileEvent";
 
 export const SessionsEventsResponse: core.serialization.Schema<
     serializers.SessionsEventsResponse.Raw,
@@ -19,6 +20,7 @@ export const SessionsEventsResponse: core.serialization.Schema<
         error: SessionsEventsResponseError,
         windowEvent: SessionsEventsResponseWindowEvent,
         sessionEvent: SessionsEventsResponseSessionEvent,
+        fileEvent: SessionsEventsResponseFileEvent,
     })
     .transform<Airtop.SessionsEventsResponse>({
         transform: (value) => value,
@@ -30,7 +32,8 @@ export declare namespace SessionsEventsResponse {
         | SessionsEventsResponse.Status
         | SessionsEventsResponse.Error
         | SessionsEventsResponse.WindowEvent
-        | SessionsEventsResponse.SessionEvent;
+        | SessionsEventsResponse.SessionEvent
+        | SessionsEventsResponse.FileEvent;
 
     export interface Status extends SessionsEventsResponseStatus.Raw {
         event: "status";
@@ -46,5 +49,9 @@ export declare namespace SessionsEventsResponse {
 
     export interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
         event: "sessionEvent";
+    }
+
+    export interface FileEvent extends SessionsEventsResponseFileEvent.Raw {
+        event: "fileEvent";
     }
 }

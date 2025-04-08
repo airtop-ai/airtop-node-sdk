@@ -11,7 +11,8 @@ export type SessionsEventsResponse =
     | Airtop.SessionsEventsResponse.Status
     | Airtop.SessionsEventsResponse.Error_
     | Airtop.SessionsEventsResponse.WindowEvent
-    | Airtop.SessionsEventsResponse.SessionEvent;
+    | Airtop.SessionsEventsResponse.SessionEvent
+    | Airtop.SessionsEventsResponse.FileEvent;
 
 export namespace SessionsEventsResponse {
     export interface Status extends Airtop.SessionsEventsResponseStatus {
@@ -28,5 +29,9 @@ export namespace SessionsEventsResponse {
 
     export interface SessionEvent extends Airtop.SessionsEventsResponseSessionEvent {
         event: "sessionEvent";
+    }
+
+    export interface FileEvent extends Airtop.SessionsEventsResponseFileEvent {
+        event: "fileEvent";
     }
 }
