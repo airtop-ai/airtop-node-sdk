@@ -177,9 +177,14 @@ export class AirtopSessions extends SessionsClass {
    * @returns {Promise<{ id: string, downloadUrl: string } | null>} Object containing file's id and downloadUrl, or null if timed out
    */
   async waitForDownloadStart(
-    { sessionId, includePriorEvents = false }: { sessionId: string; includePriorEvents?: boolean },
+    {
+      sessionId,
+      includePriorEvents = false,
+      lookbackSeconds = 5,
+    }: { sessionId: string; includePriorEvents?: boolean; lookbackSeconds?: number },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<{ id: string; downloadUrl: string } | null> {
+    const startTime = new Date();
     const timeoutSeconds = requestOptions?.timeoutInSeconds || 60;
 
     // Create a promise that resolves to null after the timeout
@@ -199,6 +204,14 @@ export class AirtopSessions extends SessionsClass {
         if (e.event === 'file_status') {
           this.log(`file_status message received:\n${JSON.stringify(event, null, 2)}`);
           if (e.status === 'uploading') {
+            const eventTime = Date.parse(e.eventTime);
+            const thresholdTime = startTime.getTime() - lookbackSeconds * 1000;
+            if (eventTime < thresholdTime) {
+              this.log(
+                `skipping file uploading event for ${e.fileId} because its timestamp is earlier than lookbackSeconds`,
+              );
+              continue;
+            }
             return {
               id: e.fileId,
               downloadUrl: e.downloadUrl,
@@ -230,15 +243,17 @@ export class AirtopSessions extends SessionsClass {
       destinationPath,
       onProgress,
       includePriorEvents = false,
+      lookbackSeconds = 5,
     }: {
       sessionId: string;
       destinationPath: string;
       onProgress?: (downloadedBytes: number, totalBytes: number) => void;
       includePriorEvents?: boolean;
+      lookbackSeconds?: number;
     },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<void> {
-    const nextFile = await this.waitForDownload(sessionId, { includePriorEvents }, requestOptions);
+    const nextFile = await this.waitForDownload(sessionId, { includePriorEvents, lookbackSeconds }, requestOptions);
     if (!nextFile) {
       throw new Error('No file to download within timeout');
     }
