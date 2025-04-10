@@ -111,16 +111,18 @@ export class AirtopSessions extends SessionsClass {
    * Defaults to looking back 5 seconds in the event stream for the file to be available.
    * Use `lookbackSeconds` to control this behavior.
    *
-   * @param {Object} params - The parameters for the function
-   * @param {string} params.sessionId - The ID of the session to monitor
-   * @param {number} [params.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
+   * @param {string} sessionId - The ID of the session to monitor
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {number} [configuration.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
    * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
    * @returns {Promise<{ id: string, downloadUrl: string } | null>} Object containing file's id and downloadUrl, or null if timed out
    */
   async waitForDownload(
-    { sessionId, lookbackSeconds = 5 }: { sessionId: string; lookbackSeconds?: number },
+    sessionId: string,
+    configuration?: { lookbackSeconds?: number },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<{ id: string; downloadUrl: string } | null> {
+    const { lookbackSeconds = 5 } = configuration || {};
     this.log(`waiting for file to be available on session: ${sessionId}`);
     const startTime = new Date();
     const timeoutSeconds = requestOptions?.timeoutInSeconds || 120;
@@ -173,16 +175,18 @@ export class AirtopSessions extends SessionsClass {
    * Defaults to looking back 5 seconds in the event stream for the file to be available.
    * Use `lookbackSeconds` to control this behavior.
    *
-   * @param {Object} params - The parameters for the function
-   * @param {string} params.sessionId - The ID of the session to monitor
-   * @param {number} [params.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
+   * @param {string} sessionId - The ID of the session to monitor
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {number} [configuration.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
    * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
    * @returns {Promise<{ id: string, downloadUrl: string } | null>} Object containing file's id and downloadUrl, or null if timed out
    */
   async waitForDownloadStart(
-    { sessionId, lookbackSeconds = 5 }: { sessionId: string; lookbackSeconds?: number },
+    sessionId: string,
+    configuration?: { lookbackSeconds?: number },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<{ id: string; downloadUrl: string } | null> {
+    const { lookbackSeconds = 5 } = configuration || {};
     const startTime = new Date();
     const timeoutSeconds = requestOptions?.timeoutInSeconds || 60;
 
@@ -228,29 +232,31 @@ export class AirtopSessions extends SessionsClass {
   /**
    * Downloads the next file from a session as soon as it starts to become available
    *
-   * @param {Object} params - The parameters for the function
-   * @param {string} params.sessionId - The ID of the session to download from
-   * @param {string} params.destinationPath - The local path where the file should be saved
-   * @param {function} [params.onProgress] - Optional callback to track download progress
+   * @param {string} sessionId - The ID of the session to download from
+   * @param {string} destinationPath - The local path where the file should be saved
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {function} [configuration.onProgress] - Optional callback to track download progress
+   * @param {number} [configuration.lookbackSeconds=5] - Optional number of seconds to look back for prior events. Default `5`. 0 means no lookback.
+   * @param {number} [configuration.timeoutSeconds=120] - Optional timeout in seconds. Default `120`.
    * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
    * @throws Error if no file is available to download within the timeout period
    */
   async downloadNextFile(
-    {
-      sessionId,
-      destinationPath,
-      onProgress,
-      lookbackSeconds = 5,
-    }: {
-      sessionId: string;
-      destinationPath: string;
+    sessionId: string,
+    destinationPath: string,
+    configuration?: {
       onProgress?: (downloadedBytes: number, totalBytes: number) => void;
       lookbackSeconds?: number;
       timeoutSeconds?: number;
     },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<void> {
-    const nextFile = await this.waitForDownload({ sessionId, lookbackSeconds }, requestOptions);
+    const { onProgress = undefined, lookbackSeconds = 5, timeoutSeconds = 120 } = configuration || {};
+    const nextFile = await this.waitForDownload(
+      sessionId,
+      { lookbackSeconds },
+      { timeoutInSeconds: timeoutSeconds, ...(requestOptions || {}) },
+    );
     if (!nextFile) {
       throw new Error('No file to download within timeout');
     }
