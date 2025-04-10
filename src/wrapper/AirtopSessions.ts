@@ -109,34 +109,37 @@ export class AirtopSessions extends SessionsClass {
   /**
    * Waits for a file to be downloaded in a session and reach 'available' status.
    * Defaults to looking back 5 seconds in the event stream for the file to be available.
-   * Use `includePriorEvents` and `lookbackSeconds` to control this behavior.
+   * Use `lookbackSeconds` to control this behavior.
    *
-   * @param {Object} params - The parameters for the function
-   * @param {string} params.sessionId - The ID of the session to monitor
-   * @param {boolean} [params.includePriorEvents=true] - Whether to include prior events in the wait. Default `true`.
-   * @param {number} [params.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`.
+   * @param {string} sessionId - The ID of the session to monitor
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {number} [configuration.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
    * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
    * @returns {Promise<{ id: string, downloadUrl: string } | null>} Object containing file's id and downloadUrl, or null if timed out
    */
   async waitForDownload(
     sessionId: string,
-    configuration?: { includePriorEvents?: boolean; lookbackSeconds?: number },
+    configuration?: { lookbackSeconds?: number },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<{ id: string; downloadUrl: string } | null> {
-    const { includePriorEvents = true, lookbackSeconds = 5 } = configuration || {};
+    const { lookbackSeconds = 5 } = configuration || {};
+    this.log(`waiting for file to be available on session: ${sessionId}`);
     const startTime = new Date();
     const timeoutSeconds = requestOptions?.timeoutInSeconds || 120;
 
     // Create a promise that resolves to null after the timeout
     const timeoutPromise = new Promise<null>((resolve) => {
-      setTimeout(() => resolve(null), timeoutSeconds * 1000);
+      setTimeout(() => {
+        this.log(`waiting for file timed out after ${timeoutSeconds} seconds`);
+        resolve(null);
+      }, timeoutSeconds * 1000);
     });
 
     // Create a promise for the event processing
     const processEventsPromise = (async () => {
       const sessionEvents = await this.events(
         sessionId,
-        { all: includePriorEvents },
+        { all: lookbackSeconds >= 0 },
         { timeoutInSeconds: timeoutSeconds, ...(requestOptions || {}) },
       );
       for await (const event of sessionEvents) {
@@ -168,18 +171,23 @@ export class AirtopSessions extends SessionsClass {
   }
 
   /**
-   * Waits for a file download to start in a session
+   * Waits for a file download to start in a session.
+   * Defaults to looking back 5 seconds in the event stream for the file to be available.
+   * Use `lookbackSeconds` to control this behavior.
    *
-   * @param {Object} params - The parameters for the function
-   * @param {string} params.sessionId - The ID of the session to monitor
-   * @param {boolean} [params.includePriorEvents=false] - Whether to include prior events in the wait
+   * @param {string} sessionId - The ID of the session to monitor
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {number} [configuration.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
    * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
    * @returns {Promise<{ id: string, downloadUrl: string } | null>} Object containing file's id and downloadUrl, or null if timed out
    */
   async waitForDownloadStart(
-    { sessionId, includePriorEvents = false }: { sessionId: string; includePriorEvents?: boolean },
+    sessionId: string,
+    configuration?: { lookbackSeconds?: number },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<{ id: string; downloadUrl: string } | null> {
+    const { lookbackSeconds = 5 } = configuration || {};
+    const startTime = new Date();
     const timeoutSeconds = requestOptions?.timeoutInSeconds || 60;
 
     // Create a promise that resolves to null after the timeout
@@ -191,7 +199,7 @@ export class AirtopSessions extends SessionsClass {
     const processEventsPromise = (async () => {
       const sessionEvents = await this.events(
         sessionId,
-        { all: includePriorEvents },
+        { all: lookbackSeconds >= 0 },
         { timeoutInSeconds: timeoutSeconds, ...(requestOptions || {}) },
       );
       for await (const event of sessionEvents) {
@@ -199,6 +207,14 @@ export class AirtopSessions extends SessionsClass {
         if (e.event === 'file_status') {
           this.log(`file_status message received:\n${JSON.stringify(event, null, 2)}`);
           if (e.status === 'uploading') {
+            const eventTime = Date.parse(e.eventTime);
+            const thresholdTime = startTime.getTime() - lookbackSeconds * 1000;
+            if (eventTime < thresholdTime) {
+              this.log(
+                `skipping file uploading event for ${e.fileId} because its timestamp is earlier than lookbackSeconds`,
+              );
+              continue;
+            }
             return {
               id: e.fileId,
               downloadUrl: e.downloadUrl,
@@ -216,29 +232,31 @@ export class AirtopSessions extends SessionsClass {
   /**
    * Downloads the next file from a session as soon as it starts to become available
    *
-   * @param {Object} params - The parameters for the function
-   * @param {string} params.sessionId - The ID of the session to download from
-   * @param {string} params.destinationPath - The local path where the file should be saved
-   * @param {function} [params.onProgress] - Optional callback to track download progress
-   * @param {boolean} [params.includePriorEvents=false] - Whether to include prior events in the wait
+   * @param {string} sessionId - The ID of the session to download from
+   * @param {string} destinationPath - The local path where the file should be saved
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {function} [configuration.onProgress] - Optional callback to track download progress
+   * @param {number} [configuration.lookbackSeconds=5] - Optional number of seconds to look back for prior events. Default `5`. 0 means no lookback.
+   * @param {number} [configuration.timeoutSeconds=120] - Optional timeout in seconds. Default `120`.
    * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
    * @throws Error if no file is available to download within the timeout period
    */
   async downloadNextFile(
-    {
-      sessionId,
-      destinationPath,
-      onProgress,
-      includePriorEvents = false,
-    }: {
-      sessionId: string;
-      destinationPath: string;
+    sessionId: string,
+    destinationPath: string,
+    configuration?: {
       onProgress?: (downloadedBytes: number, totalBytes: number) => void;
-      includePriorEvents?: boolean;
+      lookbackSeconds?: number;
+      timeoutSeconds?: number;
     },
     requestOptions?: SessionsNamespace.RequestOptions,
   ): Promise<void> {
-    const nextFile = await this.waitForDownload(sessionId, { includePriorEvents }, requestOptions);
+    const { onProgress = undefined, lookbackSeconds = 5, timeoutSeconds = 120 } = configuration || {};
+    const nextFile = await this.waitForDownload(
+      sessionId,
+      { lookbackSeconds },
+      { timeoutInSeconds: timeoutSeconds, ...(requestOptions || {}) },
+    );
     if (!nextFile) {
       throw new Error('No file to download within timeout');
     }
