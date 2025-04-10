@@ -128,7 +128,7 @@ export class AirtopSessions extends SessionsClass {
     // Create a promise that resolves to null after the timeout
     const timeoutPromise = new Promise<null>((resolve) => {
       setTimeout(() => {
-        this.log(`waitForDownload timed out after ${timeoutSeconds} seconds`);
+        this.log(`waiting for file timed out after ${timeoutSeconds} seconds`);
         resolve(null);
       }, timeoutSeconds * 1000);
     });
