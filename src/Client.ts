@@ -6,6 +6,7 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Windows } from "./api/resources/windows/client/Client";
 import { Automations } from "./api/resources/automations/client/Client";
+import { Files } from "./api/resources/files/client/Client";
 import { Profiles } from "./api/resources/profiles/client/Client";
 import { Requests } from "./api/resources/requests/client/Client";
 import { Sessions } from "./api/resources/sessions/client/Client";
@@ -34,6 +35,7 @@ export declare namespace AirtopClient {
 export class AirtopClient {
     protected _windows: Windows | undefined;
     protected _automations: Automations | undefined;
+    protected _files: Files | undefined;
     protected _profiles: Profiles | undefined;
     protected _requests: Requests | undefined;
     protected _sessions: Sessions | undefined;
@@ -46,6 +48,10 @@ export class AirtopClient {
 
     public get automations(): Automations {
         return (this._automations ??= new Automations(this._options));
+    }
+
+    public get files(): Files {
+        return (this._files ??= new Files(this._options));
     }
 
     public get profiles(): Profiles {
