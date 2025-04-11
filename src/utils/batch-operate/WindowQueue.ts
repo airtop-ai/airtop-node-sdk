@@ -129,6 +129,7 @@ export class WindowQueue<T> {
             sessionId: this.sessionId,
             liveViewUrl,
             operationUrl: urlData,
+            client: this.client,
           });
 
           if (result) {
