@@ -6,6 +6,8 @@ export * from "./AsyncSessionAiResponseEnvelope";
 export * from "./AutomationOutput";
 export * from "./BrowserWaitNavigationConfigWaitUntil";
 export * from "./BrowserWaitNavigationConfig";
+export * from "./CaptchaEventMessageStatus";
+export * from "./CaptchaEventMessage";
 export * from "./ClickConfigClickType";
 export * from "./ClickConfig";
 export * from "./ClientProvidedResponseMetadata";

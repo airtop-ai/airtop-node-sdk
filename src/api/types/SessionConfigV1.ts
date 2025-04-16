@@ -15,6 +15,8 @@ export interface SessionConfigV1 {
     profileName?: string;
     /** Proxy configuration. */
     proxy?: Airtop.SessionConfigV1Proxy;
+    /** Automatically solve captcha challenges. */
+    solveCaptcha?: boolean;
     /** Number of minutes of inactivity (idle timeout) after which the session will terminate. The idle timeout is reset when a user makes an incoming HTTP request, AI request, or new WebSocket connection to the session. Thus, when using drivers like Puppeteer, Selenium or Playwright, the timeout reset depends on the nature of the driver request. If not specified, defaults to 10 minutes. */
     timeoutMinutes?: number;
 }
