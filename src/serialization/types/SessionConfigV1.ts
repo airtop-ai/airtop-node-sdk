@@ -14,6 +14,7 @@ export const SessionConfigV1: core.serialization.ObjectSchema<serializers.Sessio
         persistProfile: core.serialization.boolean().optional(),
         profileName: core.serialization.string().optional(),
         proxy: SessionConfigV1Proxy.optional(),
+        solveCaptcha: core.serialization.boolean().optional(),
         timeoutMinutes: core.serialization.number().optional(),
     });
 
@@ -24,6 +25,7 @@ export declare namespace SessionConfigV1 {
         persistProfile?: boolean | null;
         profileName?: string | null;
         proxy?: SessionConfigV1Proxy.Raw | null;
+        solveCaptcha?: boolean | null;
         timeoutMinutes?: number | null;
     }
 }
