@@ -83,15 +83,15 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                "sessions",
+                "v1/sessions",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38",
-                "User-Agent": "@airtop/sdk/0.1.38",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -160,7 +160,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /sessions.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /v1/sessions.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -184,15 +184,15 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                "sessions",
+                "v1/sessions",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38",
-                "User-Agent": "@airtop/sdk/0.1.38",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -228,7 +228,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling POST /sessions.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling POST /v1/sessions.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -255,15 +255,15 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}`,
+                `v1/sessions/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38",
-                "User-Agent": "@airtop/sdk/0.1.38",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -331,7 +331,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /sessions/{id}.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /v1/sessions/{id}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -354,15 +354,15 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}`,
+                `v1/sessions/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38",
-                "User-Agent": "@airtop/sdk/0.1.38",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -391,7 +391,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /sessions/{id}.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /v1/sessions/{id}.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -422,15 +422,15 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(id)}/events`,
+                `v1/sessions/${encodeURIComponent(id)}/events`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38",
-                "User-Agent": "@airtop/sdk/0.1.38",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -510,7 +510,7 @@ export class Sessions {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /sessions/{id}/events.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /v1/sessions/{id}/events.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -536,15 +536,15 @@ export class Sessions {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                `sessions/${encodeURIComponent(sessionId)}/save-profile-on-termination/${encodeURIComponent(profileName)}`,
+                `v1/sessions/${encodeURIComponent(sessionId)}/save-profile-on-termination/${encodeURIComponent(profileName)}`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38",
-                "User-Agent": "@airtop/sdk/0.1.38",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -574,7 +574,7 @@ export class Sessions {
                 });
             case "timeout":
                 throw new errors.AirtopTimeoutError(
-                    "Timeout exceeded when calling PUT /sessions/{sessionId}/save-profile-on-termination/{profileName}.",
+                    "Timeout exceeded when calling PUT /v1/sessions/{sessionId}/save-profile-on-termination/{profileName}.",
                 );
             case "unknown":
                 throw new errors.AirtopError({

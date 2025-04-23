@@ -3,6 +3,8 @@
  */
 
 export interface RequestStatusResponse {
+    /** The error message, if available */
+    error?: string;
     response?: unknown;
     /** The current status of the request (pending, completed, error) */
     status: string;
