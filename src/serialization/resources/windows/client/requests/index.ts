@@ -25,3 +25,8 @@ export { SessionScreenshotHandlerRequestBody } from "./SessionScreenshotHandlerR
 export { SessionScrollHandlerRequestBody } from "./SessionScrollHandlerRequestBody";
 export { SessionSummaryHandlerRequestBody } from "./SessionSummaryHandlerRequestBody";
 export { SessionTypeHandlerRequestBody } from "./SessionTypeHandlerRequestBody";
+export { ActRequest } from "./ActRequest";
+export { ExtractRequest } from "./ExtractRequest";
+export { FindManyRequest } from "./FindManyRequest";
+export { FindOneRequest } from "./FindOneRequest";
+export { LlmRequest } from "./LlmRequest";

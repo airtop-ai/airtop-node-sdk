@@ -68,15 +68,15 @@ export class Profiles {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                "profiles",
+                "v1/profiles",
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.38-beta0",
-                "User-Agent": "@airtop/sdk/0.1.38-beta0",
+                "X-Fern-SDK-Version": "0.1.39-beta0",
+                "User-Agent": "@airtop/sdk/0.1.39-beta0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -106,7 +106,7 @@ export class Profiles {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /profiles.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling DELETE /v1/profiles.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
