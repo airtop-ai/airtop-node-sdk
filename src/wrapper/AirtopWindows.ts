@@ -25,7 +25,7 @@ import {
   type Windows as WindowsNamespace,
 } from '../api/resources/windows/client/Client';
 import * as core from '../core';
-import { uploadAndFillFileInput } from '../utils';
+import { uploadFileAndSelectInput } from '../utils';
 import type { AirtopClient } from './AirtopClient';
 
 type UploadAndFillFileInputConfiguration = Airtop.SessionFileInputHandlerRequestBody & { uploadFilePath: string };
@@ -459,7 +459,7 @@ export class AirtopWindows extends WindowsClass {
    * @see Airtop.SessionFileInputHandlerRequestBody - For additional micro-interaction configuration options.
    * @returns The file id and the ai response.
    */
-  async uploadAndFillFileInput(
+  async uploadFileAndSelectInput(
     sessionId: string,
     windowId: string,
     configuration: UploadAndFillFileInputConfiguration,
@@ -467,6 +467,6 @@ export class AirtopWindows extends WindowsClass {
     fileId: string;
     aiResponse: Airtop.AiPromptResponse;
   }> {
-    return uploadAndFillFileInput({ client: this.mainClient, sessionId, windowId, configuration });
+    return uploadFileAndSelectInput({ client: this.mainClient, sessionId, windowId, configuration });
   }
 }

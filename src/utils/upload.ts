@@ -1,7 +1,7 @@
 import type { AirtopClient } from '../wrapper/AirtopClient';
 import type * as Airtop from '../api';
 
-export async function uploadAndFillFileInput({
+export async function uploadFileAndSelectInput({
   client,
   sessionId,
   windowId,
