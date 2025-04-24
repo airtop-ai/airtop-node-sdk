@@ -10,12 +10,14 @@ export const RequestStatusResponse: core.serialization.ObjectSchema<
     serializers.RequestStatusResponse.Raw,
     Airtop.RequestStatusResponse
 > = core.serialization.object({
+    error: core.serialization.string().optional(),
     response: core.serialization.unknown(),
     status: core.serialization.string(),
 });
 
 export declare namespace RequestStatusResponse {
     export interface Raw {
+        error?: string | null;
         response?: unknown;
         status: string;
     }

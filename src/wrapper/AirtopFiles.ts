@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import fetch from 'node-fetch';
 import { Transform } from 'readable-stream';
-
 export class AirtopFiles extends FilesClass {
   constructor(readonly _options: FilesNamespace.Options) {
     super(_options);

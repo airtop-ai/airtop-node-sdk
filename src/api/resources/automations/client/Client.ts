@@ -47,15 +47,15 @@ export class Automations {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                "automations",
+                "v1/automations",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.37",
-                "User-Agent": "@airtop/sdk/0.1.37",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -90,7 +90,7 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /automations.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /v1/automations.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -126,15 +126,15 @@ export class Automations {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                "automations/description",
+                "v1/automations/description",
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.37",
-                "User-Agent": "@airtop/sdk/0.1.37",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -225,7 +225,7 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling PUT /automations/description.");
+                throw new errors.AirtopTimeoutError("Timeout exceeded when calling PUT /v1/automations/description.");
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -257,15 +257,15 @@ export class Automations {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                `automations/${encodeURIComponent(automationId)}`,
+                `v1/automations/${encodeURIComponent(automationId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.37",
-                "User-Agent": "@airtop/sdk/0.1.37",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -353,7 +353,9 @@ export class Automations {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AirtopTimeoutError("Timeout exceeded when calling GET /automations/{automationId}.");
+                throw new errors.AirtopTimeoutError(
+                    "Timeout exceeded when calling GET /v1/automations/{automationId}.",
+                );
             case "unknown":
                 throw new errors.AirtopError({
                     message: _response.error.errorMessage,
@@ -385,15 +387,15 @@ export class Automations {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AirtopEnvironment.Default,
-                `automations/${encodeURIComponent(automationId)}`,
+                `v1/automations/${encodeURIComponent(automationId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@airtop/sdk",
-                "X-Fern-SDK-Version": "0.1.37",
-                "User-Agent": "@airtop/sdk/0.1.37",
+                "X-Fern-SDK-Version": "0.1.39",
+                "User-Agent": "@airtop/sdk/0.1.39",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -482,7 +484,7 @@ export class Automations {
                 });
             case "timeout":
                 throw new errors.AirtopTimeoutError(
-                    "Timeout exceeded when calling DELETE /automations/{automationId}.",
+                    "Timeout exceeded when calling DELETE /v1/automations/{automationId}.",
                 );
             case "unknown":
                 throw new errors.AirtopError({
