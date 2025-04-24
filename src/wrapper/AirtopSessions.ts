@@ -330,4 +330,70 @@ export class AirtopSessions extends SessionsClass {
     // Race the timeout against the event processing
     return Promise.race([timeoutPromise, processEventsPromise]);
   }
+
+  /**
+   * Captcha event listener
+   * Defaults to looking back 5 seconds in the event stream for the captcha event to be available.
+   * Use `lookbackSeconds` to control this behavior.
+   *
+   * @param {string} sessionId - The ID of the session to monitor
+   * @param {function} callback - The callback function to be called when a captcha event is received
+   * @param {Object} configuration - The optional configuration parameters for the function
+   * @param {number} [configuration.lookbackSeconds=5] - The number of seconds to look back for prior events. Default `5`. 0 means no lookback.
+   * @param {Sessions.RequestOptions} [requestOptions] - Optional request configuration including timeout
+   * @returns {function} - A function to stop listening for captcha events
+   */
+  onCaptchaEvent(
+    sessionId: string,
+    callback: (data: Airtop.CaptchaEventMessage) => void | Promise<void>,
+    configuration?: { lookbackSeconds?: number },
+    requestOptions?: SessionsNamespace.RequestOptions,
+  ): () => void {
+    let lastCallbackPromise = Promise.resolve();
+    const abortController = new AbortController();
+    const startTime = new Date();
+    const { lookbackSeconds = 5 } = configuration || {};
+    const timeoutSeconds = requestOptions?.timeoutInSeconds || 60;
+
+    (async () => {
+      const sessionEvents = await this.events(
+        sessionId,
+        { all: lookbackSeconds >= 0 },
+        {
+          timeoutInSeconds: timeoutSeconds,
+          ...requestOptions,
+          abortSignal: abortController.signal
+        },
+      );
+
+      for await (const event of sessionEvents) {
+        const e = event as any;
+        if (e.event === 'captcha-event') {
+          this.log(`captcha-event message received:\n${JSON.stringify(event, null, 2)}`);
+          const msg = e as Airtop.CaptchaEventMessage;
+          const eventTime = Date.parse(e.eventTime);
+          const thresholdTime = startTime.getTime() - lookbackSeconds * 1000;
+
+          if (eventTime < thresholdTime) {
+            this.log('skipping captcha event because its timestamp is earlier than lookbackSeconds');
+            continue;
+          }
+
+          lastCallbackPromise = lastCallbackPromise
+            .then(() => callback(msg))
+            .catch(error => this.log(`Error in captcha callback: ${error}`));
+        }
+      }
+    })().catch(error => {
+      if (error.name !== 'AbortError') {
+        this.log(`Error in event processing: ${error}`);
+      }
+    });
+
+    return () => {
+      abortController.abort();
+    };
+  }
+
 }
+
