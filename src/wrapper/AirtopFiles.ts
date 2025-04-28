@@ -79,9 +79,10 @@ export class AirtopFiles extends FilesClass {
     // Get the file entry to get the download URL
     const fileEntry = await this.get(fileId, options);
 
-    //*****
-    //TODO: get file status, and return error if upload not complete
-    //*****
+    if (fileEntry.data.status !== 'available') {
+      throw new Error(`File ${fileId} is not ready for download`);
+    }
+
     // Download the file content
     const downloadResponse = await fetch(fileEntry.data.downloadUrl);
 
