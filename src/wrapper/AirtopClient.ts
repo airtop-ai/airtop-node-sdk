@@ -54,14 +54,14 @@ export class AirtopClient {
   }
 
   public get windows(): AirtopWindows {
-    return (this._windows ??= new AirtopWindows(this._options, this._options.apiKey));
+    return (this._windows ??= new AirtopWindows(this, this._options, this._options.apiKey));
   }
 
   public get requests(): AirtopRequests {
     return (this._requests ??= new AirtopRequests(this._options));
   }
 
-  get profiles() {
+  public get profiles() {
     return this._client.profiles;
   }
 

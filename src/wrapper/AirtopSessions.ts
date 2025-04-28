@@ -297,4 +297,37 @@ export class AirtopSessions extends SessionsClass {
       fileStream.on('finish', resolve);
     });
   }
+
+  /**
+   * Waits for a file upload to become available to a session.
+   *
+   * @param sessionId - The session id for the file upload.
+   * @param fileId - The file id for the file upload.
+   * @param timeoutSeconds - The timeout in seconds.
+   * @returns The event for the file upload.
+   */
+  async waitForUploadAvailable(sessionId: string, fileId: string, timeoutSeconds = 300) {
+    // Create a promise that resolves to null after the timeout
+    const timeoutPromise = new Promise<null>((resolve) => {
+      setTimeout(() => resolve(null), timeoutSeconds * 1000);
+    });
+
+    // Create a promise for the event processing
+    const processEventsPromise = (async () => {
+      const sessionEvents = await this.events(sessionId, { all: true }, { timeoutInSeconds: timeoutSeconds });
+      for await (const event of sessionEvents) {
+        const e = event as any;
+        if (e.event === 'file_upload_status') {
+          this.log(`file_upload_status message received:\n${JSON.stringify(event, null, 2)}`);
+          if (e.status === 'available' && e.fileId === fileId) {
+            return event;
+          }
+        }
+      }
+      return null;
+    })();
+
+    // Race the timeout against the event processing
+    return Promise.race([timeoutPromise, processEventsPromise]);
+  }
 }

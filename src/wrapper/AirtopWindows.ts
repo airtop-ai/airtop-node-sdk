@@ -25,13 +25,21 @@ import {
   type Windows as WindowsNamespace,
 } from '../api/resources/windows/client/Client';
 import * as core from '../core';
+import { uploadFileAndSelectInput } from '../utils';
+import type { AirtopClient } from './AirtopClient';
+
+type UploadAndFillFileInputConfiguration = Airtop.SessionFileInputHandlerRequestBody & { uploadFilePath: string };
 
 export class AirtopWindows extends WindowsClass {
+  private readonly mainClient: AirtopClient;
+
   constructor(
+    readonly _client: AirtopClient,
     readonly _options: WindowsNamespace.Options,
     private apiKeySupplier: core.Supplier<core.BearerToken | undefined>,
   ) {
     super(_options);
+    this.mainClient = _client;
   }
 
   /**
@@ -435,5 +443,30 @@ export class AirtopWindows extends WindowsClass {
       throw new Error('TargetId not found');
     }
     return await this.getWindowInfo(session.id, targetId, request, requestOptions);
+  }
+
+  /**
+   * Upload a file, push the file to a session, and fill a file input field in a window.
+   * After this operation, the file input will be ready to be submitted.
+   *
+   * @param sessionId - The session id for the window.
+   * @param windowId - The window id of the browser window.
+   * @param {UploadAndFillFileInputConfiguration} configuration
+   * @param configuration.uploadFilePath - The path to the local file to upload.
+   * @param configuration.elementDescription - A natural language description of the file input to
+   *   interact with (e.g. 'the file input', 'file upload selection box'). The interaction will be
+   *   aborted if the target element cannot be found.
+   * @see Airtop.SessionFileInputHandlerRequestBody - For additional micro-interaction configuration options.
+   * @returns The file id and the ai response.
+   */
+  async uploadFileAndSelectInput(
+    sessionId: string,
+    windowId: string,
+    configuration: UploadAndFillFileInputConfiguration,
+  ): Promise<{
+    fileId: string;
+    aiResponse: Airtop.AiPromptResponse;
+  }> {
+    return uploadFileAndSelectInput({ client: this.mainClient, sessionId, windowId, configuration });
   }
 }
