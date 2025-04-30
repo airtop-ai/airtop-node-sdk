@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import fetch from 'node-fetch';
 import { Transform } from 'readable-stream';
-
 export class AirtopFiles extends FilesClass {
   constructor(readonly _options: FilesNamespace.Options) {
     super(_options);
@@ -80,9 +79,10 @@ export class AirtopFiles extends FilesClass {
     // Get the file entry to get the download URL
     const fileEntry = await this.get(fileId, options);
 
-    //*****
-    //TODO: get file status, and return error if upload not complete
-    //*****
+    if (fileEntry.data.status !== 'available') {
+      throw new Error(`File ${fileId} is not ready for download`);
+    }
+
     // Download the file content
     const downloadResponse = await fetch(fileEntry.data.downloadUrl);
 
