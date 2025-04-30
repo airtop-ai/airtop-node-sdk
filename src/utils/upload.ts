@@ -48,9 +48,10 @@ export async function uploadFileAndSelectInput({
   client.log('executing file input interaction');
   const fileInputResponse = await client.windows.fileInput(sessionId, windowId, {
     fileId: fileId,
-    elementDescription: configuration.elementDescription,
+    ...configuration,
   });
   if (fileInputResponse.errors && fileInputResponse.errors.length > 0) {
+    client.log(`file input failed: ${JSON.stringify(fileInputResponse.errors)}`);
     throw new Error('file input failed');
   }
 
