@@ -9,6 +9,7 @@ export interface FileEventMessage {
     downloadUrl: string;
     /** Event name */
     event: string;
+    eventData?: unknown;
     /** Date and Time of the event */
     eventTime: Date;
     /** File ID */

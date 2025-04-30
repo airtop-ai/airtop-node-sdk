@@ -23,9 +23,10 @@ Instantiate and use the client with the following:
 import { AirtopClient } from "@airtop/sdk";
 
 const client = new AirtopClient({ apiKey: "YOUR_API_KEY" });
-await client.windows.asyncClick("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334da2a-91b0-42c5-6156-76a5eba87430", {
-    elementDescription: "The login button",
-});
+await client.windows.asyncCreateAutomation(
+    "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+    "0334da2a-91b0-42c5-6156-76a5eba87430",
+);
 ```
 
 ## Request And Response Types
@@ -36,7 +37,7 @@ following namespace:
 ```typescript
 import { Airtop } from "@airtop/sdk";
 
-const request: Airtop.AsyncClickRequest = {
+const request: Airtop.AsyncCreateAutomationRequest = {
     ...
 };
 ```
@@ -50,7 +51,7 @@ will be thrown.
 import { AirtopError } from "@airtop/sdk";
 
 try {
-    await client.windows.asyncClick(...);
+    await client.windows.asyncCreateAutomation(...);
 } catch (err) {
     if (err instanceof AirtopError) {
         console.log(err.statusCode);
@@ -67,7 +68,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.asyncCreateAutomation(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -89,7 +90,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.asyncCreateAutomation(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -99,7 +100,7 @@ const response = await client.windows.asyncClick(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.asyncCreateAutomation(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -110,7 +111,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.windows.asyncClick(..., {
+const response = await client.windows.asyncCreateAutomation(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
