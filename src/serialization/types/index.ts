@@ -1,6 +1,7 @@
 export * from "./AiPromptResponse";
 export * from "./AiResponseEnvelope";
 export * from "./AsyncConfig";
+export * from "./AsyncOperatorPromptResponseEnvelope";
 export * from "./AsyncSessionAiResponseEnvelope";
 export * from "./AutomationOutput";
 export * from "./BrowserWaitNavigationConfigWaitUntil";
