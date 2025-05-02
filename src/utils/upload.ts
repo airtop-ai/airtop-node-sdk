@@ -1,5 +1,6 @@
 import type { AirtopClient } from '../wrapper/AirtopClient';
 import type * as Airtop from '../api';
+import path from 'path';
 
 export async function uploadFileAndSelectInput({
   client,
@@ -23,7 +24,9 @@ export async function uploadFileAndSelectInput({
   client.log(
     `starting file upload: sessionId: ${sessionId}, windowId: ${windowId}, uploadFilePath: ${configuration.uploadFilePath}`,
   );
-  const fileUploadResponse = await client.files.upload(configuration.uploadFilePath);
+  const fileUploadResponse = await client.files.upload(configuration.uploadFilePath, {
+    fileName: configuration.fileName ?? path.basename(configuration.uploadFilePath),
+  });
   if (fileUploadResponse.errors && fileUploadResponse.errors.length > 0) {
     client.log(`file upload failed: ${JSON.stringify(fileUploadResponse.errors)}`);
     throw new Error('file upload failed');
