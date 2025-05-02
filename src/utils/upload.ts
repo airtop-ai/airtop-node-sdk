@@ -36,7 +36,7 @@ export async function uploadFileAndSelectInput({
   });
   client.log('file pushed to session');
 
-  client.log('waiting for file upload to become available');
+  client.log(`waiting for file upload to become available ${fileId}`);
   const waitResult = await client.sessions.waitForUploadAvailable(sessionId, fileId);
   if (waitResult) {
     client.log('file upload available');
@@ -45,7 +45,7 @@ export async function uploadFileAndSelectInput({
     throw new Error('file upload not available within timeout');
   }
 
-  client.log('executing file input interaction');
+  client.log(`executing file input interaction ${JSON.stringify(configuration)}`);
   const fileInputResponse = await client.windows.fileInput(sessionId, windowId, {
     fileId: fileId,
     ...configuration,
