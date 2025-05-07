@@ -28,6 +28,7 @@ export * from "./ExternalSessionAiResponseMetadata";
 export * from "./ExternalSessionAiResponseMetadataUsage";
 export * from "./ExternalSessionConfig";
 export * from "./ExternalSessionWithConnectionInfo";
+export * from "./FileEventData";
 export * from "./FileEventMessageStatus";
 export * from "./FileEventMessage";
 export * from "./FilesResponse";

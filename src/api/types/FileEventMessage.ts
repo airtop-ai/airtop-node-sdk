@@ -9,7 +9,8 @@ export interface FileEventMessage {
     downloadUrl: string;
     /** Event name */
     event: string;
-    eventData?: unknown;
+    /** Additional data for the event */
+    eventData?: Airtop.FileEventData;
     /** Date and Time of the event */
     eventTime: Date;
     /** File ID */

@@ -6,9 +6,7 @@ import * as Airtop from "../../../../index";
 
 /**
  * @example
- *     {
- *         elementDescription: "The file input in the bottom left corner"
- *     }
+ *     {}
  */
 export interface SessionFileInputHandlerRequestBody {
     clientRequestId?: string;
@@ -17,11 +15,13 @@ export interface SessionFileInputHandlerRequestBody {
     /** A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended). */
     costThresholdCredits?: number;
     /** A natural language description of the file input to interact with (e.g. 'the file input', 'file upload selection box'). The interaction will be aborted if the target element cannot be found. */
-    elementDescription: string;
+    elementDescription?: string;
     /** The id of the file to upload. 'fileId' or 'fileName' is required. */
     fileId?: string;
     /** The name of the file to upload, not including the path. 'fileId' or 'fileName' is required. */
     fileName?: string;
+    /** If true, Airtop AI will find hidden file input elements and interact with them. */
+    includeHiddenElements?: boolean;
     /**
      * A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).
      *

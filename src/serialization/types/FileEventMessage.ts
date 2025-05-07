@@ -5,6 +5,7 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { FileEventData } from "./FileEventData";
 import { FileEventMessageStatus } from "./FileEventMessageStatus";
 
 export const FileEventMessage: core.serialization.ObjectSchema<
@@ -13,7 +14,7 @@ export const FileEventMessage: core.serialization.ObjectSchema<
 > = core.serialization.object({
     downloadUrl: core.serialization.string(),
     event: core.serialization.string(),
-    eventData: core.serialization.unknown().optional(),
+    eventData: FileEventData.optional(),
     eventTime: core.serialization.date(),
     fileId: core.serialization.string(),
     status: FileEventMessageStatus,
@@ -23,7 +24,7 @@ export declare namespace FileEventMessage {
     export interface Raw {
         downloadUrl: string;
         event: string;
-        eventData?: unknown | null;
+        eventData?: FileEventData.Raw | null;
         eventTime: string;
         fileId: string;
         status: FileEventMessageStatus.Raw;

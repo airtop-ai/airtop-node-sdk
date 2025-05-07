@@ -11,7 +11,7 @@ import * as Airtop from "../../../../index";
  *     }
  */
 export interface CreateFileRestInputV1 {
-    /** Name of the file */
+    /** Name of the file, must be unique within the session the file is used with */
     fileName: string;
     /** Type of the file */
     fileType?: Airtop.CreateFileRestInputV1FileType;
