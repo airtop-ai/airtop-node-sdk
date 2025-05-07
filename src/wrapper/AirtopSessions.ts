@@ -307,6 +307,7 @@ export class AirtopSessions extends SessionsClass {
    * @returns The event for the file upload.
    */
   async waitForUploadAvailable(sessionId: string, fileId: string, timeoutSeconds = 300) {
+    this.log(`waiting for uploaded file to be available on session: ${sessionId} ${fileId}`);
     // Create a promise that resolves to null after the timeout
     const timeoutPromise = new Promise<null>((resolve) => {
       setTimeout(() => resolve(null), timeoutSeconds * 1000);
@@ -318,9 +319,15 @@ export class AirtopSessions extends SessionsClass {
       for await (const event of sessionEvents) {
         const e = event as any;
         if (e.event === 'file_upload_status') {
-          this.log(`file_upload_status message received:\n${JSON.stringify(event, null, 2)}`);
-          if (e.status === 'available' && e.fileId === fileId) {
-            return event;
+          if (e.fileId === fileId) {
+            if (e.status === 'available') {
+              this.log(`uploaded file is now available on session: ${sessionId} ${fileId}`);
+              return event;
+            }
+            if (e.status === 'upload_failed') {
+              this.log(`upload failed: ${sessionId} ${fileId}`);
+              throw new Error(`upload failed: ${e.eventData.error}`);
+            }
           }
         }
       }
@@ -362,7 +369,7 @@ export class AirtopSessions extends SessionsClass {
         {
           timeoutInSeconds: timeoutSeconds,
           ...requestOptions,
-          abortSignal: abortController.signal
+          abortSignal: abortController.signal,
         },
       );
 
@@ -381,10 +388,10 @@ export class AirtopSessions extends SessionsClass {
 
           lastCallbackPromise = lastCallbackPromise
             .then(() => callback(msg))
-            .catch(error => this.log(`Error in captcha callback: ${error}`));
+            .catch((error) => this.log(`Error in captcha callback: ${error}`));
         }
       }
-    })().catch(error => {
+    })().catch((error) => {
       if (error.name !== 'AbortError') {
         this.log(`Error in event processing: ${error}`);
       }
@@ -394,6 +401,4 @@ export class AirtopSessions extends SessionsClass {
       abortController.abort();
     };
   }
-
 }
-

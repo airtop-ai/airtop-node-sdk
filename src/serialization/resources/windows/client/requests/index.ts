@@ -32,3 +32,4 @@ export { ExtractRequest } from "./ExtractRequest";
 export { FindManyRequest } from "./FindManyRequest";
 export { FindOneRequest } from "./FindOneRequest";
 export { LlmRequest } from "./LlmRequest";
+export { WaitForPageRequest } from "./WaitForPageRequest";

@@ -16,9 +16,10 @@ export const AsyncFileInputRequest: core.serialization.Schema<
     clientRequestId: core.serialization.string().optional(),
     configuration: MicroInteractionConfigWithExperimental.optional(),
     costThresholdCredits: core.serialization.number().optional(),
-    elementDescription: core.serialization.string(),
+    elementDescription: core.serialization.string().optional(),
     fileId: core.serialization.string().optional(),
     fileName: core.serialization.string().optional(),
+    includeHiddenElements: core.serialization.boolean().optional(),
     timeThresholdSeconds: core.serialization.number().optional(),
     waitForNavigation: core.serialization.boolean().optional(),
 });
@@ -29,9 +30,10 @@ export declare namespace AsyncFileInputRequest {
         clientRequestId?: string | null;
         configuration?: MicroInteractionConfigWithExperimental.Raw | null;
         costThresholdCredits?: number | null;
-        elementDescription: string;
+        elementDescription?: string | null;
         fileId?: string | null;
         fileName?: string | null;
+        includeHiddenElements?: boolean | null;
         timeThresholdSeconds?: number | null;
         waitForNavigation?: boolean | null;
     }

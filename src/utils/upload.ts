@@ -1,5 +1,6 @@
 import type { AirtopClient } from '../wrapper/AirtopClient';
 import type * as Airtop from '../api';
+import path from 'path';
 
 export async function uploadFileAndSelectInput({
   client,
@@ -23,7 +24,9 @@ export async function uploadFileAndSelectInput({
   client.log(
     `starting file upload: sessionId: ${sessionId}, windowId: ${windowId}, uploadFilePath: ${configuration.uploadFilePath}`,
   );
-  const fileUploadResponse = await client.files.upload(configuration.uploadFilePath);
+  const fileUploadResponse = await client.files.upload(configuration.uploadFilePath, {
+    fileName: configuration.fileName ?? path.basename(configuration.uploadFilePath),
+  });
   if (fileUploadResponse.errors && fileUploadResponse.errors.length > 0) {
     client.log(`file upload failed: ${JSON.stringify(fileUploadResponse.errors)}`);
     throw new Error('file upload failed');
@@ -36,7 +39,7 @@ export async function uploadFileAndSelectInput({
   });
   client.log('file pushed to session');
 
-  client.log('waiting for file upload to become available');
+  client.log(`waiting for file upload to become available ${fileId}`);
   const waitResult = await client.sessions.waitForUploadAvailable(sessionId, fileId);
   if (waitResult) {
     client.log('file upload available');
@@ -45,12 +48,13 @@ export async function uploadFileAndSelectInput({
     throw new Error('file upload not available within timeout');
   }
 
-  client.log('executing file input interaction');
+  client.log(`executing file input interaction ${JSON.stringify(configuration)}`);
   const fileInputResponse = await client.windows.fileInput(sessionId, windowId, {
     fileId: fileId,
-    elementDescription: configuration.elementDescription,
+    ...configuration,
   });
   if (fileInputResponse.errors && fileInputResponse.errors.length > 0) {
+    client.log(`file input failed: ${JSON.stringify(fileInputResponse.errors)}`);
     throw new Error('file input failed');
   }
 

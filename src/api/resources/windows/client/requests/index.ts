@@ -33,3 +33,4 @@ export { type ExtractRequest } from "./ExtractRequest";
 export { type FindManyRequest } from "./FindManyRequest";
 export { type FindOneRequest } from "./FindOneRequest";
 export { type LlmRequest } from "./LlmRequest";
+export { type WaitForPageRequest } from "./WaitForPageRequest";
