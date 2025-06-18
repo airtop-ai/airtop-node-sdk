@@ -332,6 +332,69 @@ await client.windows.asyncFillForm("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b", "0334
 </dl>
 </details>
 
+<details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">list</a>(sessionId) -> Airtop.WindowsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists all browser windows in a session.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.windows.list("6aac6f73-bd89-4a76-ab32-5a6c422e8b0b");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sessionId:** `string` — ID of the session to list windows for.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Windows.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.windows.<a href="/src/api/resources/windows/client/Client.ts">create</a>(sessionId, { ...params }) -> Airtop.WindowIdResponse</code></summary>
 <dl>
 <dd>

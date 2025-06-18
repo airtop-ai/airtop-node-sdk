@@ -5,24 +5,24 @@
 import * as serializers from "../../../index";
 import * as Airtop from "../../../../api/index";
 import * as core from "../../../../core";
-import { SessionsEventsResponseSessionEvent } from "./SessionsEventsResponseSessionEvent";
 import { SessionsEventsResponseFileEvent } from "./SessionsEventsResponseFileEvent";
 import { SessionsEventsResponseCaptchaEvent } from "./SessionsEventsResponseCaptchaEvent";
 import { SessionsEventsResponseStatus } from "./SessionsEventsResponseStatus";
 import { SessionsEventsResponseError } from "./SessionsEventsResponseError";
 import { SessionsEventsResponseWindowEvent } from "./SessionsEventsResponseWindowEvent";
+import { SessionsEventsResponseSessionEvent } from "./SessionsEventsResponseSessionEvent";
 
 export const SessionsEventsResponse: core.serialization.Schema<
     serializers.SessionsEventsResponse.Raw,
     Airtop.SessionsEventsResponse
 > = core.serialization
     .union("event", {
-        sessionEvent: SessionsEventsResponseSessionEvent,
         fileEvent: SessionsEventsResponseFileEvent,
         captchaEvent: SessionsEventsResponseCaptchaEvent,
         status: SessionsEventsResponseStatus,
         error: SessionsEventsResponseError,
         windowEvent: SessionsEventsResponseWindowEvent,
+        sessionEvent: SessionsEventsResponseSessionEvent,
     })
     .transform<Airtop.SessionsEventsResponse>({
         transform: (value) => value,
@@ -31,16 +31,12 @@ export const SessionsEventsResponse: core.serialization.Schema<
 
 export declare namespace SessionsEventsResponse {
     export type Raw =
-        | SessionsEventsResponse.SessionEvent
         | SessionsEventsResponse.FileEvent
         | SessionsEventsResponse.CaptchaEvent
         | SessionsEventsResponse.Status
         | SessionsEventsResponse.Error
-        | SessionsEventsResponse.WindowEvent;
-
-    export interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
-        event: "sessionEvent";
-    }
+        | SessionsEventsResponse.WindowEvent
+        | SessionsEventsResponse.SessionEvent;
 
     export interface FileEvent extends SessionsEventsResponseFileEvent.Raw {
         event: "fileEvent";
@@ -60,5 +56,9 @@ export declare namespace SessionsEventsResponse {
 
     export interface WindowEvent extends SessionsEventsResponseWindowEvent.Raw {
         event: "windowEvent";
+    }
+
+    export interface SessionEvent extends SessionsEventsResponseSessionEvent.Raw {
+        event: "sessionEvent";
     }
 }
