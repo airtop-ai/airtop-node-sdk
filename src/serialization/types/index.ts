@@ -86,3 +86,5 @@ export * from "./WindowEventMessage";
 export * from "./WindowId";
 export * from "./WindowIdResponse";
 export * from "./WindowResponse";
+export * from "./WindowsResponse";
+export * from "./WindowsWithMeta";

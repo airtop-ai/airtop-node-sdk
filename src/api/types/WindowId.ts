@@ -5,6 +5,10 @@
 export interface WindowId {
     /** CDP Window target ID */
     targetId: string;
+    /** Current title of the browser window */
+    title?: string;
+    /** Current URL of the browser window */
+    url?: string;
     /** Airtop window ID of the browser window */
     windowId: string;
 }
