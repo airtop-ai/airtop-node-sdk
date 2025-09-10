@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const CreateFileRestInputV1FileType: core.serialization.Schema<
     serializers.CreateFileRestInputV1FileType.Raw,
     Airtop.CreateFileRestInputV1FileType
-> = core.serialization.enum_(["browser_download", "screenshot", "video", "customer_upload"]);
+> = core.serialization.enum_(["browser_download", "screenshot", "recording", "customer_upload"]);
 
 export declare namespace CreateFileRestInputV1FileType {
-    export type Raw = "browser_download" | "screenshot" | "video" | "customer_upload";
+    export type Raw = "browser_download" | "screenshot" | "recording" | "customer_upload";
 }

@@ -1,6 +1,6 @@
 {
     "name": "@airtop/sdk",
-    "version": "0.1.44",
+    "version": "0.1.45",
     "private": false,
     "repository": "https://github.com/airtop-ai/airtop-node-sdk",
     "main": "./index.js",
@@ -11,7 +11,7 @@
         "prepack": "cp -rv dist/. .",
         "test": "jest",
         "prepublish": "yarn build",
-        "biome:lint": "biome lint --diagnostic-level=error --no-errors-on-unmatched src",
+        "biome:lint": "biome lint --no-errors-on-unmatched src",
         "biome:fix": "biome format --write && biome lint --write",
         "biome:format": "biome format --no-errors-on-unmatched --files-ignore-unknown=true",
         "compile-nobase": "tsc --project config/tsconfig-nobase.json"

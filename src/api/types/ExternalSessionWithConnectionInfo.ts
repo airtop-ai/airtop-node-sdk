@@ -25,4 +25,6 @@ export interface ExternalSessionWithConnectionInfo {
     profileId?: string;
     /** Session status. */
     status: string;
+    /** - */
+    viceUrl?: string;
 }

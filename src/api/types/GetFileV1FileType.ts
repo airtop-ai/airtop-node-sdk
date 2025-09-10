@@ -5,10 +5,10 @@
 /**
  * Type of the file
  */
-export type GetFileV1FileType = "browser_download" | "screenshot" | "video" | "customer_upload";
+export type GetFileV1FileType = "browser_download" | "screenshot" | "recording" | "customer_upload";
 export const GetFileV1FileType = {
     BrowserDownload: "browser_download",
     Screenshot: "screenshot",
-    Video: "video",
+    Recording: "recording",
     CustomerUpload: "customer_upload",
 } as const;

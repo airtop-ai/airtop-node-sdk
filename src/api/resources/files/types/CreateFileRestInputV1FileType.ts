@@ -5,10 +5,10 @@
 /**
  * Type of the file
  */
-export type CreateFileRestInputV1FileType = "browser_download" | "screenshot" | "video" | "customer_upload";
+export type CreateFileRestInputV1FileType = "browser_download" | "screenshot" | "recording" | "customer_upload";
 export const CreateFileRestInputV1FileType = {
     BrowserDownload: "browser_download",
     Screenshot: "screenshot",
-    Video: "video",
+    Recording: "recording",
     CustomerUpload: "customer_upload",
 } as const;

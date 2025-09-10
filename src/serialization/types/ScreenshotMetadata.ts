@@ -5,16 +5,33 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { ScreenshotMetadataFormat } from "./ScreenshotMetadataFormat";
+import { ScreenshotScrollPosition } from "./ScreenshotScrollPosition";
+import { ScreenshotViewportDimensions } from "./ScreenshotViewportDimensions";
 
 export const ScreenshotMetadata: core.serialization.ObjectSchema<
     serializers.ScreenshotMetadata.Raw,
     Airtop.ScreenshotMetadata
 > = core.serialization.object({
     dataUrl: core.serialization.string().optional(),
+    fileId: core.serialization.string().optional(),
+    fileName: core.serialization.string().optional(),
+    format: ScreenshotMetadataFormat.optional(),
+    scrollPosition: ScreenshotScrollPosition.optional(),
+    signedDownloadUrl: core.serialization.string().optional(),
+    urlExpiry: core.serialization.string().optional(),
+    viewportDimensions: ScreenshotViewportDimensions.optional(),
 });
 
 export declare namespace ScreenshotMetadata {
     export interface Raw {
         dataUrl?: string | null;
+        fileId?: string | null;
+        fileName?: string | null;
+        format?: ScreenshotMetadataFormat.Raw | null;
+        scrollPosition?: ScreenshotScrollPosition.Raw | null;
+        signedDownloadUrl?: string | null;
+        urlExpiry?: string | null;
+        viewportDimensions?: ScreenshotViewportDimensions.Raw | null;
     }
 }

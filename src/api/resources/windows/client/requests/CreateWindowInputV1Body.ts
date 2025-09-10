@@ -15,6 +15,6 @@ export interface CreateWindowInputV1Body {
     url?: string;
     /** Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, 'complete' will wait until the page and all it's iframes have loaded it's dom and assets. 'noWait' will not wait for any loading event and will return immediately. */
     waitUntil?: Airtop.CreateWindowInputV1BodyWaitUntil;
-    /** Maximum time in seconds to wait for the specified loading event to occur before timing out. */
+    /** Maximum time in seconds to wait for the specified loading event to occur. If the timeout is reached, the operation will still succeed but return a warning indicating the page may still be loading resources. */
     waitUntilTimeoutSeconds?: number;
 }

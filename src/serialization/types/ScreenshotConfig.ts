@@ -5,22 +5,29 @@
 import * as serializers from "../index";
 import * as Airtop from "../../api/index";
 import * as core from "../../core";
+import { ScreenshotConfigFormat } from "./ScreenshotConfigFormat";
+import { ScreenshotConfigScope } from "./ScreenshotConfigScope";
+import { VisualAnalysisConfig } from "./VisualAnalysisConfig";
 
 export const ScreenshotConfig: core.serialization.ObjectSchema<
     serializers.ScreenshotConfig.Raw,
     Airtop.ScreenshotConfig
 > = core.serialization.object({
+    format: ScreenshotConfigFormat.optional(),
     maxHeight: core.serialization.number().optional(),
     maxWidth: core.serialization.number().optional(),
     quality: core.serialization.number().optional(),
-    scope: core.serialization.stringLiteral("viewport").optional(),
+    scope: ScreenshotConfigScope.optional(),
+    visualAnalysis: VisualAnalysisConfig.optional(),
 });
 
 export declare namespace ScreenshotConfig {
     export interface Raw {
+        format?: ScreenshotConfigFormat.Raw | null;
         maxHeight?: number | null;
         maxWidth?: number | null;
         quality?: number | null;
-        scope?: "viewport" | null;
+        scope?: ScreenshotConfigScope.Raw | null;
+        visualAnalysis?: VisualAnalysisConfig.Raw | null;
     }
 }

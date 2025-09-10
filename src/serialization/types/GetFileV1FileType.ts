@@ -7,8 +7,8 @@ import * as Airtop from "../../api/index";
 import * as core from "../../core";
 
 export const GetFileV1FileType: core.serialization.Schema<serializers.GetFileV1FileType.Raw, Airtop.GetFileV1FileType> =
-    core.serialization.enum_(["browser_download", "screenshot", "video", "customer_upload"]);
+    core.serialization.enum_(["browser_download", "screenshot", "recording", "customer_upload"]);
 
 export declare namespace GetFileV1FileType {
-    export type Raw = "browser_download" | "screenshot" | "video" | "customer_upload";
+    export type Raw = "browser_download" | "screenshot" | "recording" | "customer_upload";
 }

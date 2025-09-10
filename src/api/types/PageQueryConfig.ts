@@ -11,4 +11,6 @@ export interface PageQueryConfig {
     outputSchema?: string;
     /** Optional configuration to customize and tweak how the web page is scraped. */
     scrape?: Airtop.ScrapeConfig;
+    /** Visual analysis configuration. When provided, enables advanced screenshot-based analysis instead of or in addition to DOM scraping. */
+    visualAnalysis?: Airtop.VisualAnalysisConfig;
 }
