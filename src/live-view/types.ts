@@ -10,6 +10,7 @@ export enum LiveViewEventName {
   NavigateForward = 'NavigateForward',
   NavigateToUrl = 'NavigateToUrl',
   RefreshPage = 'RefreshPage',
+  Error = 'Error',
 }
 
 export type LiveViewMessage =
@@ -22,6 +23,7 @@ export type LiveViewMessage =
         | LiveViewEventName.NavigateForward
         | LiveViewEventName.RefreshPage;
     }
+  | { eventName: LiveViewEventName.Error; payload: { message: string; code?: string } } // message
   | { eventName: LiveViewEventName.NavigateToUrl; payload: string } // url
   | { eventName: LiveViewEventName.NewWindowOpened; payload: string } // browserId
   | { eventName: LiveViewEventName.UrlChange; payload: string }; // url
